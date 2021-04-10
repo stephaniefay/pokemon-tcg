@@ -1,6 +1,8 @@
-# PokemonTcg
+# Pokemon Tcg
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.8.
+
+I will probably use the [Pokemon TCG API](https://dev.pokemontcg.io/) to fetch the information needed. Also, will be using [Firebase Storage](https://firebase.google.com/) as a database.
 
 ## Development server
 
