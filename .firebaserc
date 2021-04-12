@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "tcg-pkmn"
+  },
+  "targets": {
+    "tcg-pkmn": {
+      "hosting": {
+        "pokemon-tcg": [
+          "tcg-pkmn"
+        ]
+      }
+    }
+  }
+}
