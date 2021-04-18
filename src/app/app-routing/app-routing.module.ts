@@ -8,6 +8,7 @@ import {NotFoundComponent} from "../public/not-found/not-found.component";
 import {PrivateComponent} from "../private/private.component";
 import {PublicComponent} from "../public/public.component";
 import {LigaPokemonComponent} from "../public/ligapokemon/liga-pokemon.component";
+import {FetchApiComponent} from "../private/fetch-api/fetch-api.component";
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/']);
 
@@ -41,6 +42,12 @@ const routes: Routes = [
       {
         path: 'export',
         component: ExportComponent,
+        canActivate: [AngularFireAuthGuard],
+        data: { authGuardPipe: redirectUnauthorizedToLogin }
+      },
+      {
+        path: 'api',
+        component: FetchApiComponent,
         canActivate: [AngularFireAuthGuard],
         data: { authGuardPipe: redirectUnauthorizedToLogin }
       }

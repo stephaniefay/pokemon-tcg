@@ -1,16 +1,16 @@
-import {set} from "./set";
-import {prices} from "./prices";
+import {SetCard} from "./setCard";
+import {PricesCard} from "./pricesCard";
 
-export class card {
+export class CardAPI {
   id: String;
   name: String;
   supertype: String;
   subtypes: any;
   types: any;
-  set: set;
+  set: SetCard;
   number: String;
   artist: String;
   rarity: String;
-  prices: prices;
+  prices: PricesCard;
   quantity: number;
 }

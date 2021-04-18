@@ -1,4 +1,4 @@
-export class prices {
+export class PricesCard {
   url: String;
   updatedAt: Date;
   normal: {low: number, mid: number, high: number, market: number, directLow: number};

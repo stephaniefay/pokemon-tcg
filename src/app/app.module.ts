@@ -25,6 +25,7 @@ import {MessagesModule} from "primeng/messages";
 import {MessageModule} from "primeng/message";
 import { LigaPokemonComponent } from './public/ligapokemon/liga-pokemon.component';
 import {TableModule} from "primeng/table";
+import { FetchApiComponent } from './private/fetch-api/fetch-api.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import {TableModule} from "primeng/table";
     PrivateComponent,
     PublicComponent,
     LigaPokemonComponent,
+    FetchApiComponent,
   ],
   imports: [
     BrowserModule,

@@ -45,7 +45,7 @@ export const Collections = {
   POWER_KEEPERS: {value: "ex16", label: "Power Keepers"},
 
   // Diamond & Pearl Collection
-  DP_PROMOS: {value: "dpp", label: "DP Black Star Promos"},
+  DP_PROMOS: {value: "dpp", label: "Diamond & Pearl Promos"},
   DIAMOND_PEARL: {value: "dp1", label: "Diamond & Pearl"},
   MYSTERIOUS_TREASURES: {value: "dp2", label: "Mysterious Treasures"},
   SECRET_WONDERS: {value: "dp3", label: "Secret Wonders"},
@@ -72,7 +72,7 @@ export const Collections = {
   ARCEUS: {value: "pl4", label: "Arceus"},
 
   // HeartGold & SoulSilver Collection
-  HGSS_PROMOS: {value: "hsp", label: "HGSS Black Star Promos"},
+  HGSS_PROMOS: {value: "hsp", label: "HeartGold & SoulSilver Promos"},
   HEARTGOLD_SOULSILVER: {value: "hgss1", label: "HeartGold & SoulSilver"},
   HS_UNLEASHED: {value: "hgss2", label: "HS—Unleashed"},
   HS_UNDAUNTET: {value: "hgss3", label: "HS—Undaunted"},
@@ -80,7 +80,7 @@ export const Collections = {
   CALL_LEGENDS: {value: "col1", label: "Call of Legends"},
 
   // Black & White Collection
-  BW_PROMOS: {value: "bwp", label: "BW Black Star Promos"},
+  BW_PROMOS: {value: "bwp", label: "Black & White Promos"},
   BLACK_WHITE: {value: "bw1", label: "Black & White"},
   EMERGING_POWERS: {value: "bw2", label: "Emerging Powers"},
   NOBLE_VICTORIES: {value: "bw3", label: "Noble Victories"},
@@ -95,7 +95,7 @@ export const Collections = {
   LEGENDARY_TREASURES: {value: "bw11", label: "Legendary Treasures"},
 
   // XY Collection
-  XY_PROMOS: {value: "xyp", label: "XY Black Star Promos"},
+  XY_PROMOS: {value: "xyp", label: "XY Promos"},
   KALOS_STARTER: {value: "xy0", label: "Kalos Starter Set"},
   XY: {value: "xy1", label: "XY"},
   FLASHFIRE: {value: "xy2", label: "Flashfire"},
@@ -122,7 +122,7 @@ export const Collections = {
   MCD_2019: {value: "mcd19", label: "McDonald's Collection 2019"},
 
   // Sun & Moon Collection
-  SM_PROMOS: {value: "smp", label: "SM Black Star Promos"},
+  SM_PROMOS: {value: "smp", label: "Sun & Moon Promos"},
   SUN_MOON: {value: "sm1", label: "Sun & Moon"},
   GUARDIANS_RISING: {value: "sm2", label: "Guardians Rising"},
   BURNING_SHADOWS: {value: "sm3", label: "Burning Shadows"},
@@ -142,7 +142,7 @@ export const Collections = {
   COSMIC_ECLIPSE: {value: "sm12", label: "Cosmic Eclipse"},
 
   // Sword & Shield Collection
-  SWSH_PROMO: {value: "swshp", label: "SWSH Black Star Promos"},
+  SWSH_PROMO: {value: "swshp", label: "Sword & Shield Promos"},
   SWORD_SHIELD: {value: "swsh1", label: "Sword & Shield"},
   REBEL_CLASH: {value: "swsh2", label: "Rebel Clash"},
   DARKNESS_ABLAZE: {value: "swsh3", label: "Darkness Ablaze"},

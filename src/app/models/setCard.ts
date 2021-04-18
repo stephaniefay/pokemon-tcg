@@ -1,4 +1,4 @@
-export class set {
+export class SetCard {
   id: String;
   name: String;
   series: String;

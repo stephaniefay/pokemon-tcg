@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {LigaPokemonService} from "../../services/liga-pokemon.service";
 import {CSVCard} from "../../models/CSVCard";
+import {Collections} from "../../models/collections";
 
 @Component({
   selector: 'app-ligapokemon',
@@ -98,6 +99,4 @@ export class LigaPokemonComponent implements OnInit {
         return 'Damaged (D)';
     }
   }
-
-
 }

@@ -57,6 +57,11 @@ export class AppComponent {
             icon: 'pi pi-fw pi-arrow-circle-up',
             label: 'Export',
             routerLink: ['/private/export']
+          },
+          {
+            label: 'Fetch from API',
+            icon: 'pi pi-fw pi-link',
+            routerLink: ['/private/api']
           }
         ]
       },
