@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MessageService} from "primeng/api";
 import {CSVCard} from "../../models/CSVCard";
-import {ExportedCSVService} from "../../services/exported-csv.service";
+import {LigaPokemonService} from "../../services/liga-pokemon.service";
 
 @Component({
   selector: 'app-import',
@@ -12,7 +12,7 @@ import {ExportedCSVService} from "../../services/exported-csv.service";
 
 export class ImportComponent implements OnInit {
 
-  constructor(private csvService: ExportedCSVService,
+  constructor(private csvService: LigaPokemonService,
               private messageService: MessageService) { }
   uploadedFiles: any[] = [];
   records: any[] = [];
@@ -63,18 +63,18 @@ export class ImportComponent implements OnInit {
     let csvArr = [];
 
     for (let i = 1; i < csvRecordsArray.length; i++) {
-      let currentRecord = (<string>csvRecordsArray[i]).split(',');
+      let currentRecord = (<string>csvRecordsArray[i]).split('","');
       let re = /"/gi;
       if (currentRecord.length == headerLength) {
         let csvRecord: CSVCard = new CSVCard();
         csvRecord.edition_ptbr = currentRecord[0].trim().replace(re, '');
-        csvRecord.edition = currentRecord[1].trim().replace(re, '');
+        csvRecord.edition = currentRecord[1].trim().replace("&rsquo;", "'").replace(re, '');
         csvRecord.initials = currentRecord[2].trim().replace(re, '');
         csvRecord.cardName_ptbr = currentRecord[3].trim().replace(re, '');
         csvRecord.cardName = currentRecord[4].trim().replace(re, '');
         csvRecord.quantity = Number(currentRecord[5].trim().replace(re, ''));
         csvRecord.quality = currentRecord[6].trim().replace(re, '');
-        csvRecord.idiom = currentRecord[7].trim().replace(re, '');
+        csvRecord.language = currentRecord[7].trim().replace(re, '');
         csvRecord.rarity = currentRecord[8].trim().replace(re, '');
         csvRecord.color = currentRecord[9].trim().replace(re, '');
         csvRecord.extras = [];

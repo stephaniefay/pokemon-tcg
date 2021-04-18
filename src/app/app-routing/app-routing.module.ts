@@ -7,6 +7,7 @@ import {CollectionComponent} from "../public/collection/collection.component";
 import {NotFoundComponent} from "../public/not-found/not-found.component";
 import {PrivateComponent} from "../private/private.component";
 import {PublicComponent} from "../public/public.component";
+import {LigaPokemonComponent} from "../public/ligapokemon/liga-pokemon.component";
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/']);
 
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'collection',
         component: CollectionComponent
+      },
+      {
+        path: 'ligapokemon',
+        component: LigaPokemonComponent
       }
     ]
   },

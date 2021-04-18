@@ -12,6 +12,7 @@ import {LoginComponent} from "./login/login.component";
 })
 export class AppComponent {
   title = 'pokemon-tcg';
+  itemsLogged: MenuItem[];
   items: MenuItem[];
   ref: DynamicDialogRef;
 
@@ -21,42 +22,60 @@ export class AppComponent {
 
   ngOnInit() {
     this.primengConfig.ripple = true;
+
     this.items = [
       {
-        label: 'Restricted Area',
-        icon: 'pi pi-fw pi-ban',
+        label: 'Collection',
+        icon: 'pi pi-fw pi-id-card',
+        routerLink: ['/public/collection']
+      },
+      {
+        label: 'LigaPokemon datatable',
+        icon: 'pi pi-fw pi-list',
+        routerLink: ['/public/ligapokemon']
+      },
+      {
+        label: 'Login',
+        icon: 'pi pi-fw pi-user',
+        command: (event: Event) => {
+          this.show()
+        }
+      }
+    ]
+
+    this.itemsLogged = [
+      {
+        label: 'Card Management',
+        icon: 'pi pi-fw pi-users',
         items: [
           {
-            label: 'Login',
-            icon: 'pi pi-fw pi-user',
-            visible:  (event: Event) => {
-              this.isUserLoggedIn()
-            },
-            command: (event: Event) => { this.show() }
+            label: 'Import',
+            icon: 'pi pi-fw pi-arrow-circle-down',
+            routerLink: ['/private/import']
           },
           {
-            label: 'Logout',
-            icon: 'pi pi-fw pi-logout',
-            visible: this.isUserLoggedIn(),
-            command: (event: Event) => { this.auth.signOut() }
-          },
-          {
-            label: 'Card Management',
-            icon: 'pi pi-fw pi-users',
-            items: [
-              {
-                label: 'Import',
-                icon: 'pi pi-fw pi-arrow-circle-down',
-                routerLink: ['/private/import']
-              },
-              {
-                icon: 'pi pi-fw pi-arrow-circle-up',
-                label: 'Export',
-                routerLink: ['/private/export']
-              }
-            ]
+            icon: 'pi pi-fw pi-arrow-circle-up',
+            label: 'Export',
+            routerLink: ['/private/export']
           }
         ]
+      },
+      {
+        label: 'Collection',
+        icon: 'pi pi-fw pi-id-card',
+        routerLink: ['/public/collection']
+      },
+      {
+        label: 'LigaPokemon datatable',
+        icon: 'pi pi-fw pi-list',
+        routerLink: ['/public/ligapokemon']
+      },
+      {
+        label: 'Logout',
+        icon: 'pi pi-fw pi-power-off',
+        command: (event: Event) => {
+          this.auth.signOut()
+        }
       }
     ];
   }
@@ -70,12 +89,9 @@ export class AppComponent {
     });
   }
 
-  isUserLoggedIn () {
-    var status;
+  async isUserLoggedIn() {
     this.auth.authState.subscribe(value => {
-      if (value == null) status = false;
-      status = true;
+      return value != null;
     });
-    return status;
   }
 }

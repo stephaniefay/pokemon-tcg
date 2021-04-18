@@ -8,7 +8,7 @@ export class CSVCard {
   cardNumber: string;
   quantity: number;
   quality: string;
-  idiom: string;
+  language: string;
   rarity: string;
   color: string;
   extras: any[];

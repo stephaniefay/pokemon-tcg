@@ -6,7 +6,7 @@ import {map} from "rxjs/operators";
 @Injectable({
   providedIn: 'root'
 })
-export class ExportedCSVService {
+export class LigaPokemonService {
 
   constructor(private db: AngularFireDatabase) { }
 
@@ -19,6 +19,19 @@ export class ExportedCSVService {
       .catch((error: any) => {
         console.error(error);
       });
+  }
+
+  getAll() {
+    return this.db.list('LigaPokemon')
+      .snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map(c => ({
+            key: c.payload.key,
+            cardCSV: c.payload.val()
+          }));
+        })
+      );
   }
 
   delete(key: string) {

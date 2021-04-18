@@ -23,6 +23,8 @@ import {AngularFireStorageModule} from "@angular/fire/storage";
 import {FileUploadModule} from "primeng/fileupload";
 import {MessagesModule} from "primeng/messages";
 import {MessageModule} from "primeng/message";
+import { LigaPokemonComponent } from './public/ligapokemon/liga-pokemon.component';
+import {TableModule} from "primeng/table";
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import {MessageModule} from "primeng/message";
     NotFoundComponent,
     PrivateComponent,
     PublicComponent,
+    LigaPokemonComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +54,7 @@ import {MessageModule} from "primeng/message";
     FormsModule,
     MessagesModule,
     MessageModule,
+    TableModule,
     HttpClientModule,
   ],
   providers: [],
