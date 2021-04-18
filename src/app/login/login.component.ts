@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AngularFireAuth} from "@angular/fire/auth";
-import firebase from "firebase";
+import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 
 @Component({
   selector: 'app-login',
@@ -12,15 +12,16 @@ export class LoginComponent {
   email: string;
   password: string;
 
-  constructor(public auth: AngularFireAuth) {
+  constructor(public auth: AngularFireAuth,
+              public ref: DynamicDialogRef,
+              public config: DynamicDialogConfig) {
   }
-  login() {
 
-    var userCredentialPromise = this.auth.signInWithEmailAndPassword(this.email, this.password);
-    console.log(userCredentialPromise);
-  }
-  logout() {
-    this.auth.signOut();
+  ngOnInit() {}
+
+  login() {
+    this.auth.signInWithEmailAndPassword(this.email, this.password);
+    this.ref.close();
   }
 
 }
