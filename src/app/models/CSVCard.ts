@@ -1,7 +1,10 @@
 export class CSVCard {
+  key: string;
   edition: string;
+  edition_ptbr: string;
   initials: string;
   cardName: string;
+  cardName_ptbr: string;
   cardNumber: string;
   quantity: number;
   quality: string;
@@ -9,4 +12,6 @@ export class CSVCard {
   rarity: string;
   color: string;
   extras: any[];
+  comments: string;
+  cardsInEdition: string;
 }

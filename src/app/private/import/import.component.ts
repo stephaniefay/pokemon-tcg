@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Message, MessageService} from "primeng/api";
+import {MessageService} from "primeng/api";
 import {CSVCard} from "../../models/CSVCard";
+import {ExportedCSVService} from "../../services/exported-csv.service";
 
 @Component({
   selector: 'app-import',
@@ -11,10 +12,10 @@ import {CSVCard} from "../../models/CSVCard";
 
 export class ImportComponent implements OnInit {
 
-  constructor() { }
+  constructor(private csvService: ExportedCSVService,
+              private messageService: MessageService) { }
   uploadedFiles: any[] = [];
   records: any[] = [];
-  msgs: Message[] = [];
 
   @ViewChild('csvReader') csvReader: any;
 
@@ -35,14 +36,25 @@ export class ImportComponent implements OnInit {
         let headersRow = this.getHeaderArray(csvRecordsArray);
 
         this.records = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
+        this.csvService.deleteAll().then(() => {
+          this.records.forEach(record => {
+            this.csvService.insert(record);
+          });
+          this.messageService.add({
+            severity: 'success',
+            summary: 'CSV imported!',
+            detail: 'the file was successfully imported to the database!'
+          });
+          this.fileReset();
+        });
       };
 
       reader.onerror = () => {
-        this.msgs.push({severity:'danger', summary:'Error', detail:'error occured while reading file'});
+        this.messageService.add({severity: 'danger', summary: 'Error', detail: 'error occured while reading file'});
       };
 
     } else {
-      this.msgs.push({severity: 'warn', summary: 'File not supported', detail: 'Please import valid .csv file'});
+      this.messageService.add({severity: 'warn', summary: 'File not supported', detail: 'Please import valid .csv file'});
       this.fileReset();
     }
   }
@@ -55,10 +67,11 @@ export class ImportComponent implements OnInit {
       let re = /\"/gi;
       if (currentRecord.length == headerLength) {
         let csvRecord: CSVCard = new CSVCard();
+        csvRecord.edition_ptbr = currentRecord[0].trim().replace(re, '');
         csvRecord.edition = currentRecord[1].trim().replace(re, '');
         csvRecord.initials = currentRecord[2].trim().replace(re, '');
+        csvRecord.cardName_ptbr = currentRecord[3].trim().replace(re, '');
         csvRecord.cardName = currentRecord[4].trim().replace(re, '');
-        csvRecord.cardNumber = currentRecord[11].trim().replace(re, '');
         csvRecord.quantity = Number(currentRecord[5].trim().replace(re, ''));
         csvRecord.quality = currentRecord[6].trim().replace(re, '');
         csvRecord.idiom = currentRecord[7].trim().replace(re, '');
@@ -70,9 +83,11 @@ export class ImportComponent implements OnInit {
           if (valueTreated != '')
             csvRecord.extras.push(valueTreated);
         });
+        csvRecord.cardNumber = currentRecord[11].trim().replace(re, '');
+        csvRecord.comments = currentRecord[12].trim().replace(re, '');
+        csvRecord.cardsInEdition = currentRecord[13].trim().replace(re, '');
 
         csvArr.push(csvRecord);
-        console.log(csvRecord);
       }
     }
     return csvArr;
