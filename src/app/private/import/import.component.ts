@@ -50,7 +50,7 @@ export class ImportComponent implements OnInit {
       };
 
       reader.onerror = () => {
-        this.messageService.add({severity: 'danger', summary: 'Error', detail: 'error occured while reading file'});
+        this.messageService.add({severity: 'danger', summary: 'Error', detail: 'error occurred while reading file'});
       };
 
     } else {
@@ -64,7 +64,7 @@ export class ImportComponent implements OnInit {
 
     for (let i = 1; i < csvRecordsArray.length; i++) {
       let currentRecord = (<string>csvRecordsArray[i]).split(',');
-      let re = /\"/gi;
+      let re = /"/gi;
       if (currentRecord.length == headerLength) {
         let csvRecord: CSVCard = new CSVCard();
         csvRecord.edition_ptbr = currentRecord[0].trim().replace(re, '');
