@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {LigaPokemonService} from "../../services/liga-pokemon.service";
 import {CSVCard} from "../../models/CSVCard";
-import {Collections} from "../../models/collections";
+import {FilterService} from "primeng/api";
+import {CollectionsFunctions} from "../../models/collections";
 
 @Component({
   selector: 'app-ligapokemon',
@@ -15,11 +16,25 @@ export class LigaPokemonComponent implements OnInit {
 
   columns: any[];
   cards: any[] = [];
+  quantity: number;
+  loading: boolean = true;
+  qualityArray: any[];
+  rarityArray: any[];
 
   ngOnInit(): void {
     this.service.getAll().subscribe(ligaPokemon => {
       ligaPokemon.forEach (entry => {
         const cardCSV = <CSVCard>entry.cardCSV;
+
+        let extrasString: string = '';
+
+        if (cardCSV.extras != null) {
+          cardCSV.extras.forEach(value => {
+            extrasString += value + ', ';
+          });
+
+          extrasString = extrasString.slice(0, -2);
+        }
 
         this.cards.push(
           {
@@ -30,10 +45,12 @@ export class LigaPokemonComponent implements OnInit {
             'quantity': cardCSV.quantity,
             'language': cardCSV.language,
             'rarity': this.getRarity(cardCSV.rarity),
-            'extras': cardCSV.extras
+            'extras': extrasString
           }
         )
       });
+      this.quantity = ligaPokemon.length;
+      this.loading = false;
     });
 
     this.columns = [
@@ -46,6 +63,16 @@ export class LigaPokemonComponent implements OnInit {
       { field: 'rarity', header: 'Rarity' },
       { field: 'extras', header: 'Extras' }
     ];
+
+    this.initializeFilters();
+  }
+
+  initializeFilters () {
+    this.qualityArray = ['Mint (M)', 'Near Mint (NM)', 'Slightly Played (SP)', 'Moderately Played (MP)',
+      'Heavily Played (HP)', 'Damaged (D)'];
+
+    this.rarityArray = ['Common', 'Uncommon', 'Rare', 'Rare Holo', 'Rare Holo EX', 'Rare Holo Lv.X', 'Rare Ultra',
+      'Rare Prime', 'Rare ACE', 'Legend', 'Secret Rare / Promo', 'Amazing Rare', 'Hyper Rare', 'Shiny Rare'];
   }
 
   getRarity (initial: string) {
@@ -98,5 +125,13 @@ export class LigaPokemonComponent implements OnInit {
       case 'D':
         return 'Damaged (D)';
     }
+  }
+
+  getIcon (code: string) {
+    const service = new CollectionsFunctions();
+    if (code == '' || code == null) {
+      return 'base1.png'
+    }
+    return code + '.png';
   }
 }

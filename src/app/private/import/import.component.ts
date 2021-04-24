@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MessageService} from "primeng/api";
 import {CSVCard} from "../../models/CSVCard";
 import {LigaPokemonService} from "../../services/liga-pokemon.service";
+import {Collections, CollectionsFunctions} from "../../models/collections";
 
 @Component({
   selector: 'app-import',
@@ -38,6 +39,7 @@ export class ImportComponent implements OnInit {
         this.records = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
         this.csvService.deleteAll().then(() => {
           this.records.forEach(record => {
+            console.log(record);
             this.csvService.insert(record);
           });
           this.messageService.add({
@@ -61,6 +63,7 @@ export class ImportComponent implements OnInit {
 
   getDataRecordsArrayFromCSVFile(csvRecordsArray: any, headerLength: any) {
     let csvArr = [];
+    const service = new CollectionsFunctions();
 
     for (let i = 1; i < csvRecordsArray.length; i++) {
       let currentRecord = (<string>csvRecordsArray[i]).split('","');
@@ -68,7 +71,9 @@ export class ImportComponent implements OnInit {
       if (currentRecord.length == headerLength) {
         let csvRecord: CSVCard = new CSVCard();
         csvRecord.edition_ptbr = currentRecord[0].trim().replace(re, '');
-        csvRecord.edition = currentRecord[1].trim().replace("&rsquo;", "'").replace(re, '');
+        var editionName = currentRecord[1].trim().replace("&rsquo;", "'").replace(re, '');
+        var iconPath = service.getIdentifierByCollectionName(editionName);
+        csvRecord.edition = {name: editionName, image: (iconPath != null) ? iconPath : null};
         csvRecord.initials = currentRecord[2].trim().replace(re, '');
         csvRecord.cardName_ptbr = currentRecord[3].trim().replace(re, '');
         csvRecord.cardName = currentRecord[4].trim().replace(re, '');

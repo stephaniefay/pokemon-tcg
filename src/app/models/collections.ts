@@ -1,7 +1,8 @@
+
 export const Collections = {
 
   // Base Collection
-  BASE: {value: "base1", label: "Base"} ,
+  BASE: {value: "base1", label: "Base Set"} ,
   JUNGLE: {value: "base2", label: "Jungle"},
   BASE_PROMOS: {value: "basep", label: "Wizards Black Star Promos"},
   FOSSIL: {value: "base3", label: "Fossil"},
@@ -74,9 +75,9 @@ export const Collections = {
   // HeartGold & SoulSilver Collection
   HGSS_PROMOS: {value: "hsp", label: "HeartGold & SoulSilver Promos"},
   HEARTGOLD_SOULSILVER: {value: "hgss1", label: "HeartGold & SoulSilver"},
-  HS_UNLEASHED: {value: "hgss2", label: "HS—Unleashed"},
-  HS_UNDAUNTET: {value: "hgss3", label: "HS—Undaunted"},
-  HS_TRIUMPHANT: {value: "hgss4", label: "HS—Triumphant"},
+  HS_UNLEASHED: {value: "hgss2", label: "Unleashed"},
+  HS_UNDAUNTED: {value: "hgss3", label: "Undaunted"},
+  HS_TRIUMPHANT: {value: "hgss4", label: "Triumphant"},
   CALL_LEGENDS: {value: "col1", label: "Call of Legends"},
 
   // Black & White Collection
@@ -137,7 +138,7 @@ export const Collections = {
   DETECTIVE_PIKACHU: {value: "det1", label: "Detective Pikachu"},
   UNBROKEN_BONDS: {value: "sm10", label: "Unbroken Bonds"},
   UNIFIED_MINDS: {value: "sm11", label: "Unified Minds"},
-  HIDDEN_FATES: {value: "sma", label: "Shiny Vault"},
+  HIDDEN_FATES: {value: "sma", label: "Hidden Fates (Shiny)"},
   HIDDEN_FATES_SHINY: {value: "sm115", label: "Hidden Fates"},
   COSMIC_ECLIPSE: {value: "sm12", label: "Cosmic Eclipse"},
 
@@ -148,8 +149,42 @@ export const Collections = {
   DARKNESS_ABLAZE: {value: "swsh3", label: "Darkness Ablaze"},
   CHAMPIONS_PATH: {value: "swsh35", label: "Champion's Path"},
   VIVID_VOLTAGE: {value: "swsh4", label: "Vivid Voltage"},
-  SHINING_FATES: {value: "swsh45sv", label: "Shiny Vault"},
+  SHINING_FATES: {value: "swsh45sv", label: "Shining Fates (Shiny)"},
   SHINING_FATES_SHINY: {value: "swsh45", label: "Shining Fates"},
   BATTLE_STYLES: {value: "swsh5", label: "Battle Styles"}
 
 } as const;
+
+export class CollectionsFunctions {
+  getAllKeys() {
+    const keys = [];
+    Object.keys(Collections).map(key => {
+      keys.push(key);
+    });
+    return keys;
+  }
+
+  getIdentifierByCollectionName(collection: string) {
+    let value;
+    var allKeys = this.getAllKeys();
+    for (var i = 0, len = allKeys.length; i < len; i++) {
+      if (Collections[allKeys[i]].label == collection) {
+        value = Collections[allKeys[i]].value;
+        break;
+      }
+    }
+    return value;
+  }
+
+  getCollectionByIdentifier(identifier: string) {
+    let value;
+    var allKeys = this.getAllKeys();
+    for (var i = 0, len = allKeys.length; i < len; i++) {
+      if (Collections[allKeys[i]].value == identifier) {
+        value = Collections[allKeys[i]].label;
+        break;
+      }
+    }
+    return value;
+  }
+}

@@ -1,6 +1,11 @@
+export interface Edition {
+  name?: string;
+  image?: string;
+}
+
 export class CSVCard {
   key: string;
-  edition: string;
+  edition: Edition;
   edition_ptbr: string;
   initials: string;
   cardName: string;

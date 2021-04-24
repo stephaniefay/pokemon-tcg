@@ -1,18 +1,128 @@
-
-
-<p-table [columns]="columns" [value]="cards">
-  <ng-template pTemplate="header" let-columns>
+<p-table #dt2 [value]="cards" dataKey="id" [rows]="10" [totalRecords]="quantity"
+         [rowsPerPageOptions]="[10,20,50,100]" [loading]="loading" styleClass="p-datatable-customers" [paginator]="true"
+         [globalFilterFields]="['cardName','edition.name']" xmlns="http://www.w3.org/1999/html">
+  <ng-template pTemplate="caption">
+    <div class="p-d-flex">
+			<span class="p-input-icon-left p-ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt2.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+            </span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
     <tr>
-      <th *ngFor="let col of columns">
-        {{col.header}}
+      <th>
+        <div class="p-d-flex p-jc-between p-ai-center">
+          Card # <p-columnFilter type="text" field="cardNumber" display="menu"></p-columnFilter>
+        </div>
+      </th>
+      <th>
+        <div class="p-d-flex p-jc-between p-ai-center">
+          Card Name <p-columnFilter type="text" field="cardName" display="menu"></p-columnFilter>
+        </div>
+      </th>
+      <th>
+        <div class="p-d-flex p-jc-between p-ai-center">
+          Collection <p-columnFilter type="text" field="edition.name" display="menu"></p-columnFilter>
+        </div>
+      </th>
+      <th>
+        <div class="p-d-flex p-jc-between p-ai-center">
+          Quality
+          <p-columnFilter field="quality" matchMode="in" display="menu" [showMatchModes]="false"
+                          [showOperator]="false" [showAddButton]="false">
+            <ng-template pTemplate="header">
+              <div class="p-px-3 p-pt-3 p-pb-0">
+                <span class="p-text-bold">Quality Picker</span>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <p-multiSelect [ngModel]="value" [options]="qualityArray" placeholder="All"
+                             (onChange)="filter($event.value)" >
+                <ng-template let-option pTemplate="item">
+                  <div class="p-multiselect-representative-option">
+                    <span class="p-ml-1">{{option}}</span>
+                  </div>
+                </ng-template>
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter>
+        </div>
+      </th>
+      <th>
+        <div class="p-d-flex p-jc-between p-ai-center">
+          Quantity <p-columnFilter type="text" field="quantity" display="menu"></p-columnFilter>
+        </div>
+      </th>
+      <th>
+        <div class="p-d-flex p-jc-between p-ai-center">
+          Language <p-columnFilter type="text" field="language" display="menu"></p-columnFilter>
+        </div>
+      </th>
+      <th>
+        <div class="p-d-flex p-jc-between p-ai-center">
+          Rarity
+          <p-columnFilter field="rarity" matchMode="in" display="menu" [showMatchModes]="false"
+                          [showOperator]="false" [showAddButton]="false">
+            <ng-template pTemplate="header">
+              <div class="p-px-3 p-pt-3 p-pb-0">
+                <span class="p-text-bold">Rarity Picker</span>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <p-multiSelect [ngModel]="value" [options]="rarityArray" placeholder="All"
+                             (onChange)="filter($event.value)" >
+                <ng-template let-option pTemplate="item">
+                  <div class="p-multiselect-representative-option">
+                    <span class="p-ml-1">{{option}}</span>
+                  </div>
+                </ng-template>
+              </p-multiSelect>
+            </ng-template>
+            </p-columnFilter>
+        </div>
+        </th>
+      <th style="width: 6rem">
+        <div class="p-d-flex p-jc-between p-ai-center">
+          Extras <p-columnFilter type="text" field="extras" display="menu"></p-columnFilter>
+        </div>
       </th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-rowData let-columns="columns">
+  <ng-template pTemplate="body" let-card>
     <tr>
-      <td *ngFor="let col of columns">
-        {{rowData[col.field]}}
+      <td>
+        {{card.cardNumber}}
       </td>
+      <td>
+        {{card.cardName}}
+      </td>
+      <td>
+        <div class="table-ligapokemon">
+          <img [alt]="card.edition.name" src="assets/icons/{{getIcon(card.edition.image)}}" height="16" style="vertical-align: middle" />
+          <div class="item-ligapokemon">{{card.edition.name}}</div>
+        </div>
+      </td>
+      <td>
+        {{card.quality}}
+      </td>
+      <td>
+        {{card.quantity}}
+      </td>
+      <td>
+        {{card.language}}
+      </td>
+      <td>
+        {{card.rarity}}
+      </td>
+      <td>
+        {{card.extras}}
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="7">No cards found.</td>
     </tr>
   </ng-template>
 </p-table>

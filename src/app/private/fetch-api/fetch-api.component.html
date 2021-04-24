@@ -1,1 +1,55 @@
-<p>fetch-api works!</p>
+<p-messages></p-messages>
+
+<div class="p-grid p-mt-2">
+  <div class="p-col">
+    <div class="box">
+      <button pButton pRipple type="button" label="Start converting" class="p-button-outlined" (click)="convert()"></button>
+    </div>
+  </div>
+</div>
+
+<div class="p-grid p-mt-2" *ngIf="multipleCardsFound">
+  <div class="p-col">
+    <div class="box">
+      <div class="card">
+        <p-table [value]="multipleCardsFound" sortField="name" sortMode="single" (onSort)="onSort()" dataKey="name"
+                 selectionMode="single" [(selection)]="selectedCard" (onRowSelect)="onRowSelect($event)" [loading]="loading">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Number</th>
+              <th>Name</th>
+              <th>Collection</th>
+              <th>Image URL</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-card let-rowIndex="rowIndex" let-expanded="expanded">
+            <tr *ngIf="rowGroupMetadata[card.name].index === rowIndex">
+              <td colspan="5">
+                <button type="button" pButton pRipple [pRowToggler]="card"
+                        class="p-button-text p-button-rounded p-button-plain p-mr-2"
+                        [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                <span class="p-text-bold p-ml-2">{{card.name}}</span>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="rowexpansion" let-data>
+            <tr [pSelectableRow]="data">
+              <td>
+                {{data.number}}
+              </td>
+              <td>
+                {{data.name}}
+              </td>
+              <td>
+                {{data.set.name}}
+              </td>
+              <td>
+                <img [src]="data.images.large" height="200px">
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+</div>

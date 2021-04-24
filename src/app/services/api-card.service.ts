@@ -6,7 +6,7 @@ import {CardAPI} from "../models/cardAPI";
 @Injectable({
   providedIn: 'root'
 })
-export class CollectionService {
+export class ApiCardService {
 
   constructor(private db: AngularFireDatabase) { }
 

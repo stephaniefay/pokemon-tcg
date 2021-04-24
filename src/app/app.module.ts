@@ -26,6 +26,8 @@ import {MessageModule} from "primeng/message";
 import { LigaPokemonComponent } from './public/ligapokemon/liga-pokemon.component';
 import {TableModule} from "primeng/table";
 import { FetchApiComponent } from './private/fetch-api/fetch-api.component';
+import {MultiSelectModule} from "primeng/multiselect";
+import {RippleModule} from "primeng/ripple";
 
 @NgModule({
   declarations: [
@@ -56,8 +58,10 @@ import { FetchApiComponent } from './private/fetch-api/fetch-api.component';
     FormsModule,
     MessagesModule,
     MessageModule,
+    MultiSelectModule,
     TableModule,
     HttpClientModule,
+    RippleModule,
   ],
   providers: [],
   entryComponents: [
