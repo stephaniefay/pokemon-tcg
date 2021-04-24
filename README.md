@@ -1,29 +1,15 @@
-# Pokemon Tcg
+# Pokemon TCG
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.8.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.8. I will probably use the [Pokemon TCG API](https://dev.pokemontcg.io/) to fetch the information needed. Also, I will be using [Firebase Storage](https://firebase.google.com/) as a database.
 
-I will probably use the [Pokemon TCG API](https://dev.pokemontcg.io/) to fetch the information needed. Also, will be using [Firebase Storage](https://firebase.google.com/) as a database.
+The live version of this project can be accessed right [here](https://tcg-pkmn.web.app/public/collection). It is still a WIP.
 
-## Development server
+## Deploy to Firebase Hosting
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `firebase deploy --except functions` for deploying. Supposedly it should be enough to deploy using only `ng deploy` because of the [@angular/fire](https://github.com/angular/angularfire) dependencies, but it didn't work for me.
 
-## Code scaffolding
+So, after some research, I found this [stackoverflow link](https://stackoverflow.com/questions/62734278/firebase-cant-deploy) that explains that this behaviour is not expected, and it is a bug, but it could be corrected by simply not deploying the Firebase Functions. I might correct my deploy script eventually, but it is not a priority.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Images
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+All images used in this project either came from the Pokemon TCG API or were found in sites that make available free vectors.
