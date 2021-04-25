@@ -28,7 +28,7 @@ export class ApiCardService {
         map(changes => {
           return changes.map(c => ({
             key: c.payload.key,
-            cardCSV: c.payload.val()
+            cardApi: <CardAPI>c.payload.val()
           }));
         })
       );

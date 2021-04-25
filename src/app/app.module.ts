@@ -28,6 +28,8 @@ import {TableModule} from "primeng/table";
 import { FetchApiComponent } from './private/fetch-api/fetch-api.component';
 import {MultiSelectModule} from "primeng/multiselect";
 import {RippleModule} from "primeng/ripple";
+import {DataViewModule} from "primeng/dataview";
+import {DropdownModule} from "primeng/dropdown";
 
 @NgModule({
   declarations: [
@@ -62,6 +64,8 @@ import {RippleModule} from "primeng/ripple";
     TableModule,
     HttpClientModule,
     RippleModule,
+    DataViewModule,
+    DropdownModule,
   ],
   providers: [],
   entryComponents: [

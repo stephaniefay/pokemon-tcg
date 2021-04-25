@@ -1,3 +1,5 @@
+import {CSVCard} from "./CSVCard";
+
 export interface Attack {
   name: string;
   cost: any[];
@@ -81,4 +83,5 @@ export class CardAPI {
   legalities: Legalities;
   images: ImagesCard;
   tcgplayer: TcgPlayer;
+  cardCSV: CSVCard;
 }

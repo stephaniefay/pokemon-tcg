@@ -38,27 +38,64 @@ export class FetchApiComponent implements OnInit {
           const cardCSV = <CSVCard>entry.cardCSV;
 
           if (cardCSV.edition.image != null && cardCSV.edition.image != '') {
-            const identifier = cardCSV.edition.image + '-' + cardCSV.cardNumber;
+            let identifier;
+            if (cardCSV.cardNumber.match(/[A-Za-z]/))  {
+              identifier = cardCSV.edition.image + '-' + cardCSV.cardNumber;
+            } else {
+              identifier = cardCSV.edition.image + '-' + Number(cardCSV.cardNumber);
+            }
             this.httpService.getCard(identifier).subscribe(response => {
-              this.apiCardService.insert(response);
+              if (response.data != null) {
+                response.data.cardCSV = cardCSV;
+                this.apiCardService.insert(response.data);
+              }
             });
           } else {
-            const query = '!name:' + cardCSV.cardName + ' !number:' + cardCSV.cardNumber;
+            let query;
+            if (cardCSV.cardName.includes(' ')) {
+              query = 'name:"' + cardCSV.cardName + '" number:' + cardCSV.cardNumber;
+            } else {
+              query = 'name:' + cardCSV.cardName + ' number:' + cardCSV.cardNumber;
+            }
             this.httpService.searchForCard(query).subscribe(response => {
               if (response.data.length == 1) {
+                response.data[0].cardCSV = cardCSV;
                 this.apiCardService.insert(response.data[0]);
               } else {
-                if (this.multipleCardsFound == null) {
-                  this.multipleCardsFound = [];
-                }
-                response.data.forEach(item => {
+                if (response.data.length > 1) {
                   this.messageService.add({
                     severity: 'warning',
                     summary: 'Multiple cards found',
-                    detail: 'adding ' + item.name + ' to the multiples list.'
+                    detail: 'adding ' + cardCSV.cardName + '(' + cardCSV.cardNumber + ') to the multiples list.'
                   });
-                  this.multipleCardsFound.push(item);
-                });
+                  if (this.multipleCardsFound == null) {
+                    this.multipleCardsFound = [];
+                  }
+                  response.data.forEach(item => {
+                    item.cardCSV = cardCSV;
+                    this.multipleCardsFound.push(item);
+                  });
+                } else {
+                  this.messageService.add({
+                    severity: 'warning',
+                    summary: 'No card found, searching only for the name',
+                    detail: 'adding ' + cardCSV.cardName + '(' + cardCSV.cardNumber + ') to the multiples list.'
+                  });
+                  if (cardCSV.cardName.includes(' ')) {
+                    query = 'name:"' + cardCSV.cardName + '"';
+                  } else {
+                    query = 'name:' + cardCSV.cardName;
+                  }
+                  this.httpService.searchForCard(query).subscribe(response => {
+                    response.data.forEach( item => {
+                      if (this.multipleCardsFound == null) {
+                        this.multipleCardsFound = [];
+                      }
+                      item.cardCSV = cardCSV;
+                      this.multipleCardsFound.push(item);
+                    });
+                  });
+                }
               }
             });
           }
@@ -67,7 +104,7 @@ export class FetchApiComponent implements OnInit {
         this.updateRowGroupMetaData();
         this.messageService.add({
           severity: 'success',
-          summary: 'Fetch successfull',
+          summary: 'Fetch successful',
           detail: 'all items from LigaPokemon were successfully fetched in the api.'
         });
       });
@@ -113,6 +150,14 @@ export class FetchApiComponent implements OnInit {
       summary: 'Sent!',
       detail: event.data.name + ' sent!'
     });
+    var name = event.data.name;
+    const newArray = [];
+    this.multipleCardsFound.forEach( (item) => {
+      if (item.name != name) {
+        newArray.push(item);
+      }
+    });
+    this.multipleCardsFound = newArray;
   }
 
 }

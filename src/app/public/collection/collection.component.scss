@@ -1,0 +1,201 @@
+:host ::ng-deep {
+  .p-dropdown {
+    width: 14rem;
+    font-weight: normal;
+  }
+
+  .card-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .card-description {
+    margin: 0 0 1rem 0;
+  }
+
+  .card-category-icon {
+    vertical-align: middle;
+    padding-right: .5rem;
+  }
+
+  .card-category {
+    font-weight: 600;
+    vertical-align: middle;
+  }
+
+  .card-list-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    width: 100%;
+
+    img {
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      margin-right: 2rem;
+    }
+
+    .card-list-detail {
+      flex: 1 1 0;
+    }
+
+    .p-rating {
+      margin: 0 0 .5rem 0;
+    }
+
+    .card-price {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: .5rem;
+      align-self: flex-end;
+    }
+
+    .card-list-action {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .p-button {
+      margin-bottom: .5rem;
+    }
+  }
+
+  .card-grid-item {
+    margin: .5em;
+    border: 1px solid #dee2e6;
+
+    .card-grid-item-top,
+    .card-grid-item-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    img {
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      margin: 2rem 0;
+    }
+
+    .card-grid-item-content {
+      text-align: center;
+    }
+
+    .card-price {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+  }
+}
+
+.card {
+  padding: 2rem;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  margin-bottom: 2rem;
+}
+
+.card-badge.status-common {
+  background: #222f3e;
+  color: #576574;
+}
+
+.card-badge.status-uncommon {
+  background: #8395a7;
+  color: #c8d6e5;
+}
+
+.card-badge.status-promo {
+  color: #a8489b;
+  background: #ff9ff3;
+}
+
+.card-badge.status-rare {
+  background: #feca57;
+  color: #ff9f43;
+}
+
+.card-badge.status-rarehololvx {
+  background: #e84118;
+  color: #87250f;
+}
+
+.card-badge.status-rareultra {
+  background: #48dbfb;
+  color: #0b87a3;
+}
+
+.card-badge.status-rarerainbow {
+  background: #1dd1a1;
+  color: #086e54;
+}
+
+.card-badge.status-amazingrare {
+  background: #00d2d3;
+  color: #016666;
+}
+
+.card-badge.status-rareholovmax {
+  background: #54a0ff;
+  color: #205f9e;
+}
+
+.card-badge.status-rareholov {
+  background: #5f27cd;
+  color: #341f97;
+}
+
+.card-badge.status-rarehologx {
+  background: #B33771;
+  color: #6D214F;
+}
+
+.card-badge.status-rareholoex {
+  background: #3B3B98;
+  color: #182C61;
+}
+
+.card-badge.status-rareshiny {
+  background: #D6A2E8;
+  color: #82589F;
+}
+
+.card-badge {
+  border-radius: 2px;
+  padding: .25em .5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .3px;
+}
+
+@media screen and (max-width: 576px) {
+  :host ::ng-deep .card-list-item {
+    flex-direction: column;
+    align-items: center;
+
+    img {
+      width: 75%;
+      margin: 2rem 0;
+    }
+
+    .card-list-detail {
+      text-align: center;
+    }
+
+    .card-price {
+      align-self: center;
+    }
+
+    .card-list-action {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-list-action {
+      margin-top: 2rem;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+  }
+}
