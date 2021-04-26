@@ -11,6 +11,7 @@
 
   .card-description {
     margin: 0 0 1rem 0;
+    min-height: 5%;
   }
 
   .card-category-icon {
@@ -52,6 +53,7 @@
     .card-list-action {
       display: flex;
       flex-direction: column;
+      align-items: flex-end;
     }
 
     .p-button {
@@ -73,6 +75,10 @@
     img {
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
       margin: 2rem 0;
+    }
+
+    .princ-img-card {
+      height: 400px;
     }
 
     .card-grid-item-content {
@@ -165,15 +171,15 @@
   font-weight: 700;
   font-size: 12px;
   letter-spacing: .3px;
+  max-width: fit-content;
 }
 
 @media screen and (max-width: 576px) {
-  :host ::ng-deep .card-list-item {
+  :host ::ng-deep .card-list-item .card-grid-item {
     flex-direction: column;
     align-items: center;
 
     img {
-      width: 75%;
       margin: 2rem 0;
     }
 
@@ -196,6 +202,10 @@
       justify-content: space-between;
       align-items: center;
       width: 100%;
+    }
+
+    .princ-img-card {
+      height: 300px;
     }
   }
 }

@@ -27,13 +27,18 @@ export class CollectionComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.getAll().subscribe( data => {
-      this.cards = data;
+      this.cards = [];
+      data.forEach( item => {
+        this.initializePrice(item.cardApi);
+        this.cards.push({key: item.key, cardApi: item.cardApi});
+      });
       this.loading = false;
     });
 
     this.sortOptions = [
-      {label: 'Price High to Low', value: '!price'},
-      {label: 'Price Low to High', value: 'price'}
+      {label: 'Price High to Low', value: '!cardApi.priceTotal'},
+      {label: 'Price Low to High', value: 'cardApi.priceTotal'},
+      {label: 'Alphabetically', value: 'cardApi.name'}
     ];
   }
 
@@ -55,8 +60,57 @@ export class CollectionComponent implements OnInit {
     return rarity;
   }
 
-  getPrice (card:CardAPI) {
-    console.log(card);
+  getPrice (card: CardAPI) {
+    if (card.priceTotal == null) {
+      this.initializePrice(card);
+    }
+    return card.priceTotal;
+  }
+
+  initializePrice (card: CardAPI) {
+      let value: number;
+      if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Foil")) {
+        value = Number(card.tcgplayer.prices['holofoil'].market);
+      } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Reverse Foil")) {
+        if (card.tcgplayer.prices['reverseHolofoil']) {
+          value = Number(card.tcgplayer.prices['reverseHolofoil'].market);
+        } else {
+          for (let pricesKey in card.tcgplayer.prices) {
+            value = Number(card.tcgplayer.prices[pricesKey].market);
+            break;
+          }
+        }
+      } else if (card.tcgplayer.prices['normal']) {
+        value = Number(card.tcgplayer.prices['normal'].market);
+      } else {
+        value = 0;
+      }
+
+      value = value * card.cardCSV.quantity;
+      card.priceTotal = Number(value.toFixed(2));
+  }
+
+  getDescriptor (card: CardAPI) {
+    let descriptor: string = this.getPrice(card) + ' = (';
+    if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Foil")) {
+        descriptor += card.tcgplayer.prices['holofoil'].market + ' x ';
+    } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Reverse Foil")) {
+      if (card.tcgplayer.prices['reverseHolofoil']) {
+        descriptor += card.tcgplayer.prices['reverseHolofoil'].market + ' x ';
+      }  else {
+        for (let pricesKey in card.tcgplayer.prices) {
+          descriptor += card.tcgplayer.prices[pricesKey].market + ' x ';
+          break;
+        }
+      }
+    } else if (card.tcgplayer.prices['normal']) {
+      descriptor += card.tcgplayer.prices['normal'].market + ' x ';
+    } else {
+      descriptor += '0 x ';
+    }
+
+    descriptor += card.cardCSV.quantity + ')';
+    return descriptor;
   }
 
 }

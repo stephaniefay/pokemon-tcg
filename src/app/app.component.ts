@@ -35,6 +35,11 @@ export class AppComponent {
         routerLink: ['/public/ligapokemon']
       },
       {
+        label: 'Overall Status',
+        icon: 'pi pi-fw pi-chart-bar',
+        routerLink: ['/public/status']
+      },
+      {
         label: 'Login',
         icon: 'pi pi-fw pi-user',
         command: (event: Event) => {
@@ -74,6 +79,11 @@ export class AppComponent {
         label: 'LigaPokemon datatable',
         icon: 'pi pi-fw pi-list',
         routerLink: ['/public/ligapokemon']
+      },
+      {
+        label: 'Overall Status',
+        icon: 'pi pi-fw pi-chart-bar',
+        routerLink: ['/public/status']
       },
       {
         label: 'Logout',

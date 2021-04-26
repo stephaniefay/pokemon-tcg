@@ -30,6 +30,10 @@ import {MultiSelectModule} from "primeng/multiselect";
 import {RippleModule} from "primeng/ripple";
 import {DataViewModule} from "primeng/dataview";
 import {DropdownModule} from "primeng/dropdown";
+import {TooltipModule} from "primeng/tooltip";
+import { OverallStatusComponent } from './public/overall-status/overall-status.component';
+import {FieldsetModule} from "primeng/fieldset";
+import { InfoDialogComponent } from './public/info-dialog/info-dialog.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +47,8 @@ import {DropdownModule} from "primeng/dropdown";
     PublicComponent,
     LigaPokemonComponent,
     FetchApiComponent,
+    OverallStatusComponent,
+    InfoDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,6 +72,8 @@ import {DropdownModule} from "primeng/dropdown";
     RippleModule,
     DataViewModule,
     DropdownModule,
+    TooltipModule,
+    FieldsetModule,
   ],
   providers: [],
   entryComponents: [

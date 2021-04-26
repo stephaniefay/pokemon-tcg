@@ -9,6 +9,7 @@ import {PrivateComponent} from "../private/private.component";
 import {PublicComponent} from "../public/public.component";
 import {LigaPokemonComponent} from "../public/ligapokemon/liga-pokemon.component";
 import {FetchApiComponent} from "../private/fetch-api/fetch-api.component";
+import {OverallStatusComponent} from "../public/overall-status/overall-status.component";
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/']);
 
@@ -27,6 +28,10 @@ const routes: Routes = [
       {
         path: 'ligapokemon',
         component: LigaPokemonComponent
+      },
+      {
+        path: 'status',
+        component: OverallStatusComponent
       }
     ]
   },

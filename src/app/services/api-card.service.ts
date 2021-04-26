@@ -39,7 +39,19 @@ export class ApiCardService {
   }
 
   async deleteAll() {
-    this.db.object(`API`).remove();
+    await this.db.object(`API`).remove();
+  }
+
+  searchByChild (child: string, value: string) {
+    return this.db.list('API', ref => ref.orderByChild(child).equalTo(value)).snapshotChanges()
+      .pipe(
+        map( changes => {
+          return changes.map((c => ({
+            key: c.payload.key,
+            cardApi: <CardAPI>c.payload.val()
+          })))
+        })
+      );
   }
 
 }

@@ -7,7 +7,7 @@ import {CollectionsFunctions} from "../../models/collections";
 @Component({
   selector: 'app-ligapokemon',
   templateUrl: './liga-pokemon.component.html',
-  styleUrls: ['./liga-pokemon.component.css']
+  styleUrls: ['./liga-pokemon.component.scss']
 })
 
 export class LigaPokemonComponent implements OnInit {

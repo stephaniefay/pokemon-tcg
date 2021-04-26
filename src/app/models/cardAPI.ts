@@ -84,4 +84,5 @@ export class CardAPI {
   images: ImagesCard;
   tcgplayer: TcgPlayer;
   cardCSV: CSVCard;
+  priceTotal: number;
 }
