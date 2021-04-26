@@ -34,6 +34,8 @@ import {TooltipModule} from "primeng/tooltip";
 import { OverallStatusComponent } from './public/overall-status/overall-status.component';
 import {FieldsetModule} from "primeng/fieldset";
 import { InfoDialogComponent } from './public/info-dialog/info-dialog.component';
+import {ProgressSpinnerModule} from "primeng/progressspinner";
+import {ToastModule} from "primeng/toast";
 
 @NgModule({
   declarations: [
@@ -74,6 +76,9 @@ import { InfoDialogComponent } from './public/info-dialog/info-dialog.component'
     DropdownModule,
     TooltipModule,
     FieldsetModule,
+    ProgressSpinnerModule,
+    ToastModule,
+
   ],
   providers: [],
   entryComponents: [

@@ -28,7 +28,7 @@ export class LigaPokemonService {
         map(changes => {
           return changes.map(c => ({
             key: c.payload.key,
-            cardCSV: c.payload.val()
+            cardCSV: <CSVCard> c.payload.val()
           }));
         })
       );

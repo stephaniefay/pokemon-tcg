@@ -65,20 +65,18 @@ export class InfoDialogComponent implements OnInit {
   }
 
   getPrice (card: CardAPI) {
-    if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Foil")) {
+    if (card.tcgplayer) {
+      return '0.00';
+    } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Foil") && card.tcgplayer.prices['holofoil']) {
       return Number(card.tcgplayer.prices['holofoil'].market).toFixed(2);
-    } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Reverse Foil")) {
-      if (card.tcgplayer.prices['reverseHolofoil']) {
-        return Number(card.tcgplayer.prices['reverseHolofoil'].market).toFixed(2);
-      } else {
-        for (let pricesKey in card.tcgplayer.prices) {
-          return Number(card.tcgplayer.prices[pricesKey].market).toFixed(2);
-        }
-      }
+    } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Reverse Foil") && card.tcgplayer.prices['reverseHolofoil']) {
+      return Number(card.tcgplayer.prices['reverseHolofoil'].market).toFixed(2);
     } else if (card.tcgplayer.prices['normal']) {
       return Number(card.tcgplayer.prices['normal'].market).toFixed(2);
     } else {
-      return '0.00';
+      for (let pricesKey in card.tcgplayer.prices) {
+        return Number(card.tcgplayer.prices[pricesKey].market).toFixed(2);
+      }
     }
   }
 

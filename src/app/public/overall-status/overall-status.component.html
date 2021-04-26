@@ -30,23 +30,23 @@
       <div class="status-container">
         <div class="div-line">
             <label for="totalHigh">Total High: </label>
-            <span id="totalHigh">$ {{ totalPriceHigh.toFixed(2) }}</span>
+            <span id="totalHigh">{{ totalPriceHigh.toFixed(2) | currency: 'USD' }}</span>
           </div>
           <div class="div-line">
             <label for="totalMedium">Total Medium: </label>
-            <span id="totalMedium">$ {{ totalPriceMedium.toFixed(2) }}</span>
+            <span id="totalMedium">{{ totalPriceMedium.toFixed(2) | currency: 'USD' }}</span>
           </div>
           <div class="div-line">
             <label for="totalLow">Total Low: </label>
-              <span id="totalLow">$ {{ totalPriceLow.toFixed(2) }}</span>
+              <span id="totalLow">{{ totalPriceLow.toFixed(2) | currency: 'USD' }}</span>
           </div>
           <div class="div-line">
             <label for="totalMarket">Total Market: </label>
-              <span id="totalMarket">$ {{ totalPriceMarket.toFixed(2) }}</span>
+              <span id="totalMarket">{{ totalPriceMarket.toFixed(2) | currency: 'USD' }}</span>
           </div>
         <div class="div-line">
-          <label for="totalFakeCards">All fake cards: </label>
-          <span id="totalFakeCards" class="openModal" (click)="openModal('', 'fake')">{{fakeCards.length}}</span>
+          <label for="totalFakeCards">All cards without price: </label>
+          <span id="totalFakeCards" class="openModal" (click)="openModal('', 'noPrice')">{{noPrice.length}}</span>
         </div>
       </div>
     </p-fieldset>
@@ -75,8 +75,14 @@
 </p-table>
 </p-fieldset>
 
+<div class="container-fieldset">
 <p-fieldset legend="Pokemons By Stage" [toggleable]="true">
   <p-table [columns]="stagesIndexArray" [value]="stagesArray" [loading]="loading" styleClass="p-datatable-responsive-type">
+    <ng-template pTemplate="colgroup" let-columns>
+      <colgroup>
+        <col *ngFor="let col of columns" style="width:200px">
+      </colgroup>
+    </ng-template>
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th *ngFor="let col of columns" style="text-align: center;">
@@ -94,6 +100,7 @@
     </ng-template>
   </p-table>
 </p-fieldset>
+</div>
 
 <p-fieldset legend="Trainers By Type" [toggleable]="true">
   <p-table [columns]="trainerIndexArray" [value]="trainerArray" [loading]="loading" styleClass="p-datatable-responsive-type">
@@ -135,11 +142,17 @@
   </p-table>
 </p-fieldset>
 
-<p-fieldset legend="Cards By Collection" [toggleable]="true">
-  <p-table [columns]="collectionIndexArray" [value]="collectionArray" [loading]="loading" styleClass="p-datatable-responsive-type">
+<div class="container-fieldset">
+<p-fieldset legend="Cards By Collection" [toggleable]="true" [style]="{width:'100%', overflow: 'hidden'}">
+  <p-table [columns]="collectionIndexArray" [value]="collectionArray" [loading]="loading" [scrollable]="true" [style]="{width:'100%'}" styleClass="p-datatable-responsive-type">
+    <ng-template pTemplate="colgroup" let-columns>
+      <colgroup>
+        <col *ngFor="let col of columns" style="width:50px">
+      </colgroup>
+    </ng-template>
     <ng-template pTemplate="header" let-columns>
       <tr>
-        <th *ngFor="let col of columns" style="text-align: center;">
+        <th *ngFor="let col of columns" style="text-align: center">
           <img [src]="'assets/icons/' + col + '.png'" [alt]="getCollectionName(col)" height="20">
         </th>
       </tr>
@@ -154,9 +167,16 @@
     </ng-template>
   </p-table>
 </p-fieldset>
+</div>
 
+<div class="container-fieldset">
 <p-fieldset legend="Cards By Rarity" [toggleable]="true">
   <p-table [columns]="rarityIndexArray" [value]="rarityArray" [loading]="loading" styleClass="p-datatable-responsive-type">
+    <ng-template pTemplate="colgroup" let-columns>
+      <colgroup>
+        <col *ngFor="let col of columns" style="width:200px">
+      </colgroup>
+    </ng-template>
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th *ngFor="let col of columns" style="text-align: center;">
@@ -174,6 +194,7 @@
     </ng-template>
   </p-table>
 </p-fieldset>
+</div>
 
 <p-fieldset legend="Cards By Quality" [toggleable]="true">
   <p-table [columns]="qualityIndexArray" [value]="qualityArray" [loading]="loading" styleClass="p-datatable-responsive-type">

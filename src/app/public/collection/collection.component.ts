@@ -69,21 +69,19 @@ export class CollectionComponent implements OnInit {
 
   initializePrice (card: CardAPI) {
       let value: number;
-      if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Foil")) {
+      if (card.tcgplayer) {
+        value = 0;
+      } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Foil") && card.tcgplayer.prices['holofoil']) {
         value = Number(card.tcgplayer.prices['holofoil'].market);
-      } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Reverse Foil")) {
-        if (card.tcgplayer.prices['reverseHolofoil']) {
+      } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Reverse Foil") && card.tcgplayer.prices['reverseHolofoil']) {
           value = Number(card.tcgplayer.prices['reverseHolofoil'].market);
-        } else {
-          for (let pricesKey in card.tcgplayer.prices) {
-            value = Number(card.tcgplayer.prices[pricesKey].market);
-            break;
-          }
-        }
       } else if (card.tcgplayer.prices['normal']) {
         value = Number(card.tcgplayer.prices['normal'].market);
       } else {
-        value = 0;
+        for (let pricesKey in card.tcgplayer.prices) {
+          value = Number(card.tcgplayer.prices[pricesKey].market);
+          break;
+        }
       }
 
       value = value * card.cardCSV.quantity;

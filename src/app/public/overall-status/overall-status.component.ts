@@ -48,7 +48,7 @@ export class OverallStatusComponent implements OnInit {
   rarityIndexArray = [];
 
   // prices + fake
-  fakeCards = [];
+  noPrice = [];
   totalPriceLow = 0;
   totalPriceMedium = 0;
   totalPriceHigh = 0;
@@ -102,17 +102,21 @@ export class OverallStatusComponent implements OnInit {
   }
 
   setTypeTrainer (card: CardAPI) {
-    card.subtypes.forEach(type => {
-      const trainerTypeArray: CardAPI[] = this.trainerMap.get(type);
-      if (trainerTypeArray) {
-        trainerTypeArray.push(card);
-        this.trainerMap.set(type, trainerTypeArray);
-      } else {
-        const newTrainerTypeArray = [];
-        newTrainerTypeArray.push(card);
-        this.trainerMap.set(type, newTrainerTypeArray);
-      }
-    });
+    if (card.subtypes) {
+      card.subtypes.forEach(type => {
+        const trainerTypeArray: CardAPI[] = this.trainerMap.get(type);
+        if (trainerTypeArray) {
+          trainerTypeArray.push(card);
+          this.trainerMap.set(type, trainerTypeArray);
+        } else {
+          const newTrainerTypeArray = [];
+          newTrainerTypeArray.push(card);
+          this.trainerMap.set(type, newTrainerTypeArray);
+        }
+      });
+    } else {
+      console.log('CARD SEM SUBTYPE: ' + card);
+    }
   }
 
   setPokemonTypes (card: CardAPI) {
@@ -134,37 +138,35 @@ export class OverallStatusComponent implements OnInit {
     let medium: number;
     let low: number;
     let market: number;
-    if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Foil")) {
-      high = Number(card.tcgplayer.prices['holofoil'].high);
-      medium = Number(card.tcgplayer.prices['holofoil'].mid);
-      low = Number(card.tcgplayer.prices['holofoil'].low);
-      market = Number(card.tcgplayer.prices['holofoil'].market);
-    } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Reverse Foil")) {
-      if (card.tcgplayer.prices['reverseHolofoil']) {
-        high = Number(card.tcgplayer.prices['reverseHolofoil'].high);
-        medium = Number(card.tcgplayer.prices['reverseHolofoil'].mid);
-        low = Number(card.tcgplayer.prices['reverseHolofoil'].low);
-        market = Number(card.tcgplayer.prices['reverseHolofoil'].market);
-      } else {
-        for (let pricesKey in card.tcgplayer.prices) {
-          high = Number(card.tcgplayer.prices[pricesKey].high);
-          medium = Number(card.tcgplayer.prices[pricesKey].mid);
-          low = Number(card.tcgplayer.prices[pricesKey].low);
-          market = Number(card.tcgplayer.prices[pricesKey].market);
-          break;
-        }
-      }
-    } else if (card.tcgplayer.prices['normal']) {
-      high = Number(card.tcgplayer.prices['normal'].high);
-      medium = Number(card.tcgplayer.prices['normal'].mid);
-      low = Number(card.tcgplayer.prices['normal'].low);
-      market = Number(card.tcgplayer.prices['normal'].market);
-    } else {
+    if (card.tcgplayer == null) {
       high = 0;
       medium = 0;
       low = 0;
       market = 0;
-      this.fakeCards.push(card);
+      this.noPrice.push(card);
+    } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Foil") && card.tcgplayer.prices['holofoil']) {
+      high = Number(card.tcgplayer.prices['holofoil'].high);
+      medium = Number(card.tcgplayer.prices['holofoil'].mid);
+      low = Number(card.tcgplayer.prices['holofoil'].low);
+      market = Number(card.tcgplayer.prices['holofoil'].market);
+    } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Reverse Foil") && card.tcgplayer.prices['reverseHolofoil']) {
+      high = Number(card.tcgplayer.prices['reverseHolofoil'].high);
+      medium = Number(card.tcgplayer.prices['reverseHolofoil'].mid);
+      low = Number(card.tcgplayer.prices['reverseHolofoil'].low);
+      market = Number(card.tcgplayer.prices['reverseHolofoil'].market);
+    } else if (card.tcgplayer && card.tcgplayer.prices['normal']) {
+        high = Number(card.tcgplayer.prices['normal'].high);
+        medium = Number(card.tcgplayer.prices['normal'].mid);
+        low = Number(card.tcgplayer.prices['normal'].low);
+        market = Number(card.tcgplayer.prices['normal'].market);
+    } else {
+      for (let pricesKey in card.tcgplayer.prices) {
+        high = Number(card.tcgplayer.prices[pricesKey].high);
+        medium = Number(card.tcgplayer.prices[pricesKey].mid);
+        low = Number(card.tcgplayer.prices[pricesKey].low);
+        market = Number(card.tcgplayer.prices[pricesKey].market);
+        break;
+      }
     }
 
     high = high * card.cardCSV.quantity;
@@ -289,11 +291,11 @@ export class OverallStatusComponent implements OnInit {
           data: this.qualityMap.get(key)
         });
         break;
-      case 'fake':
+      case 'noPrice':
         this.dialogService.open(InfoDialogComponent, {
           header: 'Cards in this section',
           width: '70%',
-          data: this.fakeCards
+          data: this.noPrice
         });
         break;
     }
