@@ -2,8 +2,10 @@
 
 <div class="p-grid p-mt-2">
   <div class="p-col">
-    <div class="box">
-      <button pButton pRipple type="button" label="Start converting" class="p-button-outlined" (click)="convert()"></button>
+    <div class="top-div">
+      <button pButton pRipple type="button" label="Start converting" class="p-button-outlined" (click)="convert()" [disabled]="disabled"></button>
+
+      Fetching {{cardsProcessed}} of {{totalCards}}
     </div>
   </div>
 </div>
@@ -27,6 +29,33 @@
       </td>
       <td>
         {{getCollection(rowData)}}
+      </td>
+      <td>
+        <p-progressSpinner [style]="{width: '30px', height: '30px'}"></p-progressSpinner>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-table *ngIf="errorCards && errorCards.length > 0" [value]="errorCards" [loading]="loadingCSV" styleClass="p-datatable-responsive-type">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th>Card #</th>
+      <th>Card Name</th>
+      <th>Card Collection</th>
+      <th>Status</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData>
+    <tr>
+      <td>
+        {{getNumberCard(rowData)}}
+      </td>
+      <td>
+        {{getNameCard(rowData)}}
+      </td>
+      <td>
+        {{getCollectionCard(rowData)}}
       </td>
       <td>
         <p-progressSpinner [style]="{width: '30px', height: '30px'}"></p-progressSpinner>

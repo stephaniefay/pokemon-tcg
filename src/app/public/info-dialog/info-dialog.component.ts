@@ -65,7 +65,7 @@ export class InfoDialogComponent implements OnInit {
   }
 
   getPrice (card: CardAPI) {
-    if (card.tcgplayer) {
+    if (card.tcgplayer == null) {
       return '0.00';
     } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Foil") && card.tcgplayer.prices['holofoil']) {
       return Number(card.tcgplayer.prices['holofoil'].market).toFixed(2);

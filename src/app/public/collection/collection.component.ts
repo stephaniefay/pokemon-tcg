@@ -69,7 +69,7 @@ export class CollectionComponent implements OnInit {
 
   initializePrice (card: CardAPI) {
       let value: number;
-      if (card.tcgplayer) {
+      if (card.tcgplayer == null) {
         value = 0;
       } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Foil") && card.tcgplayer.prices['holofoil']) {
         value = Number(card.tcgplayer.prices['holofoil'].market);
@@ -90,21 +90,19 @@ export class CollectionComponent implements OnInit {
 
   getDescriptor (card: CardAPI) {
     let descriptor: string = this.getPrice(card) + ' = (';
-    if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Foil")) {
-        descriptor += card.tcgplayer.prices['holofoil'].market + ' x ';
-    } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Reverse Foil")) {
-      if (card.tcgplayer.prices['reverseHolofoil']) {
-        descriptor += card.tcgplayer.prices['reverseHolofoil'].market + ' x ';
-      }  else {
-        for (let pricesKey in card.tcgplayer.prices) {
-          descriptor += card.tcgplayer.prices[pricesKey].market + ' x ';
-          break;
-        }
-      }
+    if (card.tcgplayer == null) {
+      descriptor += '0 x ';
+    } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Foil") && card.tcgplayer.prices['holofoil']) {
+      descriptor += card.tcgplayer.prices['holofoil'].market + ' x ';
+    } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Reverse Foil") && card.tcgplayer.prices['reverseHolofoil']) {
+      descriptor += card.tcgplayer.prices['reverseHolofoil'].market + ' x ';
     } else if (card.tcgplayer.prices['normal']) {
       descriptor += card.tcgplayer.prices['normal'].market + ' x ';
     } else {
-      descriptor += '0 x ';
+      for (let pricesKey in card.tcgplayer.prices) {
+        descriptor += card.tcgplayer.prices[pricesKey].market + ' x ';
+        break;
+      }
     }
 
     descriptor += card.cardCSV.quantity + ')';
