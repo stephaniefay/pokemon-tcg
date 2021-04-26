@@ -1,0 +1,124 @@
+.icon {
+  cursor: pointer;
+}
+
+:host ::ng-deep {
+  .p-datatable-responsive-type .p-datatable-tbody > tr > td .p-column-title {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 40rem) {
+  :host ::ng-deep {
+    .p-datatable {
+      &.p-datatable-responsive-type {
+        .p-datatable-thead > tr > th,
+        .p-datatable-tfoot > tr > td {
+          display: none !important;
+        }
+
+        .p-datatable-tbody > tr > td {
+          text-align: left;
+          display: block;
+          width: 100%;
+          float: left;
+          clear: left;
+          border: 0 none;
+
+          .p-column-title {
+            padding: .4rem;
+            min-width: 30%;
+            display: inline-block;
+            margin: -.4em 1em -.4em -.4rem;
+            font-weight: bold;
+          }
+
+          &:last-child {
+            border-bottom: 1px solid var(--surface-d);
+          }
+        }
+      }
+    }
+  }
+}
+
+.card-badge.status-common {
+  background: #222f3e;
+  color: #576574;
+}
+
+.card-badge.status-uncommon {
+  background: #8395a7;
+  color: #c8d6e5;
+}
+
+.card-badge.status-promo {
+  color: #a8489b;
+  background: #ff9ff3;
+}
+
+.card-badge.status-rare {
+  background: #feca57;
+  color: #ff9f43;
+}
+
+.card-badge.status-rarehololvx {
+  background: #e84118;
+  color: #87250f;
+}
+
+.card-badge.status-rareultra {
+  background: #48dbfb;
+  color: #0b87a3;
+}
+
+.card-badge.status-rarerainbow {
+  background: #1dd1a1;
+  color: #086e54;
+}
+
+.card-badge.status-amazingrare {
+  background: #00d2d3;
+  color: #016666;
+}
+
+.card-badge.status-rareholovmax {
+  background: #54a0ff;
+  color: #205f9e;
+}
+
+.card-badge.status-rareholov {
+  background: #5f27cd;
+  color: #341f97;
+}
+
+.card-badge.status-rarehologx {
+  background: #B33771;
+  color: #6D214F;
+}
+
+.card-badge.status-rareholoex {
+  background: #3B3B98;
+  color: #182C61;
+}
+
+.card-badge.status-rareshiny {
+  background: #D6A2E8;
+  color: #82589F;
+}
+
+.card-badge {
+  border-radius: 2px;
+  padding: .25em .5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .3px;
+  max-width: fit-content;
+}
+
+.nameCollection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

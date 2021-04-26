@@ -1,0 +1,25 @@
+  <p-table [columns]="headers" [value]="content" [loading]="loading" styleClass="p-datatable-striped p-datatable-responsive-type">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" style="text-align: center;">
+          {{col.label}}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns" style="text-align: center;">
+          <span class="p-column-title">{{col.label}}</span>
+          <i class="pi pi-fw pi-image icon" *ngIf="col.field == 'image'" (click)="goToLink(rowData[col.field])"></i>
+          <span *ngIf="col.field == 'rarity'" [class]="'card-badge status-' + getBadge(rowData[col.field])">{{rowData[col.field]}}</span>
+          <span *ngIf="col.field == 'number'">{{rowData[col.field]}}</span>
+          <span *ngIf="col.field == 'name'" class="nameCollection">{{rowData[col.field]}}
+            <img class="card-category-icon" [src]="'assets/icons/'+ rowData['collectionId'] + '.png'" [alt]="rowData['collectionName']" height="20"/>
+          </span>
+          <span *ngIf="col.field == 'type'">{{rowData[col.field]}}</span>
+          <span *ngIf="col.field == 'price'">{{rowData[col.field]}}</span>
+          <span *ngIf="col.field == 'quantity'">{{rowData[col.field]}}</span>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>

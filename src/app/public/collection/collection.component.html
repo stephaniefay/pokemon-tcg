@@ -38,7 +38,7 @@
             <span [class]="'card-badge status-' + getBadge(card.cardApi.rarity)">{{card.cardApi.rarity}}</span>
           </div>
           <div class="card-grid-item-content">
-            <img class="princ-img-card" [src]="card.cardApi.images.large" [alt]="card.cardApi.name"/>
+            <img class="card-image-big" [src]="card.cardApi.images.large" [alt]="card.cardApi.name"/>
             <div class="card-name" pTooltip="{{card.cardApi.flavorText}}" tooltipEvent="hover" tooltipPosition="bottom">{{card.cardApi.name}}</div>
           </div>
           <div class="card-grid-item-bottom">

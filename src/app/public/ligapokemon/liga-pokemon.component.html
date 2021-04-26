@@ -1,5 +1,5 @@
 <p-table #dt2 [value]="cards" dataKey="id" [rows]="10" [totalRecords]="quantity"
-         [rowsPerPageOptions]="[10,20,50,100]" [loading]="loading" styleClass="p-datatable-responsive" [paginator]="true"
+         [rowsPerPageOptions]="[10,20,50,100]" [loading]="loading" styleClass="p-datatable-responsive-type" [paginator]="true"
          [globalFilterFields]="['cardName','edition.name']" xmlns="http://www.w3.org/1999/html">
   <ng-template pTemplate="caption">
     <div class="p-d-flex">
@@ -92,30 +92,38 @@
   <ng-template pTemplate="body" let-card>
     <tr>
       <td>
+        <span class="p-column-title">Card #</span>
         {{card.cardNumber}}
       </td>
       <td>
+        <span class="p-column-title">Card Name</span>
         {{card.cardName}}
       </td>
       <td>
+        <span class="p-column-title">Collection</span>
         <div class="table-ligapokemon">
           <img [alt]="card.edition.name" src="assets/icons/{{getIcon(card.edition.image)}}" height="16" style="vertical-align: middle" />
           <div class="item-ligapokemon">{{card.edition.name}}</div>
         </div>
       </td>
       <td>
+        <span class="p-column-title">Quality</span>
         {{card.quality}}
       </td>
       <td>
+        <span class="p-column-title">Quantity</span>
         {{card.quantity}}
       </td>
       <td>
+        <span class="p-column-title">Language</span>
         {{card.language}}
       </td>
       <td>
+        <span class="p-column-title">Rarity</span>
         {{card.rarity}}
       </td>
       <td>
+        <span class="p-column-title">Extras</span>
         {{card.extras}}
       </td>
     </tr>

@@ -1,0 +1,196 @@
+<div class="p-grid p-mt-2">
+  <div class="p-col">
+    <p-fieldset legend="General Numbers" [toggleable]="true">
+      <div class="status-container">
+        <div class="div-line">
+          <label for="totalCards">Total Cards: </label>
+          <span id="totalCards">{{ qtdTotalCards }}</span>
+          </div>
+         <div class="div-line">
+            <label for="totalUniqueCards">Total Unique Cards: </label>
+            <span id="totalUniqueCards">{{ qtdTotalUniqueCards }}</span>
+         </div>
+         <div class="div-line">
+            <label for="totalPokemonCards">Total Pokemon Cards: </label>
+              <span id="totalPokemonCards">{{ qtdTotalPokemonCards }}</span>
+          </div>
+         <div class="div-line">
+            <label for="totalTrainerCards">Total Trainer Cards: </label>
+              <span id="totalTrainerCards">{{ qtdTotalTrainerCards }}</span>
+          </div>
+         <div class="div-line">
+            <label for="totalEnergyCards">Total Energy Cards: </label>
+            <span id="totalEnergyCards">{{ qtdTotalEnergyCards }}</span>
+          </div>
+        </div>
+    </p-fieldset>
+  </div>
+  <div class="p-col">
+    <p-fieldset legend="Prices" [toggleable]="true">
+      <div class="status-container">
+        <div class="div-line">
+            <label for="totalHigh">Total High: </label>
+            <span id="totalHigh">$ {{ totalPriceHigh.toFixed(2) }}</span>
+          </div>
+          <div class="div-line">
+            <label for="totalMedium">Total Medium: </label>
+            <span id="totalMedium">$ {{ totalPriceMedium.toFixed(2) }}</span>
+          </div>
+          <div class="div-line">
+            <label for="totalLow">Total Low: </label>
+              <span id="totalLow">$ {{ totalPriceLow.toFixed(2) }}</span>
+          </div>
+          <div class="div-line">
+            <label for="totalMarket">Total Market: </label>
+              <span id="totalMarket">$ {{ totalPriceMarket.toFixed(2) }}</span>
+          </div>
+        <div class="div-line">
+          <label for="totalFakeCards">All fake cards: </label>
+          <span id="totalFakeCards" class="openModal" (click)="openModal('', 'fake')">{{fakeCards.length}}</span>
+        </div>
+      </div>
+    </p-fieldset>
+  </div>
+</div>
+
+<p-fieldset legend="Pokemons By Type" [toggleable]="true">
+<p-table [columns]="pokemonIndexArray" [value]="pokemonArray" [loading]="loading" styleClass="p-datatable-responsive-type">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns">
+        <div [class]="'icon ' + col.toLowerCase()">
+          <img [src]="'assets/types/'+ col.toLowerCase() + '.svg'" [alt]="col">
+        </div>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr>
+      <td *ngFor="let col of columns" style="text-align: center;">
+        <span class="p-column-title">{{col}}</span>
+        <span class="openModal" (click)="openModal(col, 'pokemon')">{{rowData[col].length}}</span>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+</p-fieldset>
+
+<p-fieldset legend="Pokemons By Stage" [toggleable]="true">
+  <p-table [columns]="stagesIndexArray" [value]="stagesArray" [loading]="loading" styleClass="p-datatable-responsive-type">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" style="text-align: center;">
+          {{col}}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns" style="text-align: center;">
+          <span class="p-column-title">{{col}}</span>
+          <span class="openModal" (click)="openModal(col, 'stage')">{{rowData[col].length}}</span>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-fieldset>
+
+<p-fieldset legend="Trainers By Type" [toggleable]="true">
+  <p-table [columns]="trainerIndexArray" [value]="trainerArray" [loading]="loading" styleClass="p-datatable-responsive-type">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" style="text-align: center;">
+          {{col}}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns" style="text-align: center;">
+          <span class="p-column-title">{{col}}</span>
+          <span class="openModal" (click)="openModal(col, 'trainer')">{{rowData[col].length}}</span>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-fieldset>
+
+<p-fieldset legend="Energy By Type" [toggleable]="true">
+  <p-table [columns]="energyIndexArray" [value]="energyArray" [loading]="loading" styleClass="p-datatable-responsive-type">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" style="text-align: center;">
+          {{col}}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns" style="text-align: center;">
+          <span class="p-column-title">{{col}}</span>
+          <span class="openModal" (click)="openModal(col, 'energy')">{{rowData[col].length}}</span>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-fieldset>
+
+<p-fieldset legend="Cards By Collection" [toggleable]="true">
+  <p-table [columns]="collectionIndexArray" [value]="collectionArray" [loading]="loading" styleClass="p-datatable-responsive-type">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" style="text-align: center;">
+          <img [src]="'assets/icons/' + col + '.png'" [alt]="getCollectionName(col)" height="20">
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns" style="text-align: center;">
+          <span class="p-column-title">{{getCollectionName(col)}}</span>
+          <span class="openModal" (click)="openModal(col, 'collection')">{{rowData[col].length}}</span>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-fieldset>
+
+<p-fieldset legend="Cards By Rarity" [toggleable]="true">
+  <p-table [columns]="rarityIndexArray" [value]="rarityArray" [loading]="loading" styleClass="p-datatable-responsive-type">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" style="text-align: center;">
+          {{col}}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns" style="text-align: center;">
+          <span class="p-column-title">{{col}}</span>
+          <span class="openModal" (click)="openModal(col, 'rarity')">{{rowData[col].length}}</span>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-fieldset>
+
+<p-fieldset legend="Cards By Quality" [toggleable]="true">
+  <p-table [columns]="qualityIndexArray" [value]="qualityArray" [loading]="loading" styleClass="p-datatable-responsive-type">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" style="text-align: center;">
+          {{col}}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns" style="text-align: center;">
+          <span class="p-column-title">{{col}}</span>
+          <span class="openModal" (click)="openModal(col, 'quality')">{{rowData[col].length}}</span>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-fieldset>
