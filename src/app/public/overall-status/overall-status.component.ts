@@ -115,7 +115,7 @@ export class OverallStatusComponent implements OnInit {
         }
       });
     } else {
-      console.log('CARD SEM SUBTYPE: ' + card);
+      console.log(card.name + ': no subtype');
     }
   }
 
@@ -246,6 +246,8 @@ export class OverallStatusComponent implements OnInit {
         this.dialogService.open(InfoDialogComponent, {
           header: 'Cards in this section',
           width: '70%',
+          autoZIndex: false,
+          style: {"z-index": 3},
           data: this.pokemonMap.get(key)
         });
         break;
@@ -253,6 +255,8 @@ export class OverallStatusComponent implements OnInit {
         this.dialogService.open(InfoDialogComponent, {
           header: 'Cards in this section',
           width: '70%',
+          autoZIndex: false,
+          style: {"z-index": 3},
           data: this.trainerMap.get(key)
         });
         break;
@@ -260,6 +264,8 @@ export class OverallStatusComponent implements OnInit {
         this.dialogService.open(InfoDialogComponent, {
           header: 'Cards in this section',
           width: '70%',
+          autoZIndex: false,
+          style: {"z-index": 3},
           data: this.energyMap.get(key)
         });
         break;
@@ -267,6 +273,8 @@ export class OverallStatusComponent implements OnInit {
         this.dialogService.open(InfoDialogComponent, {
           header: 'Cards in this section',
           width: '70%',
+          autoZIndex: false,
+          style: {"z-index": 3},
           data: this.stagesMap.get(key)
         });
         break;
@@ -274,6 +282,8 @@ export class OverallStatusComponent implements OnInit {
         this.dialogService.open(InfoDialogComponent, {
           header: 'Cards in this section',
           width: '70%',
+          autoZIndex: false,
+          style: {"z-index": 3},
           data: this.collectionMap.get(key)
         });
         break;
@@ -281,6 +291,8 @@ export class OverallStatusComponent implements OnInit {
         this.dialogService.open(InfoDialogComponent, {
           header: 'Cards in this section',
           width: '70%',
+          autoZIndex: false,
+          style: {"z-index": 3},
           data: this.rarityMap.get(key)
         });
         break;
@@ -288,6 +300,8 @@ export class OverallStatusComponent implements OnInit {
         this.dialogService.open(InfoDialogComponent, {
           header: 'Cards in this section',
           width: '70%',
+          autoZIndex: false,
+          style: {"z-index": 3},
           data: this.qualityMap.get(key)
         });
         break;
@@ -295,6 +309,8 @@ export class OverallStatusComponent implements OnInit {
         this.dialogService.open(InfoDialogComponent, {
           header: 'Cards in this section',
           width: '70%',
+          autoZIndex: false,
+          style: {"z-index": 3},
           data: this.noPrice
         });
         break;

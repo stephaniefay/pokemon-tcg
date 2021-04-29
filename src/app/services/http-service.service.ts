@@ -4,7 +4,11 @@ import {environment} from "../../environments/environment";
 import {CardAPI} from "../models/cardAPI";
 
 export interface SearchCardAPIMultiple {
-  data: CardAPI[];
+  data: any[];
+  page: number;
+  pageSize: number;
+  count: number;
+  totalCount: number;
 }
 
 export interface SearchCardAPI {

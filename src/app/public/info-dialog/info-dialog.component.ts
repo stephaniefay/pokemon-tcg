@@ -29,8 +29,7 @@ export class InfoDialogComponent implements OnInit {
     {label: 'Type', field: 'type'},
     {label: 'Rarity', field: 'rarity'},
     {label: 'Price (Un)', field: 'price'},
-    {label: 'Quantity', field: 'quantity'},
-    {label:'Image', field: 'image'}
+    {label: 'Quantity', field: 'quantity'}
   ];
 
   content: CardContent[];
@@ -78,10 +77,6 @@ export class InfoDialogComponent implements OnInit {
         return Number(card.tcgplayer.prices[pricesKey].market).toFixed(2);
       }
     }
-  }
-
-  goToLink(url: string){
-    window.open(url, "_blank");
   }
 
   getBadge (rarity:string) {

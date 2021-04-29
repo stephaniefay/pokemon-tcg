@@ -36,6 +36,9 @@ import {FieldsetModule} from "primeng/fieldset";
 import { InfoDialogComponent } from './public/info-dialog/info-dialog.component';
 import {ProgressSpinnerModule} from "primeng/progressspinner";
 import {ToastModule} from "primeng/toast";
+import {OverlayModule} from "@angular/cdk/overlay";
+import {AwesomeTooltipDirective} from "./helper/tooltip/tooltip.directive";
+import {AwesomeTooltipComponent} from "./helper/tooltip/tooltip.component";
 
 @NgModule({
   declarations: [
@@ -51,6 +54,8 @@ import {ToastModule} from "primeng/toast";
     FetchApiComponent,
     OverallStatusComponent,
     InfoDialogComponent,
+    AwesomeTooltipDirective,
+    AwesomeTooltipComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,7 +83,7 @@ import {ToastModule} from "primeng/toast";
     FieldsetModule,
     ProgressSpinnerModule,
     ToastModule,
-
+    OverlayModule,
   ],
   providers: [],
   entryComponents: [

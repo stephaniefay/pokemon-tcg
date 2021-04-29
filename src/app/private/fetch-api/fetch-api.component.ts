@@ -57,7 +57,7 @@ export class FetchApiComponent implements OnInit {
       });
     });
 
-    this.observable = interval(10000).subscribe( x => {
+    this.observable = interval(5000).subscribe( x => {
       if (this.cardsCSV.length > 0) {
         this.limitRateAPI = 50;
         while (this.limitRateAPI > 0 && this.cardsCSV.length > 0) {
@@ -93,7 +93,7 @@ export class FetchApiComponent implements OnInit {
     });
     this.totalCards = this.errorCards.length;
     this.cardsProcessed = 0;
-    this.observable = interval(10000).subscribe(x => {
+    this.observable = interval(5000).subscribe( x => {
       if (this.errorCards.length > 0) {
         this.limitRateAPI = 50;
         while (this.limitRateAPI > 0 && this.errorCards.length > 0) {
@@ -116,67 +116,67 @@ export class FetchApiComponent implements OnInit {
     });
   }
 
-  fetchFromAPIByQuery (cardCSV: CSVCard) {
+  async fetchFromAPIByQuery (cardCSV: CSVCard) {
     let query;
+
     if (cardCSV.cardName.includes(' ')) {
       query = 'name:"' + cardCSV.cardName + '" number:' + cardCSV.cardNumber;
     } else {
       query = 'name:' + cardCSV.cardName + ' number:' + cardCSV.cardNumber;
     }
-    this.httpService.searchForCard(query).subscribe(response => {
-      if (response.data.length == 1) {
-        response.data[0].cardCSV = cardCSV;
-        this.apiCardService.insert(response.data[0]);
+    let response = await this.httpService.searchForCard(query).toPromise();
+
+    if (response.count == 1) {
+      response.data[0].cardCSV = cardCSV;
+      this.apiCardService.insert(response.data[0]);
+    } else {
+      if (response.data.length > 1) {
+        this.messageService.add({
+          key: 'tc',
+          severity: 'warn',
+          summary: 'Multiple cards found',
+          detail: 'adding ' + cardCSV.cardName + '(' + cardCSV.cardNumber + ') to the multiples list.'
+        });
+        if (this.multipleCardsFound == null) {
+          this.multipleCardsFound = [];
+        }
+        response.data.forEach(item => {
+          item.cardCSV = cardCSV;
+          if (cardCSV.extras) {
+            item.name += ' id: (' + query + ', ' + cardCSV.extras.toString() + ') collection: ' + cardCSV.edition.name;
+          } else {
+            item.name += ' id: (' + query + ') collection: ' + cardCSV.edition.name;
+          }
+          this.multipleCardsFound.push(item);
+        });
+        this.updateRowGroupMetaData();
       } else {
-        if (response.data.length > 1) {
-          this.messageService.add({
-            key: 'tc',
-            severity: 'warn',
-            summary: 'Multiple cards found',
-            detail: 'adding ' + cardCSV.cardName + '(' + cardCSV.cardNumber + ') to the multiples list.'
-          });
+        this.messageService.add({
+          key: 'tc',
+          severity: 'warn',
+          summary: 'No card found, searching only for the name',
+          detail: 'adding ' + cardCSV.cardName + '(' + cardCSV.cardNumber + ') to the multiples list.'
+        });
+        if (cardCSV.cardName.includes(' ')) {
+          query = 'name:"' + cardCSV.cardName + '"';
+        } else {
+          query = 'name:' + cardCSV.cardName;
+        }
+        response = await this.httpService.searchForCard(query).toPromise();
+        response.data.forEach(item => {
           if (this.multipleCardsFound == null) {
             this.multipleCardsFound = [];
           }
-          response.data.forEach(item => {
-            item.cardCSV = cardCSV;
-            if (cardCSV.extras) {
-              item.name += ' id: (' + query + ', ' + cardCSV.extras.toString() + ') collection: ' + cardCSV.edition.name;
-            } else {
-              item.name += ' id: (' + query + ') collection: ' + cardCSV.edition.name;
-            }
-            this.multipleCardsFound.push(item);
-          });
-          this.updateRowGroupMetaData();
-        } else {
-          this.messageService.add({
-            key: 'tc',
-            severity: 'warn',
-            summary: 'No card found, searching only for the name',
-            detail: 'adding ' + cardCSV.cardName + '(' + cardCSV.cardNumber + ') to the multiples list.'
-          });
-          if (cardCSV.cardName.includes(' ')) {
-            query = 'name:"' + cardCSV.cardName + '"';
+          item.cardCSV = cardCSV;
+          if (cardCSV.extras) {
+            item.name += ' id: (' + query + ', ' + cardCSV.extras.toString() + ') collection: ' + cardCSV.edition.name;
           } else {
-            query = 'name:' + cardCSV.cardName;
+            item.name += ' id: (' + query + ') collection: ' + cardCSV.edition.name;
           }
-          this.httpService.searchForCard(query).subscribe(response => {
-            response.data.forEach(item => {
-              if (this.multipleCardsFound == null) {
-                this.multipleCardsFound = [];
-              }
-              item.cardCSV = cardCSV;
-              if (cardCSV.extras) {
-                item.name += ' id: (' + query + ', ' + cardCSV.extras.toString() + ') collection: ' + cardCSV.edition.name;
-              } else {
-                item.name += ' id: (' + query + ') collection: ' + cardCSV.edition.name;
-              }
-              this.multipleCardsFound.push(item);
-            });
-          });
-        }
+          this.multipleCardsFound.push(item);
+        });
       }
-    });
+    }
   }
 
   fetchFromAPI (cardCSV: CSVCard) {

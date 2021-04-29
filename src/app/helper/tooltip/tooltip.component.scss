@@ -1,0 +1,25 @@
+:host {
+  display: block
+}
+
+div {
+  background-color: transparent;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+img {
+  max-width: 50%;
+}
+
+@media screen and (max-width: 40rem) {
+  img {
+    max-width: 70%;
+  }
+}
+
+:host ::ng-deep {
+  .cdk-overlay-container {
+    z-index: 100 !important;
+  }
+}
