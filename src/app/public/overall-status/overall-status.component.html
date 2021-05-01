@@ -77,28 +77,20 @@
 
 <div class="container-fieldset">
 <p-fieldset legend="Pokemons By Stage" [toggleable]="true">
-  <p-table [columns]="stagesIndexArray" [value]="stagesArray" [loading]="loading" styleClass="p-datatable-responsive-type">
-    <ng-template pTemplate="colgroup" let-columns>
-      <colgroup>
-        <col *ngFor="let col of columns" style="width:200px">
-      </colgroup>
+  <p-dataView #dv [value]="stagesIndexArray" [paginator]="false" [rows]="stagesIndexArray.length" layout="grid" [loading]="loading" styleClass="dataview-grid">
+    <ng-template let-stages pTemplate="gridItem">
+      <div class="p-col-12 p-md-6 p-lg-3">
+        <div class="collection">
+          <div class="div-line">
+            <span class="p-column-title">{{stages}}</span>
+          </div>
+          <div class="div-line">
+            <span class="openModal" (click)="openModal(stages, 'stage')">{{stagesArray[0][stages].length}}</span>
+          </div>
+        </div>
+      </div>
     </ng-template>
-    <ng-template pTemplate="header" let-columns>
-      <tr>
-        <th *ngFor="let col of columns" style="text-align: center;">
-          {{col}}
-        </th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-rowData let-columns="columns">
-      <tr>
-        <td *ngFor="let col of columns" style="text-align: center;">
-          <span class="p-column-title">{{col}}</span>
-          <span class="openModal" (click)="openModal(col, 'stage')">{{rowData[col].length}}</span>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
+  </p-dataView>
 </p-fieldset>
 </div>
 
@@ -143,56 +135,41 @@
 </p-fieldset>
 
 <div class="container-fieldset">
-<p-fieldset legend="Cards By Collection" [toggleable]="true" [style]="{width:'100%', overflow: 'hidden'}">
-  <p-table [columns]="collectionIndexArray" [value]="collectionArray" [loading]="loading" [scrollable]="true" [style]="{width:'100%'}" styleClass="p-datatable-responsive-type">
-    <ng-template pTemplate="colgroup" let-columns>
-      <colgroup>
-        <col *ngFor="let col of columns" style="width:50px">
-      </colgroup>
+<p-fieldset legend="Cards By Collection" [toggleable]="true">
+  <p-dataView #dvcollection [value]="collectionIndexArray" [paginator]="false" [rows]="collectionIndexArray.length" layout="grid" [loading]="loading" styleClass="dataview-grid">
+    <ng-template let-collection pTemplate="gridItem">
+      <div class="p-col-12 p-md-6 p-lg-3">
+        <div class="collection">
+          <div class="div-line">
+            <img [src]="'assets/icons/' + collection + '.png'" [alt]="getCollectionName(collection)" height="20">
+            <span class="p-column-title">{{getCollectionName(collection)}}</span>
+          </div>
+          <div class="div-line">
+            <span class="openModal" (click)="openModal(collection, 'collection')">{{collectionArray[0][collection].length}}</span>
+          </div>
+        </div>
+      </div>
     </ng-template>
-    <ng-template pTemplate="header" let-columns>
-      <tr>
-        <th *ngFor="let col of columns" style="text-align: center">
-          <img [src]="'assets/icons/' + col + '.png'" [alt]="getCollectionName(col)" height="20">
-        </th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-rowData let-columns="columns">
-      <tr>
-        <td *ngFor="let col of columns" style="text-align: center;">
-          <span class="p-column-title">{{getCollectionName(col)}}</span>
-          <span class="openModal" (click)="openModal(col, 'collection')">{{rowData[col].length}}</span>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
+  </p-dataView>
 </p-fieldset>
 </div>
 
 <div class="container-fieldset">
 <p-fieldset legend="Cards By Rarity" [toggleable]="true">
-  <p-table [columns]="rarityIndexArray" [value]="rarityArray" [loading]="loading" styleClass="p-datatable-responsive-type">
-    <ng-template pTemplate="colgroup" let-columns>
-      <colgroup>
-        <col *ngFor="let col of columns" style="width:200px">
-      </colgroup>
+  <p-dataView #dvrarity [value]="rarityIndexArray" [paginator]="false" [rows]="rarityIndexArray.length" layout="grid" [loading]="loading" styleClass="dataview-grid">
+    <ng-template let-rarity pTemplate="gridItem">
+      <div class="p-col-12 p-md-6 p-lg-3">
+        <div class="collection">
+          <div class="div-line">
+            <span class="p-column-title">{{rarity}}</span>
+          </div>
+          <div class="div-line">
+            <span class="openModal" (click)="openModal(rarity, 'rarity')">{{rarityArray[0][rarity].length}}</span>
+          </div>
+        </div>
+      </div>
     </ng-template>
-    <ng-template pTemplate="header" let-columns>
-      <tr>
-        <th *ngFor="let col of columns" style="text-align: center;">
-          {{col}}
-        </th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-rowData let-columns="columns">
-      <tr>
-        <td *ngFor="let col of columns" style="text-align: center;">
-          <span class="p-column-title">{{col}}</span>
-          <span class="openModal" (click)="openModal(col, 'rarity')">{{rowData[col].length}}</span>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
+  </p-dataView>
 </p-fieldset>
 </div>
 

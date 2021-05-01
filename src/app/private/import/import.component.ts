@@ -77,6 +77,11 @@ export class ImportComponent implements OnInit {
         csvRecord.initials = currentRecord[2].trim().replace(re, '');
         csvRecord.cardName_ptbr = currentRecord[3].trim().replace(re, '');
         csvRecord.cardName = currentRecord[4].trim().replace(re, '');
+
+        if (csvRecord.cardName.includes('- Promo')) {
+          csvRecord.cardName = csvRecord.cardName.replace('- Promo', '').trim()
+        }
+
         csvRecord.quantity = Number(currentRecord[5].trim().replace(re, ''));
         csvRecord.quality = currentRecord[6].trim().replace(re, '');
         csvRecord.language = currentRecord[7].trim().replace(re, '');

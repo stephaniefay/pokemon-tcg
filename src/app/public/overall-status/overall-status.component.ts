@@ -82,7 +82,7 @@ export class OverallStatusComponent implements OnInit {
       this.configureArrays(this.qualityMap, this.qualityArray, this.qualityIndexArray);
       this.configureArrays(this.rarityMap, this.rarityArray, this.rarityIndexArray);
       this.configureArrays(this.collectionMap, this.collectionArray, this.collectionIndexArray);
-
+      this.collectionIndexArray.sort((a,b) => this.getCollectionName(a).localeCompare(this.getCollectionName(b)));
       this.loading = false;
     });
   }

@@ -14,6 +14,30 @@ label {
   justify-content: space-evenly;
 }
 
+.collection {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  .div-line {
+    display: flex;
+    flex-direction: row;
+    padding: 1%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  img {
+    margin-right: 2%;
+  }
+
+}
+
+.dataview-grid.ui-dataview .ui-dataview-header {
+  border-bottom: 0 none;
+  display: none;
+}
+
 .div-line {
   display: flex;
   flex-direction: row;

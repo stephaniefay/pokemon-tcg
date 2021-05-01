@@ -57,12 +57,12 @@ export class FetchApiComponent implements OnInit {
       });
     });
 
-    this.observable = interval(5000).subscribe( x => {
+    this.observable = interval(5000).subscribe(async x => {
       if (this.cardsCSV.length > 0) {
         this.limitRateAPI = 50;
         while (this.limitRateAPI > 0 && this.cardsCSV.length > 0) {
           const index = this.cardsCSV.length - 1;
-          this.fetchFromAPI(this.cardsCSV[index].cardCSV);
+          const promise = await this.fetchFromAPI(this.cardsCSV[index].cardCSV);
           this.limitRateAPI -= 1;
           this.cardsCSV.pop();
           this.cardsProcessed += 1;
@@ -93,12 +93,12 @@ export class FetchApiComponent implements OnInit {
     });
     this.totalCards = this.errorCards.length;
     this.cardsProcessed = 0;
-    this.observable = interval(5000).subscribe( x => {
+    this.observable = interval(5000).subscribe(async x => {
       if (this.errorCards.length > 0) {
-        this.limitRateAPI = 50;
+        this.limitRateAPI = 10;
         while (this.limitRateAPI > 0 && this.errorCards.length > 0) {
           const index = this.errorCards.length - 1;
-          this.fetchFromAPIByQuery(this.errorCards[index]);
+          const promise = await this.fetchFromAPIByQuery(this.errorCards[index]);
           this.limitRateAPI -= 1;
           this.errorCards.pop();
           this.cardsProcessed += 1;
@@ -118,7 +118,6 @@ export class FetchApiComponent implements OnInit {
 
   async fetchFromAPIByQuery (cardCSV: CSVCard) {
     let query;
-
     if (cardCSV.cardName.includes(' ')) {
       query = 'name:"' + cardCSV.cardName + '" number:' + cardCSV.cardNumber;
     } else {
@@ -149,14 +148,14 @@ export class FetchApiComponent implements OnInit {
           }
           this.multipleCardsFound.push(item);
         });
-        this.updateRowGroupMetaData();
       } else {
         this.messageService.add({
           key: 'tc',
           severity: 'warn',
-          summary: 'No card found, searching only for the name',
-          detail: 'adding ' + cardCSV.cardName + '(' + cardCSV.cardNumber + ') to the multiples list.'
+          summary: 'No card found',
+          detail: 'searching only for the name (' + cardCSV.cardName + ')'
         });
+        console.log(cardCSV.cardName);
         if (cardCSV.cardName.includes(' ')) {
           query = 'name:"' + cardCSV.cardName + '"';
         } else {
@@ -179,7 +178,7 @@ export class FetchApiComponent implements OnInit {
     }
   }
 
-  fetchFromAPI (cardCSV: CSVCard) {
+  async fetchFromAPI(cardCSV: CSVCard) {
     if (cardCSV.edition.image != null && cardCSV.edition.image != '') {
       let identifier;
       if (cardCSV.cardNumber.match(/[A-Za-z]/)) {
@@ -196,16 +195,8 @@ export class FetchApiComponent implements OnInit {
         this.errorCards.push(cardCSV);
       });
     } else {
-      this.fetchFromAPIByQuery(cardCSV);
+      const promise = await this.fetchFromAPIByQuery(cardCSV);
     }
-  }
-
-  onSort() {
-    this.updateRowGroupMetaData();
-  }
-
-  update() {
-    this.updateRowGroupMetaData();
   }
 
   updateRowGroupMetaData() {
@@ -255,6 +246,7 @@ export class FetchApiComponent implements OnInit {
       }
     });
     this.multipleCardsFound = newArray;
+    this.updateRowGroupMetaData();
   }
 
   getNumber (card: cardCSVDB) {
