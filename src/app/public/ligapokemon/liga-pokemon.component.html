@@ -1,4 +1,5 @@
-<p-table #dt2 [value]="cards" dataKey="id" [rows]="10" [totalRecords]="quantity"
+<p-table #dt2 [value]="cards" dataKey="id" [rows]="10" [totalRecords]="quantity" [showCurrentPageReport]="true"
+         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
          [rowsPerPageOptions]="[10,20,50,100]" [loading]="loading" styleClass="p-datatable-responsive-type" [paginator]="true"
          [globalFilterFields]="['cardName','edition.name']" xmlns="http://www.w3.org/1999/html">
   <ng-template pTemplate="caption">

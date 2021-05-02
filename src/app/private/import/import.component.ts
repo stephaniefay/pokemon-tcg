@@ -17,6 +17,8 @@ export class ImportComponent implements OnInit {
               private messageService: MessageService) { }
   uploadedFiles: any[] = [];
   records: any[] = [];
+  linesRead: number = 0;
+  totalLines: number;
 
   @ViewChild('csvReader') csvReader: any;
 
@@ -37,9 +39,10 @@ export class ImportComponent implements OnInit {
         let headersRow = this.getHeaderArray(csvRecordsArray);
 
         this.records = this.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
+        this.totalLines = this.records.length;
         this.csvService.deleteAll().then(() => {
           this.records.forEach(record => {
-            console.log(record);
+            this.linesRead += 1;
             this.csvService.insert(record);
           });
           this.messageService.add({
@@ -77,9 +80,11 @@ export class ImportComponent implements OnInit {
         csvRecord.initials = currentRecord[2].trim().replace(re, '');
         csvRecord.cardName_ptbr = currentRecord[3].trim().replace(re, '');
         csvRecord.cardName = currentRecord[4].trim().replace(re, '');
-
         if (csvRecord.cardName.includes('- Promo')) {
-          csvRecord.cardName = csvRecord.cardName.replace('- Promo', '').trim()
+          csvRecord.cardName = csvRecord.cardName.replace('- Promo', '').trim();
+        }
+        if (csvRecord.cardName.includes('Pokegear')) {
+          csvRecord.cardName = csvRecord.cardName.replace('Pokegear', 'Pokégear').trim();
         }
 
         csvRecord.quantity = Number(currentRecord[5].trim().replace(re, ''));

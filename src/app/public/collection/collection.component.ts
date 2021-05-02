@@ -68,30 +68,68 @@ export class CollectionComponent implements OnInit {
   }
 
   initializePrice (card: CardAPI) {
-      let value: number;
-      if (card.tcgplayer == null) {
-        value = 0;
-      } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Foil") && card.tcgplayer.prices['holofoil']) {
-        value = Number(card.tcgplayer.prices['holofoil'].market);
-      } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Reverse Foil") && card.tcgplayer.prices['reverseHolofoil']) {
-          value = Number(card.tcgplayer.prices['reverseHolofoil'].market);
-      } else if (card.tcgplayer.prices['normal']) {
-        value = Number(card.tcgplayer.prices['normal'].market);
+    let flag = false;
+    let value: number;
+    if (card.tcgplayer == null) {
+      value = 0;
+    } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Edition One")) {
+      if (card.cardCSV.extras.includes("Foil")) {
+        if (card.tcgplayer.prices['holo1stEditionHolofoilfoil']) {
+          value = Number(card.tcgplayer.prices['holo1stEditionHolofoilfoil'].market);
+        } else if (card.tcgplayer.prices['1stEditionNormal']) {
+          value = Number(card.tcgplayer.prices['1stEditionNormal'].market);
+        } else {
+          flag = true;
+        }
       } else {
-        for (let pricesKey in card.tcgplayer.prices) {
-          value = Number(card.tcgplayer.prices[pricesKey].market);
-          break;
+        if (card.tcgplayer.prices['1stEditionNormal']) {
+          value = Number(card.tcgplayer.prices['1stEditionNormal'].market);
+        } else {
+          flag = true;
         }
       }
+    } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Foil") && card.tcgplayer.prices['holofoil']) {
+      value = Number(card.tcgplayer.prices['holofoil'].market);
+    } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Reverse Foil") && card.tcgplayer.prices['reverseHolofoil']) {
+      value = Number(card.tcgplayer.prices['reverseHolofoil'].market);
+    } else if (card.tcgplayer.prices['normal']) {
+      value = Number(card.tcgplayer.prices['normal'].market);
+    } else {
+      flag = true;
+    }
 
-      value = value * card.cardCSV.quantity;
-      card.priceTotal = Number(value.toFixed(2));
+    if (flag) {
+      for (let pricesKey in card.tcgplayer.prices) {
+        value = Number(card.tcgplayer.prices[pricesKey].market);
+        break;
+      }
+    }
+
+    value = value * card.cardCSV.quantity;
+    card.priceTotal = Number(value.toFixed(2));
   }
 
   getDescriptor (card: CardAPI) {
+    let flag = false;
     let descriptor: string = this.getPrice(card) + ' = (';
     if (card.tcgplayer == null) {
       descriptor += '0 x ';
+    } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Edition One")) {
+      if (card.cardCSV.extras.includes("Foil")) {
+        if (card.tcgplayer.prices['holo1stEditionHolofoilfoil']) {
+          descriptor += card.tcgplayer.prices['holo1stEditionHolofoilfoil'].market + ' x ';
+        } else if (card.tcgplayer.prices['1stEditionNormal']) {
+          descriptor += card.tcgplayer.prices['1stEditionNormal'].market + ' x ';
+        } else {
+          flag = true;
+        }
+      } else {
+        if (card.tcgplayer.prices['1stEditionNormal']) {
+          descriptor += card.tcgplayer.prices['1stEditionNormal'].market + ' x ';
+        } else {
+          flag = true;
+        }
+      }
     } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Foil") && card.tcgplayer.prices['holofoil']) {
       descriptor += card.tcgplayer.prices['holofoil'].market + ' x ';
     } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Reverse Foil") && card.tcgplayer.prices['reverseHolofoil']) {
@@ -99,6 +137,10 @@ export class CollectionComponent implements OnInit {
     } else if (card.tcgplayer.prices['normal']) {
       descriptor += card.tcgplayer.prices['normal'].market + ' x ';
     } else {
+      flag = true;
+    }
+
+    if (flag) {
       for (let pricesKey in card.tcgplayer.prices) {
         descriptor += card.tcgplayer.prices[pricesKey].market + ' x ';
         break;

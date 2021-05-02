@@ -138,12 +138,38 @@ export class OverallStatusComponent implements OnInit {
     let medium: number;
     let low: number;
     let market: number;
+    let flag = false;
     if (card.tcgplayer == null) {
       high = 0;
       medium = 0;
       low = 0;
       market = 0;
       this.noPrice.push(card);
+    } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Edition One")) {
+      if (card.cardCSV.extras.includes("Foil")) {
+        if (card.tcgplayer.prices['holo1stEditionHolofoilfoil']) {
+          high = Number(card.tcgplayer.prices['holo1stEditionHolofoilfoil'].high);
+          medium = Number(card.tcgplayer.prices['holo1stEditionHolofoilfoil'].mid);
+          low = Number(card.tcgplayer.prices['holo1stEditionHolofoilfoil'].low);
+          market = Number(card.tcgplayer.prices['holo1stEditionHolofoilfoil'].market);
+        } else if (card.tcgplayer.prices['1stEditionNormal']) {
+          high = Number(card.tcgplayer.prices['1stEditionNormal'].high);
+          medium = Number(card.tcgplayer.prices['1stEditionNormal'].mid);
+          low = Number(card.tcgplayer.prices['1stEditionNormal'].low);
+          market = Number(card.tcgplayer.prices['1stEditionNormal'].market);
+        } else {
+          flag = true;
+        }
+      } else {
+        if (card.tcgplayer.prices['1stEditionNormal']) {
+          high = Number(card.tcgplayer.prices['1stEditionNormal'].high);
+          medium = Number(card.tcgplayer.prices['1stEditionNormal'].mid);
+          low = Number(card.tcgplayer.prices['1stEditionNormal'].low);
+          market = Number(card.tcgplayer.prices['1stEditionNormal'].market);
+        } else {
+          flag = true;
+        }
+      }
     } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Foil") && card.tcgplayer.prices['holofoil']) {
       high = Number(card.tcgplayer.prices['holofoil'].high);
       medium = Number(card.tcgplayer.prices['holofoil'].mid);
@@ -160,6 +186,10 @@ export class OverallStatusComponent implements OnInit {
         low = Number(card.tcgplayer.prices['normal'].low);
         market = Number(card.tcgplayer.prices['normal'].market);
     } else {
+      flag = true;
+    }
+
+    if (flag) {
       for (let pricesKey in card.tcgplayer.prices) {
         high = Number(card.tcgplayer.prices[pricesKey].high);
         medium = Number(card.tcgplayer.prices[pricesKey].mid);
