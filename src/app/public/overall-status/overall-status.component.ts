@@ -56,8 +56,8 @@ export class OverallStatusComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.getAll().subscribe(content => {
+      this.qtdTotalUniqueCards = content.length;
       content.forEach(card => {
-        this.qtdTotalUniqueCards += 1;
         this.qtdTotalCards += card.cardApi.cardCSV.quantity;
         if (card.cardApi.supertype == 'Energy') {
           this.qtdTotalEnergyCards += card.cardApi.cardCSV.quantity;

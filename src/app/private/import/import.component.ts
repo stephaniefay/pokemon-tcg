@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MessageService} from "primeng/api";
 import {CSVCard} from "../../models/CSVCard";
 import {LigaPokemonService} from "../../services/liga-pokemon.service";
-import {Collections, CollectionsFunctions} from "../../models/collections";
+import {CollectionsFunctions} from "../../models/collections";
 
 @Component({
   selector: 'app-import',
@@ -16,7 +16,7 @@ export class ImportComponent implements OnInit {
   constructor(private csvService: LigaPokemonService,
               private messageService: MessageService) { }
   uploadedFiles: any[] = [];
-  records: any[] = [];
+  records: CSVCard[] = [];
   linesRead: number = 0;
   totalLines: number;
 
@@ -80,11 +80,8 @@ export class ImportComponent implements OnInit {
         csvRecord.initials = currentRecord[2].trim().replace(re, '');
         csvRecord.cardName_ptbr = currentRecord[3].trim().replace(re, '');
         csvRecord.cardName = currentRecord[4].trim().replace(re, '');
-        if (csvRecord.cardName.includes('- Promo')) {
-          csvRecord.cardName = csvRecord.cardName.replace('- Promo', '').trim();
-        }
-        if (csvRecord.cardName.includes('Pokegear')) {
-          csvRecord.cardName = csvRecord.cardName.replace('Pokegear', 'Pokégear').trim();
+        if (csvRecord.cardName.includes('Poke')) {
+          csvRecord.cardName = csvRecord.cardName.replace('Poke', 'Poké').trim();
         }
 
         csvRecord.quantity = Number(currentRecord[5].trim().replace(re, ''));

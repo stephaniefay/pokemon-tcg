@@ -5,7 +5,6 @@ import {ApiCardService} from "../../services/api-card.service";
 import {MessageService} from "primeng/api";
 import {CSVCard} from "../../models/CSVCard";
 import {CardAPI} from "../../models/cardAPI";
-import {interval} from "rxjs";
 
 export interface cardCSVDB {
   key: string;
@@ -34,13 +33,16 @@ export class FetchApiComponent implements OnInit {
   cardsCSV: cardCSVDB[];
   errorCards: CSVCard[] = [];
   cardsProcessed = 0;
+  cardsMultipleProcessed = 0;
   totalCards = 0;
+  totalMultipleCards = 0;
   limitRateAPI;
   disabled = false;
   observable;
   selectedCard: CardAPI;
   loading = true;
   loadingCSV = true;
+  loadingErrors = true;
 
   constructor(private ligaPokemonService: LigaPokemonService,
               private httpService: HttpServiceService,
@@ -58,69 +60,74 @@ export class FetchApiComponent implements OnInit {
       detail: 'fetching cards in the api (from LigaPokemon)'
     });
     this.apiCardService.deleteAll().then(() => {
-      this.ligaPokemonService.getAll().subscribe(ligaPokemon => {
+      this.ligaPokemonService.getAll().subscribe(async ligaPokemon => {
         this.cardsCSV = ligaPokemon;
+        this.cardsCSV.forEach(card => {
+          this.totalMultipleCards += card.cardCSV.quantity;
+        });
         this.loadingCSV = false;
         this.totalCards = this.cardsCSV.length;
-      });
-    });
 
-    this.observable = interval(5000).subscribe(async x => {
-      if (this.cardsCSV && this.cardsCSV.length > 0) {
-        this.limitRateAPI = 50;
-        while (this.limitRateAPI > 0 && this.cardsCSV.length > 0) {
+        while (this.cardsCSV.length > 0) {
           const index = this.cardsCSV.length - 1;
           this.cardsCSV[index].cardCSV.key = this.cardsCSV[index].key;
-          const promise = await this.fetchFromAPI(this.cardsCSV[index].cardCSV);
-          this.limitRateAPI -= 1;
-          this.cardsCSV.pop();
+          const fetchFromAPI = await this.fetchFromAPI(this.cardsCSV[index].cardCSV);
           this.cardsProcessed += 1;
+          const cardCSV = this.cardsCSV.pop().cardCSV;
+          this.cardsMultipleProcessed += cardCSV.quantity;
         }
-      } else {
         this.messageService.add({
           key: 'tc',
           severity: 'success',
           summary: 'Fetch successful',
           detail: 'all items from LigaPokemon were successfully fetched in the api.'
         });
-        this.loading = false;
-        this.observable.unsubscribe();
+        this.loadingCSV = false;
         if (this.errorCards.length > 0) {
-          this.processErrors();
+          const processErrors = await this.processErrors();
+        } else {
+          this.loading = false;
         }
-      }
+      });
     });
   }
 
-  processErrors () {
+  async processErrors() {
     this.messageService.add({
       key: 'tc',
       severity: 'warn',
       summary: 'There were some errors, trying to process it',
       detail: 'automatically processing errors found'
     });
-    this.totalCards = this.errorCards.length;
+    this.totalCards = 0;
+    this.totalMultipleCards = 0;
+    this.cardsMultipleProcessed = 0;
     this.cardsProcessed = 0;
-    this.observable = interval(5000).subscribe(async x => {
-      if (this.errorCards.length > 0) {
-        this.limitRateAPI = 10;
-        while (this.limitRateAPI > 0 && this.errorCards.length > 0) {
-          const index = this.errorCards.length - 1;
-          const promise = await this.fetchFromAPIByQuery(this.errorCards[index]);
-          this.limitRateAPI -= 1;
-          this.errorCards.pop();
-          this.cardsProcessed += 1;
-        }
-      } else {
-        this.messageService.add({
-          key: 'tc',
-          severity: 'success',
-          summary: 'Errors Processed!',
-          detail: 'all items from error list fetched!'
-        });
-        this.observable.unsubscribe();
-      }
+
+    this.errorCards.forEach(card => {
+      console.log(card);
+      this.totalCards += 1;
+      this.totalMultipleCards += card.quantity;
     });
+
+    while (this.errorCards.length > 0) {
+      const index = this.errorCards.length - 1;
+      const promise = await this.fetchFromAPIByQuery(this.errorCards[index]);
+      this.limitRateAPI -= 1;
+      this.cardsProcessed += 1;
+      const errorCard = this.errorCards.pop();
+      this.cardsMultipleProcessed += errorCard.quantity;
+    }
+
+    this.messageService.add({
+      key: 'tc',
+      severity: 'success',
+      summary: 'Errors Processed!',
+      detail: 'all items from error list fetched!'
+    });
+
+    this.loadingErrors = false;
+    this.loading = false;
   }
 
   addToMultiple (response: SearchCardAPIMultiple, card: CSVCard) {
@@ -145,43 +152,47 @@ export class FetchApiComponent implements OnInit {
     this.multipleCardsFound.push(multiple);
   }
 
-  async fetchFromAPIByQuery (cardCSV: CSVCard) {
+  async fetchFromAPIByQuery (card: CSVCard) {
     let query;
-    if (cardCSV.cardName.includes(' ')) {
-      query = 'name:"' + cardCSV.cardName + '" number:' + cardCSV.cardNumber;
+    if (card.cardName.includes(' ')) {
+      query = 'name:"' + card.cardName + '" number:' + card.cardNumber;
     } else {
-      query = 'name:' + cardCSV.cardName + ' number:' + cardCSV.cardNumber;
+      query = 'name:' + card.cardName + ' number:' + card.cardNumber;
     }
     let response = await this.httpService.searchForCard(query).toPromise();
-
     if (response.count == 1) {
-      response.data[0].cardCSV = cardCSV;
-      this.apiCardService.insert(response.data[0]);
+      const data = response.data[0];
+      data.cardCSV = card;
+      this.apiCardService.insert(data);
     } else {
       if (response.data.length > 1) {
         this.messageService.add({
           key: 'tc',
           severity: 'warn',
           summary: 'Multiple cards found',
-          detail: 'adding ' + cardCSV.cardName + '(' + cardCSV.cardNumber + ') to the multiples list.'
+          detail: 'adding ' + card.cardName + '(' + card.cardNumber + ') to the multiples list.'
         });
 
-        this.addToMultiple(response, cardCSV);
+        this.addToMultiple(response, card);
       } else {
         this.messageService.add({
           key: 'tc',
           severity: 'warn',
           summary: 'No card found',
-          detail: 'searching only for the name (' + cardCSV.cardName + ')'
+          detail: 'searching only for the name (' + card.cardName + ')'
         });
-        if (cardCSV.cardName.includes(' ')) {
-          query = 'name:"' + cardCSV.cardName + '"';
+        if (card.cardName.includes(' ')) {
+          query = 'name:"' + card.cardName + '"';
         } else {
-          query = 'name:' + cardCSV.cardName;
+          query = 'name:' + card.cardName;
         }
         response = await this.httpService.searchForCard(query).toPromise();
+        if (response.count == 0) {
+          console.log('no response ');
+          console.log(card);
+        }
 
-        this.addToMultiple(response, cardCSV);
+        this.addToMultiple(response, card);
       }
     }
   }
@@ -194,14 +205,16 @@ export class FetchApiComponent implements OnInit {
       } else {
         identifier = cardCSV.edition.image + '-' + Number(cardCSV.cardNumber);
       }
-      this.httpService.getCard(identifier).subscribe(response => {
-        if (response.data != null) {
-          response.data.cardCSV = cardCSV;
-          this.apiCardService.insert(response.data);
+
+      try {
+        const searchCardAPIPromise = await this.httpService.getCard(identifier).toPromise();
+        if (searchCardAPIPromise.data != null) {
+          searchCardAPIPromise.data.cardCSV = cardCSV;
+          this.apiCardService.insert(searchCardAPIPromise.data);
         }
-      }, error => {
+      } catch (e) {
         this.errorCards.push(cardCSV);
-      });
+      }
     } else {
       const promise = await this.fetchFromAPIByQuery(cardCSV);
     }
@@ -216,6 +229,7 @@ export class FetchApiComponent implements OnInit {
     });
 
     this.apiCardService.insert(this.selectedCard);
+
     this.messageService.add({
       key: 'tc',
       severity: 'success',
@@ -224,7 +238,10 @@ export class FetchApiComponent implements OnInit {
     });
 
     this.multipleCardsFound.forEach((element,index)=>{
-      if(element.name == card.name) this.multipleCardsFound.splice(index,1);
+      if(element.index == card.index) {
+        const multipleCards = this.multipleCardsFound.splice(index,1);
+        console.log(multipleCards);
+      }
     });
 
     this.selectedCard = null;

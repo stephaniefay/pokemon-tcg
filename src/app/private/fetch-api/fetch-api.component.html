@@ -3,14 +3,15 @@
 <div class="p-grid p-mt-2">
   <div class="p-col">
     <div class="top-div">
-      <button pButton pRipple type="button" label="Start converting" class="p-button-outlined" (click)="convert()" [disabled]="disabled"></button>
-
-      Fetching {{cardsProcessed}} of {{totalCards}}
-    </div>
+        <span>Fetching {{cardsProcessed}} of {{totalCards}} unique cards;</span>
+        <button pButton pRipple type="button" label="Start converting" class="p-button-outlined" (click)="convert()" [disabled]="disabled"></button>
+        <span>Fetching {{cardsMultipleProcessed}} of {{totalMultipleCards}} total (multiple) cards;</span>
   </div>
 </div>
 
-<p-table *ngIf="cardsCSV && cardsCSV.length > 0" [value]="cardsCSV" [loading]="loadingCSV" styleClass="p-datatable-responsive-type">
+<p-table *ngIf="cardsCSV && cardsCSV.length > 0" [value]="cardsCSV" [loading]="loadingCSV"
+         [scrollable]="true" scrollHeight="250px" [virtualScroll]="true" [virtualRowHeight]="34"
+         styleClass="p-datatable-responsive-type">
   <ng-template pTemplate="header" let-columns>
     <tr>
       <th>Card #</th>
@@ -20,7 +21,7 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData>
-    <tr>
+    <tr style="height:34px">
       <td>
         {{getNumber(rowData)}}
       </td>
@@ -37,7 +38,9 @@
   </ng-template>
 </p-table>
 
-<p-table *ngIf="errorCards && errorCards.length > 0" [value]="errorCards" [loading]="loadingCSV" styleClass="p-datatable-responsive-type">
+<p-table *ngIf="errorCards && errorCards.length > 0" [value]="errorCards" [loading]="loadingErrors"
+         [scrollable]="true" scrollHeight="250px" [virtualScroll]="true" [virtualRowHeight]="34"
+         styleClass="p-datatable-responsive-type">
   <ng-template pTemplate="header" let-columns>
     <tr>
       <th>Card #</th>
@@ -47,7 +50,7 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData>
-    <tr>
+    <tr style="height:34px">
       <td>
         {{getNumberCard(rowData)}}
       </td>
