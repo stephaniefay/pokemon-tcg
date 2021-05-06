@@ -35,7 +35,10 @@
               <img class="card-category-icon" [src]="'assets/icons/'+ card.cardApi.set.id + '.png'" [alt]="card.cardApi.set.name" height="20"/>
               <span class="card-category">{{card.cardApi.set.name}}</span>
             </div>
+            <div class="badges">
+            <span *ngIf="getExtra(card.cardApi) != null" [class]="'card-badge ' + getExtraClass(card.cardApi)">{{getExtra(card.cardApi)}}</span>
             <span [class]="'card-badge status-' + getBadge(card.cardApi.rarity)">{{card.cardApi.rarity}}</span>
+            </div>
           </div>
           <div class="card-grid-item-content">
             <img class="card-image-big" [src]="card.cardApi.images.large" [alt]="card.cardApi.name"/>

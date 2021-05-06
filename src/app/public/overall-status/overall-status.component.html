@@ -192,3 +192,22 @@
     </ng-template>
   </p-table>
 </p-fieldset>
+
+<div class="container-fieldset">
+  <p-fieldset legend="Cards By Illustrator" [toggleable]="true">
+    <p-dataView #dvillustrator [value]="illustratorIndexArray" [paginator]="false" [rows]="illustratorIndexArray.length" layout="grid" [loading]="loading" styleClass="dataview-grid">
+      <ng-template let-illustrator pTemplate="gridItem">
+        <div class="p-col-12 p-md-6 p-lg-3">
+          <div class="collection">
+            <div class="div-line">
+              <span class="p-column-title">{{illustrator}}</span>
+            </div>
+            <div class="div-line">
+              <span class="openModal" (click)="openModal(illustrator, 'illustrator')">{{illustratorArray[0][illustrator].length}}</span>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-dataView>
+  </p-fieldset>
+</div>

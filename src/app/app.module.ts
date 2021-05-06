@@ -39,6 +39,10 @@ import {ToastModule} from "primeng/toast";
 import {OverlayModule} from "@angular/cdk/overlay";
 import {AwesomeTooltipDirective} from "./helper/tooltip/tooltip.directive";
 import {AwesomeTooltipComponent} from "./helper/tooltip/tooltip.component";
+import { ImportSomeComponent } from './private/import-some/import-some.component';
+import { DeckBuilderComponent } from './private/deck-builder/deck-builder.component';
+import { DecksComponent } from './public/decks/decks.component';
+import {FetchSomeApiComponent} from "./private/fetch-some-api/fetch-some-api.component";
 
 @NgModule({
   declarations: [
@@ -56,6 +60,10 @@ import {AwesomeTooltipComponent} from "./helper/tooltip/tooltip.component";
     InfoDialogComponent,
     AwesomeTooltipDirective,
     AwesomeTooltipComponent,
+    FetchSomeApiComponent,
+    ImportSomeComponent,
+    DeckBuilderComponent,
+    DecksComponent,
   ],
   imports: [
     BrowserModule,

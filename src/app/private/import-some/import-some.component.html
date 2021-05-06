@@ -7,7 +7,7 @@
   <div class="p-col">
     <div class="box">
       <p-fileUpload #uploader accept=".csv" customUpload="true" (uploadHandler)="uploadFile($event)"
-              multiple="multiple" maxFileSize="1000000">
+                    multiple="multiple" maxFileSize="1000000">
         <ng-template pTemplate="content">
           <ul *ngIf="uploadedFiles.length">
             <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>

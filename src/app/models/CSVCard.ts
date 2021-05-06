@@ -19,4 +19,5 @@ export class CSVCard {
   extras: any[];
   comments: string;
   cardsInEdition: string;
+  dateImport: number;
 }

@@ -1,22 +1,19 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MessageService} from "primeng/api";
-import {CSVCard} from "../../models/CSVCard";
 import {LigaPokemonService} from "../../services/liga-pokemon.service";
-import {CollectionsFunctions} from "../../models/collections";
+import {MessageService} from "primeng/api";
 import {CsvReaderService} from "../../services/csv-reader.service";
 
 @Component({
-  selector: 'app-import',
-  templateUrl: './import.component.html',
-  styleUrls: ['./import.component.css'],
-  providers: [MessageService]
+  selector: 'app-import-some',
+  templateUrl: './import-some.component.html',
+  styleUrls: ['./import-some.component.css']
 })
-
-export class ImportComponent implements OnInit {
+export class ImportSomeComponent implements OnInit {
 
   constructor(private ligaPokemonService: LigaPokemonService,
               private messageService: MessageService,
               public csvReader: CsvReaderService) { }
+
   uploadedFiles: any[] = [];
 
   @ViewChild('uploader') uploader: any;
@@ -39,18 +36,16 @@ export class ImportComponent implements OnInit {
 
         this.csvReader.records = this.csvReader.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
         this.csvReader.totalLines = this.csvReader.records.length;
-        this.ligaPokemonService.deleteAll().then(() => {
-          this.csvReader.records.forEach(record => {
-            this.csvReader.linesRead += 1;
-            this.ligaPokemonService.insert(record);
-          });
-          this.messageService.add({
-            severity: 'success',
-            summary: 'CSV imported!',
-            detail: 'the file was successfully imported to the database!'
-          });
-          this.fileReset();
+        this.csvReader.records.forEach(record => {
+          this.csvReader.linesRead += 1;
+          this.ligaPokemonService.insert(record);
         });
+        this.messageService.add({
+          severity: 'success',
+          summary: 'CSV imported!',
+          detail: 'the file was successfully imported to the database!'
+        });
+        this.fileReset();
       };
 
       reader.onerror = () => {

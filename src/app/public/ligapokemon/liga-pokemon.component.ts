@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LigaPokemonService} from "../../services/liga-pokemon.service";
 import {CSVCard} from "../../models/CSVCard";
-import {FilterService} from "primeng/api";
 import {CollectionsFunctions} from "../../models/collections";
 
 @Component({
@@ -45,7 +44,8 @@ export class LigaPokemonComponent implements OnInit {
             'quantity': cardCSV.quantity,
             'language': cardCSV.language,
             'rarity': this.getRarity(cardCSV.rarity),
-            'extras': extrasString
+            'extras': extrasString,
+            'dateImport': new Date(cardCSV.dateImport)
           }
         )
       });

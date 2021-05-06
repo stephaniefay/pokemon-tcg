@@ -38,6 +38,8 @@ export class CollectionComponent implements OnInit {
     this.sortOptions = [
       {label: 'Price High to Low', value: '!cardApi.priceTotal'},
       {label: 'Price Low to High', value: 'cardApi.priceTotal'},
+      {label: 'Acquisition Date (Desc)', value: '!cardApi.cardCSV.dateImport'},
+      {label: 'Acquisition Date (Asc)', value: 'cardApi.cardCSV.dateImport'},
       {label: 'Alphabetically', value: 'cardApi.name'}
     ];
   }
@@ -149,6 +151,47 @@ export class CollectionComponent implements OnInit {
 
     descriptor += card.cardCSV.quantity + ')';
     return descriptor;
+  }
+
+  getExtra (card: CardAPI) {
+    if (card.cardCSV.extras == null)
+      return null;
+
+    if (card.cardCSV.extras.includes('Foil')) {
+      if (card.cardCSV.extras.includes('Oversize')) {
+        return 'Oversized';
+      }
+      return 'Foil';
+    } else if (card.cardCSV.extras.includes('Reverse Foil')) {
+      return 'Reverse';
+    } else if (card.cardCSV.extras.includes('Edition One')) {
+      return 'Edition #1';
+    } else if (card.cardCSV.extras.includes('Oversize')) {
+      return 'Oversized';
+    }
+
+    return null;
+  }
+
+  getExtraClass (card: CardAPI) {
+    if (card.cardCSV.extras == null)
+      return null;
+
+    if (card.cardCSV.extras.includes('Foil')) {
+      if (card.cardCSV.extras.includes('Oversize')) {
+        return 'oversize';
+      }
+
+      return 'holo';
+    } else if (card.cardCSV.extras.includes('Reverse Foil')) {
+      return 'reverseholo';
+    } else if (card.cardCSV.extras.includes('Edition One')) {
+      return 'editionone';
+    } else if (card.cardCSV.extras.includes('Oversize')) {
+      return 'oversize';
+    }
+
+    return null;
   }
 
 }

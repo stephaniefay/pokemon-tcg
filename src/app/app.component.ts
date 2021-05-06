@@ -26,22 +26,27 @@ export class AppComponent {
     this.items = [
       {
         label: 'Collection',
-        icon: 'pi pi-fw pi-id-card',
+        icon: 'fas fa-dragon',
         routerLink: ['/public/collection']
       },
       {
         label: 'LigaPokemon datatable',
-        icon: 'pi pi-fw pi-list',
+        icon: 'fas fa-table',
         routerLink: ['/public/ligapokemon']
       },
       {
         label: 'Overall Status',
-        icon: 'pi pi-fw pi-chart-bar',
+        icon: 'fas fa-chart-line',
         routerLink: ['/public/status']
       },
       {
+        label: 'Decks',
+        icon: 'fas fa-journal-whills',
+        routerLink: ['/public/decks']
+      },
+      {
         label: 'Login',
-        icon: 'pi pi-fw pi-user',
+        icon: 'fas fa-user-circle',
         command: (event: Event) => {
           this.show()
         }
@@ -51,43 +56,58 @@ export class AppComponent {
     this.itemsLogged = [
       {
         label: 'Card Management',
-        icon: 'pi pi-fw pi-users',
+        icon: 'fas fa-terminal',
         items: [
           {
-            label: 'Import',
-            icon: 'pi pi-fw pi-arrow-circle-down',
+            label: 'Import All',
+            icon: 'fas fa-file-import',
             routerLink: ['/private/import']
           },
           {
-            icon: 'pi pi-fw pi-arrow-circle-up',
-            label: 'Export',
-            routerLink: ['/private/export']
+            label: 'Import Some',
+            icon: 'fas fa-file-medical',
+            routerLink: ['/private/add-import']
           },
           {
-            label: 'Fetch from API',
-            icon: 'pi pi-fw pi-link',
+            label: 'Fetch all from API',
+            icon: 'fas fa-link',
             routerLink: ['/private/api']
+          },
+          {
+            label: 'Fetch some from API',
+            icon: 'fas fa-plus-circle',
+            routerLink: ['/private/api']
+          },
+          {
+            icon: 'fas fa-file-export',
+            label: 'Export',
+            routerLink: ['/private/export']
           }
         ]
       },
       {
         label: 'Collection',
-        icon: 'pi pi-fw pi-id-card',
+        icon: 'fas fa-dragon',
         routerLink: ['/public/collection']
       },
       {
         label: 'LigaPokemon datatable',
-        icon: 'pi pi-fw pi-list',
+        icon: 'fas fa-table',
         routerLink: ['/public/ligapokemon']
       },
       {
         label: 'Overall Status',
-        icon: 'pi pi-fw pi-chart-bar',
+        icon: 'fas fa-chart-line',
         routerLink: ['/public/status']
       },
       {
+        label: 'Decks',
+        icon: 'fas fa-journal-whills',
+        routerLink: ['/public/decks']
+      },
+      {
         label: 'Logout',
-        icon: 'pi pi-fw pi-power-off',
+        icon: 'fas fa-sign-out-alt',
         command: (event: Event) => {
           this.auth.signOut()
         }

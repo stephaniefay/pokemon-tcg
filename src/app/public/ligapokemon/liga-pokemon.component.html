@@ -88,6 +88,11 @@
           Extras <p-columnFilter type="text" field="extras" display="menu"></p-columnFilter>
         </div>
       </th>
+      <th>
+        <div class="p-d-flex p-jc-between p-ai-center">
+          Date added <p-columnFilter type="date" field="dateImport" display="menu"></p-columnFilter>
+        </div>
+      </th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-card>
@@ -126,6 +131,10 @@
       <td>
         <span class="p-column-title">Extras</span>
         {{card.extras}}
+      </td>
+      <td>
+        <span class="p-column-title">Date added</span>
+        {{card.dateImport | date}}
       </td>
     </tr>
   </ng-template>

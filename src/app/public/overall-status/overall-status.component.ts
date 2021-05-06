@@ -31,6 +31,7 @@ export class OverallStatusComponent implements OnInit {
   collectionMap = new Map();
   qualityMap = new Map();
   rarityMap = new Map();
+  illustratorMap = new Map();
 
   energyArray = [];
   energyIndexArray = [];
@@ -46,6 +47,8 @@ export class OverallStatusComponent implements OnInit {
   qualityIndexArray = [];
   rarityArray = [];
   rarityIndexArray = [];
+  illustratorArray = [];
+  illustratorIndexArray = [];
 
   // prices + fake
   noPrice = [];
@@ -74,6 +77,7 @@ export class OverallStatusComponent implements OnInit {
         this.setCollection(card.cardApi);
         this.setQuality(card.cardApi);
         this.setRarity(card.cardApi);
+        this.setIllustrator(card.cardApi);
       });
       this.configureArrays(this.pokemonMap, this.pokemonArray, this.pokemonIndexArray);
       this.configureArrays(this.stagesMap, this.stagesArray, this.stagesIndexArray);
@@ -82,6 +86,7 @@ export class OverallStatusComponent implements OnInit {
       this.configureArrays(this.qualityMap, this.qualityArray, this.qualityIndexArray);
       this.configureArrays(this.rarityMap, this.rarityArray, this.rarityIndexArray);
       this.configureArrays(this.collectionMap, this.collectionArray, this.collectionIndexArray);
+      this.configureArrays(this.illustratorMap, this.illustratorArray, this.illustratorIndexArray);
       this.collectionIndexArray.sort((a,b) => this.getCollectionName(a).localeCompare(this.getCollectionName(b)));
       this.loading = false;
     });
@@ -236,6 +241,21 @@ export class OverallStatusComponent implements OnInit {
     }
   }
 
+  setIllustrator (card: CardAPI) {
+    if (card.artist == undefined || card.artist.trim() == '') {
+      card.artist = 'No name';
+    }
+    const illustratorArray: CardAPI[] = this.illustratorMap.get(card.artist);
+    if (illustratorArray) {
+      illustratorArray.push(card);
+      this.illustratorMap.set(card.artist, illustratorArray);
+    } else {
+      const newIllustratorArray: CardAPI[] = [];
+      newIllustratorArray.push(card);
+      this.illustratorMap.set(card.artist, newIllustratorArray);
+    }
+  }
+
   setQuality (card: CardAPI) {
     const qualityArray: CardAPI[] = this.qualityMap.get(card.cardCSV.quality);
     if (qualityArray) {
@@ -342,6 +362,15 @@ export class OverallStatusComponent implements OnInit {
           autoZIndex: false,
           style: {"z-index": 3},
           data: this.noPrice
+        });
+        break;
+      case 'illustrator':
+        this.dialogService.open(InfoDialogComponent, {
+          header: 'Cards in this section',
+          width: '70%',
+          autoZIndex: false,
+          style: {"z-index": 3},
+          data: this.illustratorMap.get(key)
         });
         break;
     }

@@ -8,13 +8,13 @@
   }
 }
 
-.container-fieldset {
+.body {
   overflow-y: scroll;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none;  /* Internet Explorer 10+ */
 }
 
-.container-fieldset::-webkit-scrollbar { /* WebKit */
+.body::-webkit-scrollbar { /* WebKit */
   width: 0;
   height: 0;
 }

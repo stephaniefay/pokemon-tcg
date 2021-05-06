@@ -10,6 +10,9 @@ import {PublicComponent} from "../public/public.component";
 import {LigaPokemonComponent} from "../public/ligapokemon/liga-pokemon.component";
 import {FetchApiComponent} from "../private/fetch-api/fetch-api.component";
 import {OverallStatusComponent} from "../public/overall-status/overall-status.component";
+import {DecksComponent} from "../public/decks/decks.component";
+import {ImportSomeComponent} from "../private/import-some/import-some.component";
+import {FetchSomeApiComponent} from "../private/fetch-some-api/fetch-some-api.component";
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/']);
 
@@ -32,29 +35,46 @@ const routes: Routes = [
       {
         path: 'status',
         component: OverallStatusComponent
+      },
+      {
+        path: 'decks',
+        component: DecksComponent
       }
     ]
   },
-  { path: 'private',
+  {
+    path: 'private',
     component: PrivateComponent,
     children: [
       {
         path: 'import',
         component: ImportComponent,
         canActivate: [AngularFireAuthGuard],
-        data: { authGuardPipe: redirectUnauthorizedToLogin }
+        data: {authGuardPipe: redirectUnauthorizedToLogin}
+      },
+      {
+        path: 'add-import',
+        component: ImportSomeComponent,
+        canActivate: [AngularFireAuthGuard],
+        data: {authGuardPipe: redirectUnauthorizedToLogin}
       },
       {
         path: 'export',
         component: ExportComponent,
         canActivate: [AngularFireAuthGuard],
-        data: { authGuardPipe: redirectUnauthorizedToLogin }
+        data: {authGuardPipe: redirectUnauthorizedToLogin}
       },
       {
         path: 'api',
         component: FetchApiComponent,
         canActivate: [AngularFireAuthGuard],
-        data: { authGuardPipe: redirectUnauthorizedToLogin }
+        data: {authGuardPipe: redirectUnauthorizedToLogin}
+      },
+      {
+        path: 'add-api',
+        component: FetchSomeApiComponent,
+        canActivate: [AngularFireAuthGuard],
+        data: {authGuardPipe: redirectUnauthorizedToLogin}
       }
     ]
   },

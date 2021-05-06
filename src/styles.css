@@ -8,6 +8,35 @@ body {
   color: var(--text-color);
 }
 
+.card-badge.holo {
+  background-image: url('./assets/badges/holo.gif');
+  background-position: center;
+  color: #1e1e1e;
+  background-size: cover;
+  background-color: #000000;
+}
+
+.card-badge.reverseholo {
+  background-image: url('./assets/badges/reverseholo.gif');
+  background-position: center;
+  background-size: cover;
+  background-color: #000000;
+}
+
+.card-badge.editionone {
+  background-image: url('./assets/badges/editionone.gif');
+  background-position: center;
+  background-size: cover;
+  background-color: #000000;
+}
+
+.card-badge.oversize {
+  background-image: url('./assets/badges/oversize.gif');
+  background-position: center;
+  background-size: cover;
+  background-color: #000000;
+}
+
 .card-badge.status-common {
   background: #222f3e;
   color: #576574;
@@ -105,5 +134,6 @@ body {
   font-weight: 700;
   font-size: 12px;
   letter-spacing: .3px;
-  max-width: fit-content;
+  text-align: center;
+  /*max-width: fit-content;*/
 }
