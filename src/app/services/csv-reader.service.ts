@@ -49,6 +49,7 @@ export class CsvReaderService {
         csvRecord.comments = currentRecord[12].trim().replace(re, '');
         csvRecord.cardsInEdition = currentRecord[13].trim().replace(re, '');
         csvRecord.dateImport = this.currentDate.getTime();
+        csvRecord.id = currentRecord[2].trim().replace(re, '') + '-' + currentRecord[11].trim().replace(re, '');
 
         csvArr.push(csvRecord);
       }

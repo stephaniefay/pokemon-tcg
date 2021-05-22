@@ -76,12 +76,17 @@ export class AppComponent {
           {
             label: 'Fetch some from API',
             icon: 'fas fa-plus-circle',
-            routerLink: ['/private/api']
+            routerLink: ['/private/add-api']
           },
           {
             icon: 'fas fa-file-export',
             label: 'Export',
             routerLink: ['/private/export']
+          },
+          {
+            label: 'Edit Cards',
+            icon: 'fas fa-table',
+            routerLink: ['/private/cardmanagement']
           }
         ]
       },

@@ -60,6 +60,7 @@ export class InfoDialogComponent implements OnInit {
 
       this.content.push(content);
     });
+    this.content.sort((a,b) => a.name.localeCompare(b.name));
     this.loading = false;
   }
 

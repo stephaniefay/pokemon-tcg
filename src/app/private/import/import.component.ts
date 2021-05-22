@@ -1,8 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MessageService} from "primeng/api";
-import {CSVCard} from "../../models/CSVCard";
 import {LigaPokemonService} from "../../services/liga-pokemon.service";
-import {CollectionsFunctions} from "../../models/collections";
 import {CsvReaderService} from "../../services/csv-reader.service";
 
 @Component({

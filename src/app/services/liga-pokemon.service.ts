@@ -41,4 +41,17 @@ export class LigaPokemonService {
   async deleteAll() {
     this.db.object(`LigaPokemon`).remove();
   }
+
+  getByTime (time: number) {
+    return this.db.list('LigaPokemon', ref => ref.orderByChild('dateImport').startAt(time))
+      .snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map(c => ({
+            key: c.payload.key,
+            cardCSV: <CSVCard> c.payload.val()
+          }));
+        })
+      );
+  }
 }

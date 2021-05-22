@@ -2,11 +2,18 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {LigaPokemonService} from "../../services/liga-pokemon.service";
 import {MessageService} from "primeng/api";
 import {CsvReaderService} from "../../services/csv-reader.service";
+import {CSVCard} from "../../models/CSVCard";
+
+export interface CardCSVDB {
+  key: string;
+  cardCSV: CSVCard;
+}
 
 @Component({
   selector: 'app-import-some',
   templateUrl: './import-some.component.html',
-  styleUrls: ['./import-some.component.css']
+  styleUrls: ['./import-some.component.css'],
+  providers: [MessageService]
 })
 export class ImportSomeComponent implements OnInit {
 
@@ -15,10 +22,16 @@ export class ImportSomeComponent implements OnInit {
               public csvReader: CsvReaderService) { }
 
   uploadedFiles: any[] = [];
+  cards: CardCSVDB[];
+
 
   @ViewChild('uploader') uploader: any;
 
   ngOnInit(): void {
+    const service = this.ligaPokemonService.getAll().subscribe(result => {
+      this.cards = result;
+      service.unsubscribe();
+    });
   }
 
   uploadFile (event) {
@@ -38,7 +51,25 @@ export class ImportSomeComponent implements OnInit {
         this.csvReader.totalLines = this.csvReader.records.length;
         this.csvReader.records.forEach(record => {
           this.csvReader.linesRead += 1;
-          this.ligaPokemonService.insert(record);
+          if (record.extras.length == 0) record.extras = null;
+          const temp = this.cards.filter(val =>
+            val.cardCSV.id == record.id &&
+            ((val.cardCSV.extras && record.extras) ? val.cardCSV.extras.sort().join(' ') == record.extras.sort().join(' ') : (val.cardCSV.extras == record.extras)) &&
+            val.cardCSV.language == record.language &&
+            val.cardCSV.quality == record.quality
+          );
+
+          if (temp.length == 0) {
+            console.log(record);
+            this.ligaPokemonService.insert(record);
+          } else if (temp.length == 1) {
+            let card = temp.pop();
+            card.cardCSV.quantity += record.quantity;
+            card.cardCSV.dateImport = record.dateImport;
+            this.ligaPokemonService.update(card.cardCSV, card.key);
+          } else if (temp.length > 1) {
+            console.log('Multiple')
+          }
         });
         this.messageService.add({
           severity: 'success',

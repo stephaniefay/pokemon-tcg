@@ -1,1 +1,22 @@
-<p>deck-builder works!</p>
+<p-pickList [source]="sourceCards" [target]="targetCards" sourceHeader="Available" targetHeader="Selected" [dragdrop]="true"
+            [responsive]="true" [sourceStyle]="{'height':'30rem'}" [targetStyle]="{'height':'30rem'}" filterBy="cardApi.name"
+            sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name"
+            [showSourceControls]="false" [showTargetControls]="false"
+            (onMoveToTarget)="dealWithCard($event)">
+  <ng-template let-card pTemplate="item">
+    <div class="product-item">
+      <div class="image-container">
+        <img [src]="card.cardApi.images.small" [alt]="card.cardApi.name" class="product-image" />
+      </div>
+      <div class="product-list-detail">
+        <h5 class="p-mb-2">{{card.cardApi.name}}</h5>
+        <img class="card-category-icon" [src]="'assets/icons/'+ card.cardApi.set.id + '.png'" [alt]="card.cardApi.set.name" height="20"/>
+        <span class="product-category">{{card.cardApi.set.name}}</span>
+      </div>
+      <div class="product-list-action">
+        <h6 class="p-mb-2">{{card.cardApi.cardCSV.quantity}}</h6>
+        <span [class]="'card-badge status-' + getBadge(card.cardApi.rarity)">{{card.cardApi.rarity}}</span>
+      </div>
+    </div>
+  </ng-template>
+</p-pickList>

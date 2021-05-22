@@ -1,24 +1,45 @@
 <p-table [columns]="headers" [value]="content" [loading]="loading" styleClass="p-datatable-striped p-datatable-responsive-type">
     <ng-template pTemplate="header" let-columns>
       <tr>
-        <th *ngFor="let col of columns" style="text-align: center;">
-          {{col.label}}
-        </th>
-      </tr>
+        <th></th>
+        <th>{{columns[0].label}}</th>
+        <th>{{columns[1].label}}</th>
+        <th>{{columns[2].label}}</th>
+        <th>{{columns[3].label}}</th>
+        <th>{{columns[4].label}}</th>
+        <th>{{columns[5].label}}</th>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
       <tr>
-        <td *ngFor="let col of columns" style="text-align: center;">
-          <span class="p-column-title">{{col.label}}</span>
-          <span *ngIf="col.field == 'rarity'" [class]="'card-badge status-' + getBadge(rowData[col.field])">{{rowData[col.field]}}</span>
-          <span *ngIf="col.field == 'number'">{{rowData[col.field]}}</span>
-          <div *ngIf="col.field == 'name'" class="nameCollection">
-            <span awesomeTooltip="" image="{{rowData['image']}}">{{rowData[col.field]}}</span>
+        <td class="centralized">
+          <img  awesomeTooltip="" image="{{rowData['image']}}" [src]="rowData['image']" [alt]="rowData['name']" width="100" class="p-shadow-4" />
+        </td>
+        <td>
+          <span class="p-column-title">{{columns[0].label}}</span>
+          {{rowData['number']}}
+        </td>
+        <td>
+          <span class="p-column-title">{{columns[1].label}}</span>
+          <div class="nameCollection">
+            <span>{{rowData['name']}}</span>
             <img class="card-category-icon" [src]="'assets/icons/'+ rowData['collectionId'] + '.png'" [alt]="rowData['collectionName']" height="20"/>
           </div>
-          <span *ngIf="col.field == 'type'">{{rowData[col.field]}}</span>
-          <span *ngIf="col.field == 'price'">{{rowData[col.field] | currency: 'USD'}}</span>
-          <span *ngIf="col.field == 'quantity'">{{rowData[col.field]}}</span>
+        </td>
+        <td>
+          <span class="p-column-title">{{columns[2].label}}</span>
+          {{rowData['type']}}
+        </td>
+        <td>
+          <span class="p-column-title">{{columns[3].label}}</span>
+          <span [class]="'card-badge status-' + getBadge(rowData['rarity'])">{{rowData['rarity']}}</span>
+        </td>
+        <td>
+          <span class="p-column-title">{{columns[4].label}}</span>
+          {{rowData['price'] | currency: 'USD'}}
+        </td>
+        <td>
+          <span class="p-column-title">{{columns[5].label}}</span>
+          {{rowData['quantity']}}
         </td>
       </tr>
     </ng-template>

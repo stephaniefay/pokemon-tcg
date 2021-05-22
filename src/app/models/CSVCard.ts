@@ -5,6 +5,7 @@ export interface Edition {
 
 export class CSVCard {
   key: string;
+  id: string;
   edition: Edition;
   edition_ptbr: string;
   initials: string;

@@ -1,1 +1,163 @@
-<p>fetch-some-api works!</p>
+<p-toast position="top-center" key="tc"></p-toast>
+
+<div class="p-grid p-mt-2">
+  <div class="p-col">
+    <div class="top-div">
+      <span>Fetching {{cardsProcessed}} of {{totalCards}} ({{multipleCardsProcessed}}) cards;</span>
+        <div class="p-inputgroup">
+          <p-calendar [(ngModel)]="date" [touchUI]="true" [readonlyInput]="true" inputId="touchui"></p-calendar>
+          <button pButton pRipple type="button" label="Start converting" class="p-button-outlined" (click)="convert()" [disabled]="disabled"></button>
+        </div>
+    </div>
+  </div>
+
+  <p-table *ngIf="cardsCSV && cardsCSV.length > 0" [value]="cardsCSV" [loading]="loadingCSV"
+           [scrollable]="true" scrollHeight="250px" [virtualScroll]="true" [virtualRowHeight]="34"
+           styleClass="p-datatable-responsive-type">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th>Card #</th>
+        <th>Card Name</th>
+        <th>Card Collection</th>
+        <th>Status</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData>
+      <tr style="height:34px">
+        <td>
+          {{getNumber(rowData)}}
+        </td>
+        <td>
+          {{getName(rowData)}}
+        </td>
+        <td>
+          {{getCollection(rowData)}}
+        </td>
+        <td>
+          <p-progressSpinner [style]="{width: '30px', height: '30px'}"></p-progressSpinner>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-table *ngIf="errorCards && errorCards.length > 0" [value]="errorCards" [loading]="loadingErrors"
+           [scrollable]="true" scrollHeight="250px" [virtualScroll]="true" [virtualRowHeight]="34"
+           styleClass="p-datatable-responsive-type">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th>Card #</th>
+        <th>Card Name</th>
+        <th>Card Collection</th>
+        <th>Status</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData>
+      <tr style="height:34px">
+        <td>
+          {{getNumberCard(rowData)}}
+        </td>
+        <td>
+          {{getNameCard(rowData)}}
+        </td>
+        <td>
+          {{getCollectionCard(rowData)}}
+        </td>
+        <td>
+          <p-progressSpinner [style]="{width: '30px', height: '30px'}"></p-progressSpinner>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <!--
+  <p-table *ngIf="multipleCardsFound" [value]="multipleCardsFound" sortField="name" sortMode="single" dataKey="name"
+           selectionMode="single" [(selection)]="selectedCard" (onRowSelect)="onRowSelect($event)">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Number</th>
+        <th>Name</th>
+        <th>Collection</th>
+        <th>Image URL</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-card let-rowIndex="rowIndex" let-expanded="expanded">
+      <tr *ngIf="rowGroupMetadata && rowGroupMetadata[card.name].index === rowIndex">
+        <td colspan="5">
+          <button type="button" pButton pRipple [pRowToggler]="card"
+                  class="p-button-text p-button-rounded p-button-plain p-mr-2"
+                  [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+          <span class="p-text-bold p-ml-2">{{card.name}}</span>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="rowexpansion" let-data>
+      <tr [pSelectableRow]="data">
+        <td>
+          {{data.number}}
+        </td>
+        <td>
+          {{data.name}}
+        </td>
+        <td>
+          {{data.set.name}}
+        </td>
+        <td>
+          <img [src]="data.images.large" height="200px">
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+  -->
+
+  <p-table *ngIf="multipleCardsFound && multipleCardsFound.length > 0" [value]="multipleCardsFound" dataKey="index">
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem"></th>
+        <th>Key</th>
+        <th>Number</th>
+        <th>Name</th>
+        <th>Collection</th>
+        <th>Extras</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-card let-expanded="expanded">
+      <tr>
+        <td>
+          <button type="button" pButton pRipple [pRowToggler]="card" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+        </td>
+        <td>{{card.index}}</td>
+        <td>{{card.number}}</td>
+        <td>{{card.name}}</td>
+        <td>{{card.edition}}</td>
+        <td>{{card.extras}}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="rowexpansion" let-card>
+      <tr>
+        <td colspan="7">
+          <div class="p-p-3">
+            <p-table [value]="card.multiples" dataKey="id" selectionMode="single" [(selection)]="selectedCard" (onRowSelect)="onRowSelect(card)">
+              <ng-template pTemplate="header">
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Number</th>
+        <th>Collection</th>
+        <th>Image</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-api>
+      <tr [pSelectableRow]="api">
+        <td>{{api.id}}</td>
+        <td>{{api.name}}</td>
+        <td>{{api.number}}</td>
+        <td>{{api.set.name}}</td>
+        <td><img [src]="api.images.large" height="200px"></td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+</td>
+</tr>
+</ng-template>
+</p-table>

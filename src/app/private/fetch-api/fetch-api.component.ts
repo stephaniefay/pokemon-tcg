@@ -5,11 +5,7 @@ import {ApiCardService} from "../../services/api-card.service";
 import {MessageService} from "primeng/api";
 import {CSVCard} from "../../models/CSVCard";
 import {CardAPI} from "../../models/cardAPI";
-
-export interface cardCSVDB {
-  key: string;
-  cardCSV: CSVCard;
-}
+import {cardCSVDB} from "../../models/interfaces/ligaPokemonDB";
 
 export class MultipleCards {
   index: string;
@@ -105,7 +101,6 @@ export class FetchApiComponent implements OnInit {
     this.cardsProcessed = 0;
 
     this.errorCards.forEach(card => {
-      console.log(card);
       this.totalCards += 1;
       this.totalMultipleCards += card.quantity;
     });

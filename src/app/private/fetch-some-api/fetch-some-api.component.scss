@@ -1,24 +1,12 @@
-.icon {
-  cursor: pointer;
-}
-
 :host ::ng-deep {
   .p-datatable-responsive-type .p-datatable-tbody > tr > td .p-column-title {
     display: none;
   }
-}
 
-.body {
-  overflow-y: scroll;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  .p-inputgroup {
+    justify-content: center !important;
+  }
 }
-
-.body::-webkit-scrollbar { /* WebKit */
-  width: 0;
-  height: 0;
-}
-
 
 @media screen and (max-width: 40rem) {
   :host ::ng-deep {
@@ -54,12 +42,26 @@
   }
 }
 
-.centralized {
-  text-align: center !important;
+@keyframes p-progress-spinner-color {
+  100%,
+  0% {
+    stroke: #d62d20;
+  }
+  40% {
+    stroke: #0057e7;
+  }
+  66% {
+    stroke: #008744;
+  }
+  80%,
+  90% {
+    stroke: #ffa700;
+  }
 }
 
-.nameCollection {
+.top-div {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }

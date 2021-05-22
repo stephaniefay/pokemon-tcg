@@ -1,1 +1,69 @@
-<p>decks works!</p>
+<div class="card">
+  <p-table #dt [value]="decks" [rows]="10" [paginator]="true" [globalFilterFields]="['name', 'type', 'legality']"
+           [rowHover]="true" dataKey="key"
+           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        <button  *ngIf="auth.user | async as user;" pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openBuilder()"></button>
+        <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+                </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+        <th></th>
+        <th pSortableColumn="type">Type <p-sortIcon field="type"></p-sortIcon></th>
+        <th pSortableColumn="legality">Legality <p-sortIcon field="legality"></p-sortIcon></th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-deck>
+      <tr>
+        <td>{{deck.name}}</td>
+        <td><img [src]="deck.type.toLowerCase()" [alt]="deck.type" width="100" class="p-shadow-4" /></td>
+        <td>{{deck.type}}</td>
+        <td>{{deck.legality}}</td>
+        <td>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="viewDeck(deck)"></button>
+          <button *ngIf="auth.user | async as user;" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editDeck(deck)"></button>
+          <button *ngIf="auth.user | async as user;" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteDeck(deck)"></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        In total there are {{decks ? decks.length : 0 }} decks.
+      </div>
+    </ng-template>
+  </p-table>
+</div>
+
+<!--<p-dialog [(visible)]="deckDialog" [style]="{width: '450px'}" header="Deck Details" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <img [src]="card.cardApi.ts.images.large" [alt]="card.cardApi.ts.name" class="card-image" *ngIf="card.cardApi.ts.images.small">
+    <div class="p-field">
+      <label for="name">Name</label>
+      <input type="text" pInputText id="name" [(ngModel)]="card.cardApi.ts.name" [disabled]="true"/>
+    </div>
+    <div class="p-field">
+      <label for="description">Flavor Text</label>
+      <textarea id="description" pInputTextarea [(ngModel)]="card.cardApi.ts.flavorText" [disabled]="true"></textarea>
+    </div>
+    <div class="p-formgrid p-grid">
+      <div class="p-field p-col">
+        <label for="quantity">Quantity</label>
+        <p-inputNumber id="quantity" [(ngModel)]="card.cardApi.ts.cardCSV.quantity"></p-inputNumber>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveCard()"></button>
+  </ng-template>
+</p-dialog>-->
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

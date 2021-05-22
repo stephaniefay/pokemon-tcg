@@ -43,6 +43,13 @@ import { ImportSomeComponent } from './private/import-some/import-some.component
 import { DeckBuilderComponent } from './private/deck-builder/deck-builder.component';
 import { DecksComponent } from './public/decks/decks.component';
 import {FetchSomeApiComponent} from "./private/fetch-some-api/fetch-some-api.component";
+import { CardManagementComponent } from './private/card-management/card-management.component';
+import {InputNumberModule} from "primeng/inputnumber";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {InputTextareaModule} from "primeng/inputtextarea";
+import {DialogModule} from "primeng/dialog";
+import {CalendarModule} from "primeng/calendar";
+import {PickListModule} from "primeng/picklist";
 
 @NgModule({
   declarations: [
@@ -64,6 +71,7 @@ import {FetchSomeApiComponent} from "./private/fetch-some-api/fetch-some-api.com
     ImportSomeComponent,
     DeckBuilderComponent,
     DecksComponent,
+    CardManagementComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,6 +100,12 @@ import {FetchSomeApiComponent} from "./private/fetch-some-api/fetch-some-api.com
     ProgressSpinnerModule,
     ToastModule,
     OverlayModule,
+    InputTextareaModule,
+    ConfirmDialogModule,
+    DialogModule,
+    InputNumberModule,
+    CalendarModule,
+    PickListModule,
   ],
   providers: [],
   entryComponents: [
