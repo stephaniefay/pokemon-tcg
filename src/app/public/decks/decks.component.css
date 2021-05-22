@@ -1,0 +1,27 @@
+.icon {
+  border-radius: 100%;
+  height: 50px;
+  width: 50px;
+  margin-right: 2%;
+  transition: 200ms all;
+}
+
+.icon:hover{
+  filter: saturate(200%);
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.icon img {
+  height: 60%;
+  width: 60%;
+  margin: 20%;
+}
+
+.typesTD {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}

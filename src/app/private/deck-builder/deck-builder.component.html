@@ -1,8 +1,10 @@
+<p-messages></p-messages>
+
 <p-pickList [source]="sourceCards" [target]="targetCards" sourceHeader="Available" targetHeader="Selected" [dragdrop]="true"
             [responsive]="true" [sourceStyle]="{'height':'30rem'}" [targetStyle]="{'height':'30rem'}" filterBy="cardApi.name"
             sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name"
             [showSourceControls]="false" [showTargetControls]="false"
-            (onMoveToTarget)="dealWithCard($event)">
+            (onMoveToTarget)="addCard($event.items)" (onMoveToSource)="removeCard($event.items)">
   <ng-template let-card pTemplate="item">
     <div class="product-item">
       <div class="image-container">
@@ -20,3 +22,93 @@
     </div>
   </ng-template>
 </p-pickList>
+
+<p-dialog [(visible)]="dialogCard" [style]="{width: '30%'}" header="Details" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <img [src]="selectedCard.cardApi.images.large" [alt]="selectedCard.cardApi.name" class="card-image" *ngIf="selectedCard.cardApi.images.large">
+    <div class="p-field">
+      <label for="name">Name</label>
+      <input type="text" pInputText id="name" [(ngModel)]="selectedCard.cardApi.name" [disabled]="true"/>
+    </div>
+    <div class="p-formgrid p-grid">
+      <div class="p-field p-col">
+        <label for="quantity">Quantity (max of: {{selectedCard.cardApi.cardCSV.quantity}})</label>
+        <p-inputNumber  id="quantity" [(ngModel)]="quantity" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="1" [max]="selectedCard.cardApi.cardCSV.quantity">
+        </p-inputNumber>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveCard()"></button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="dialogDeck" [style]="{width: '70%'}" header="Save Deck" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="p-field">
+      <label for="deckName">Name</label>
+      <input type="text" pInputText id="deckName" [(ngModel)]="deck.name"/>
+    </div>
+
+    <div class="p-field">
+      <label for="deckType">Type</label>
+      <p-multiSelect id="deckType" [options]="types" [(ngModel)]="deck.type" defaultLabel="Types" display="chip"></p-multiSelect>
+    </div>
+
+    <p-table [columns]="headers" [value]="content" styleClass="p-datatable-striped p-datatable-responsive-type">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th></th>
+          <th>{{columns[0].label}}</th>
+          <th>{{columns[1].label}}</th>
+          <th>{{columns[2].label}}</th>
+          <th>{{columns[3].label}}</th>
+          <th>{{columns[4].label}}</th>
+          <th>{{columns[5].label}}</th>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td class="centralized">
+            <img  awesomeTooltip="" image="{{rowData['image']}}" [src]="rowData['image']" [alt]="rowData['name']" width="100" class="p-shadow-4" />
+          </td>
+          <td>
+            <span class="p-column-title">{{columns[0].label}}</span>
+            {{rowData['number']}}
+          </td>
+          <td>
+            <span class="p-column-title">{{columns[1].label}}</span>
+            <div class="nameCollection">
+              <span>{{rowData['name']}}</span>
+              <img class="card-category-icon" [src]="'assets/icons/'+ rowData['collectionId'] + '.png'" [alt]="rowData['collectionName']" height="20"/>
+            </div>
+          </td>
+          <td>
+            <span class="p-column-title">{{columns[2].label}}</span>
+            {{rowData['type']}}
+          </td>
+          <td>
+            <span class="p-column-title">{{columns[3].label}}</span>
+            <span [class]="'card-badge status-' + getBadge(rowData['rarity'])">{{rowData['rarity']}}</span>
+          </td>
+          <td>
+            <span class="p-column-title">{{columns[4].label}}</span>
+            {{rowData['price'] | currency: 'USD'}}
+          </td>
+          <td>
+            <span class="p-column-title">{{columns[5].label}}</span>
+            {{rowData['quantity']}}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="validateDeck()"></button>
+  </ng-template>
+</p-dialog>
+
+<div class="p-dialog-footer">
+  <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveDeck()"></button>
+</div>

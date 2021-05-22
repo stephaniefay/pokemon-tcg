@@ -50,6 +50,7 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import {DialogModule} from "primeng/dialog";
 import {CalendarModule} from "primeng/calendar";
 import {PickListModule} from "primeng/picklist";
+import { InfoDeckDialogComponent } from './public/info-deck-dialog/info-deck-dialog.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import {PickListModule} from "primeng/picklist";
     DeckBuilderComponent,
     DecksComponent,
     CardManagementComponent,
+    InfoDeckDialogComponent,
   ],
   imports: [
     BrowserModule,

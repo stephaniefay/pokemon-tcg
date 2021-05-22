@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
-import {CardAPI} from "../../models/cardAPI";
 import {CardContent} from "../../models/interfaces/cardContent";
+import {CardAPI} from "../../models/cardAPI";
+import {DeckCard} from "../../models/deck";
 
 @Component({
-  selector: 'app-info-dialog',
-  templateUrl: './info-dialog.component.html',
-  styleUrls: ['./info-dialog.component.scss']
+  selector: 'app-info-deck-dialog',
+  templateUrl: './info-deck-dialog.component.html',
+  styleUrls: ['./info-deck-dialog.component.scss']
 })
-export class InfoDialogComponent implements OnInit {
+export class InfoDeckDialogComponent implements OnInit {
 
   constructor(public ref: DynamicDialogRef, public config: DynamicDialogConfig) { }
 
@@ -25,27 +26,27 @@ export class InfoDialogComponent implements OnInit {
   loading = true;
 
   ngOnInit(): void {
-    const cards: CardAPI[] = this.config.data;
+    const cards: DeckCard[] = this.config.data;
     this.content = [];
     cards.forEach( card => {
       let content: CardContent = {};
       let types: string = '';
-      if (card.subtypes) {
-        card.subtypes.forEach(value => {
+      if (card.card.subtypes) {
+        card.card.subtypes.forEach(value => {
           types += value + ', ';
         });
         types = types.slice(0, -2);
       }
 
-      content.number = card.number;
-      content.name = card.name;
+      content.number = card.card.number;
+      content.name = card.card.name;
       content.type = types;
-      content.rarity = card.rarity;
-      content.collectionName = card.set.name;
-      content.collectionId = card.set.id;
-      content.quantity = card.cardCSV.quantity.toString();
-      content.price = this.getPrice(card);
-      content.image = card.images.large;
+      content.rarity = card.card.rarity;
+      content.collectionName = card.card.set.name;
+      content.collectionId = card.card.set.id;
+      content.quantity = card.quantity.toString();
+      content.price = this.getPrice(card.card);
+      content.image = card.card.images.large;
 
       this.content.push(content);
     });
@@ -94,4 +95,5 @@ export class InfoDialogComponent implements OnInit {
     rarity = rarity.replace(/ /g, '').replace(/\./g, '').toLocaleLowerCase();
     return rarity;
   }
+
 }

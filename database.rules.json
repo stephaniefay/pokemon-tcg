@@ -1,6 +1,12 @@
 {
   "rules": {
     ".read": true,
-    ".write": "auth != null"
+    ".write": "auth != null",
+    "API": {
+      ".indexOn": "cardCSV/key"
+    },
+    "LigaPokemon": {
+      ".indexOn": "dateImport"
+    }
   }
 }

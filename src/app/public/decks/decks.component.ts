@@ -5,6 +5,8 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {DeckDB} from "../../models/interfaces/deckDB";
 import {DialogService} from "primeng/dynamicdialog";
 import {DeckBuilderComponent} from "../../private/deck-builder/deck-builder.component";
+import {InfoDialogComponent} from "../info-dialog/info-dialog.component";
+import {InfoDeckDialogComponent} from "../info-deck-dialog/info-deck-dialog.component";
 
 @Component({
   selector: 'app-decks',
@@ -39,7 +41,13 @@ export class DecksComponent implements OnInit {
   }
 
   viewDeck (deck: DeckDB) {
-    console.log('view deck');
+    this.dialogService.open(InfoDeckDialogComponent, {
+      header: 'Cards in this section',
+      width: '70%',
+      autoZIndex: false,
+      style: {"z-index": 3},
+      data: deck.deck.cards
+    });
   }
 
   editDeck (deck: DeckDB) {
