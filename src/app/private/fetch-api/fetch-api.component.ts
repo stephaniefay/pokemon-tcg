@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {LigaPokemonService} from "../../services/liga-pokemon.service";
-import {HttpServiceService, SearchCardAPIMultiple} from "../../services/http-service.service";
+import {HttpServiceService} from "../../services/http-service.service";
 import {ApiCardService} from "../../services/api-card.service";
 import {MessageService} from "primeng/api";
 import {CSVCard} from "../../models/CSVCard";
 import {CardAPI} from "../../models/cardAPI";
 import {cardCSVDB} from "../../models/interfaces/ligaPokemonDB";
+import {ApiSearch} from "../../models/interfaces/apiSearch";
 
 export class MultipleCards {
   index: string;
@@ -125,7 +126,7 @@ export class FetchApiComponent implements OnInit {
     this.loading = false;
   }
 
-  addToMultiple (response: SearchCardAPIMultiple, card: CSVCard) {
+  addToMultiple (response: ApiSearch, card: CSVCard) {
     if (this.multipleCardsFound == null) {
       this.multipleCardsFound = [];
     }

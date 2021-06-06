@@ -1,9 +1,10 @@
 <div class="card">
   <p-table #dt [value]="cards" [rows]="10" [paginator]="true" [globalFilterFields]="['cardApi.name','cardApi.set.name','cardApi.number']"
            [rowHover]="true" dataKey="key"
-           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true" (onPage)="gotoTop()">
     <ng-template pTemplate="caption">
       <div class="p-d-flex p-ai-center p-jc-between">
+        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
         <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
@@ -50,14 +51,16 @@
       <label for="name">Name</label>
       <input type="text" pInputText id="name" [(ngModel)]="card.cardApi.name" [disabled]="true"/>
     </div>
-    <div class="p-field">
-      <label for="description">Flavor Text</label>
-      <textarea id="description" pInputTextarea [(ngModel)]="card.cardApi.flavorText" [disabled]="true"></textarea>
-    </div>
     <div class="p-formgrid p-grid">
       <div class="p-field p-col">
         <label for="quantity">Quantity</label>
         <p-inputNumber id="quantity" [(ngModel)]="card.cardApi.cardCSV.quantity"></p-inputNumber>
+      </div>
+      <div class="p-field p-col" *ngIf="card.cardApi.cardCSV.extras">
+        <div class="extrasLine"><label for="extras">Extras: </label> <button *ngIf="showAddButton" pButton pRipple type="button" icon="pi pi-bookmark" class="p-button-rounded p-button-secondary p-button-outlined"></button> </div>
+        <div id="extras">
+          <p-chip *ngFor="let extra of card.cardApi.cardCSV.extras" [label]="extra" [removable]="true" (onRemove)="removeExtra(extra)"></p-chip>
+        </div>
       </div>
     </div>
   </ng-template>

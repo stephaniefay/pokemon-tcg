@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {CardAPI} from "../../models/cardAPI";
 import {ApiCardService} from "../../services/api-card.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {LigaPokemonService} from "../../services/liga-pokemon.service";
 import {CardAPIDB} from "../../models/interfaces/cardApiDB";
+import {AddCardComponent} from "../add-card/add-card.component";
+import {DialogService} from "primeng/dynamicdialog";
 
 @Component({
   selector: 'app-card-management',
@@ -18,11 +19,13 @@ export class CardManagementComponent implements OnInit {
   cardDialog: boolean;
   card: CardAPIDB;
   submitted: boolean;
+  showAddButton: boolean = true;
 
   constructor(private apiCardService: ApiCardService,
               private ligaCardService: LigaPokemonService,
               private confirmationService: ConfirmationService,
-              private messageService: MessageService) { }
+              private messageService: MessageService,
+              public dialogService: DialogService) { }
 
   ngOnInit(): void {
 
@@ -62,6 +65,7 @@ export class CardManagementComponent implements OnInit {
   saveCard() {
     this.submitted = true;
     if (this.card.cardApi.cardCSV.quantity > 0) {
+      this.card.cardApi.cardCSV.dateImport = new Date().getTime();
       this.apiCardService.update(this.card.cardApi, this.card.key)
       this.ligaCardService.update(this.card.cardApi.cardCSV, this.card.cardApi.cardCSV.key);
     } else {
@@ -79,6 +83,42 @@ export class CardManagementComponent implements OnInit {
       extrasString = extrasString.slice(0, -2);
     }
     return extrasString;
+  }
+
+  onClickAddButton() {
+    this.showAddButton = false;
+  }
+
+  addExtra(extra: string) {
+    this.card.cardApi.cardCSV.extras.push(extra);
+    this.showAddButton = true;
+  }
+
+  cancelAddExtra () {
+    this.showAddButton = true;
+  }
+
+  removeExtra(extra: string) {
+    this.card.cardApi.cardCSV.extras = this.card.cardApi.cardCSV.extras.filter(val =>
+      val == extra
+    );
+  }
+
+  gotoTop() {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+
+  openNew() {
+    this.dialogService.open(AddCardComponent, {
+      header: 'Add cards',
+      width: '90%',
+      autoZIndex: false,
+      style: {"z-index": 3}
+    });
   }
 
 }

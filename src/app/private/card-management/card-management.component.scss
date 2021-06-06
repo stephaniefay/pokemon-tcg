@@ -98,5 +98,20 @@
       }
     }
   }
+}
 
+.extrasLine {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.p-button.p-button-secondary.p-button-outlined, .p-buttonset.p-button-secondary > .p-button.p-button-outlined, .p-splitbutton.p-button-secondary > .p-button.p-button-outlined {
+  width: 15px;
+  height: 15px;
+}
+
+.buttonNew {
+  display: flex;
 }

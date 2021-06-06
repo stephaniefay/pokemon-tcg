@@ -2,14 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {CardAPI} from "../models/cardAPI";
-
-export interface SearchCardAPIMultiple {
-  data: any[];
-  page: number;
-  pageSize: number;
-  count: number;
-  totalCount: number;
-}
+import {ApiSearch} from "../models/interfaces/apiSearch";
 
 export interface SearchCardAPI {
   data: CardAPI;
@@ -28,6 +21,6 @@ export class HttpServiceService {
   }
 
   searchForCard (query: string) {
-    return this.http.get<SearchCardAPIMultiple>('https://api.pokemontcg.io/v2/cards?q=' + query, {headers: this.httpHeaders});
+    return this.http.get<ApiSearch>('https://api.pokemontcg.io/v2/cards?q=' + query, {headers: this.httpHeaders});
   }
 }

@@ -51,6 +51,8 @@ import {DialogModule} from "primeng/dialog";
 import {CalendarModule} from "primeng/calendar";
 import {PickListModule} from "primeng/picklist";
 import { InfoDeckDialogComponent } from './public/info-deck-dialog/info-deck-dialog.component';
+import {ChipModule} from "primeng/chip";
+import { AddCardComponent } from './private/add-card/add-card.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +76,7 @@ import { InfoDeckDialogComponent } from './public/info-deck-dialog/info-deck-dia
     DecksComponent,
     CardManagementComponent,
     InfoDeckDialogComponent,
+    AddCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -107,6 +110,7 @@ import { InfoDeckDialogComponent } from './public/info-deck-dialog/info-deck-dia
     DialogModule,
     InputNumberModule,
     CalendarModule,
+    ChipModule,
     PickListModule,
   ],
   providers: [],

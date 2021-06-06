@@ -1,0 +1,92 @@
+<div class="content">
+  <p-progressBar *ngIf="loading" mode="indeterminate"></p-progressBar>
+  <div class="p-fluid p-grid">
+  <div class="p-field p-col-12 p-md-4">
+        <span class="p-float-label">
+            <input type="text" id="cardname" pInputText [(ngModel)]="cardName">
+            <label for="cardname">Card Name</label>
+        </span>
+  </div>
+  <div class="p-field p-col-12 p-md-4">
+        <span class="p-float-label">
+            <p-dropdown inputId="typedropdown" [autoDisplayFirst]="false" [options]="types" [(ngModel)]="typeChosen" optionLabel="label"></p-dropdown>
+            <label for="typedropdown">Type</label>
+        </span>
+  </div>
+  <div class="p-field p-col-12 p-md-4">
+        <span class="p-float-label">
+            <p-dropdown inputId="collectiondropdown" [autoDisplayFirst]="false" [options]="collections" [(ngModel)]="collectionChosen" optionLabel="label"></p-dropdown>
+            <label for="collectiondropdown">Collection</label>
+        </span>
+  </div>
+  <div class="p-field p-col-12 p-md-4">
+        <span class="p-float-label">
+            <p-dropdown inputId="supertypedropdown" [autoDisplayFirst]="false" [options]="supertypes" [(ngModel)]="supertypeChosen" optionLabel="label"></p-dropdown>
+            <label for="supertypedropdown">Supertype</label>
+        </span>
+  </div>
+  <button pButton pRipple label="Search" icon="fas fa-search" class="p-button-success p-mr-2" (click)="newSearch()"></button>
+</div>
+</div>
+
+<p-dataView [loading]="loading" *ngIf="cards" [value]="cards.data" [paginator]="false" [rows]="20" layout="grid"
+            [totalRecords]="cards.totalCount">
+  <ng-template let-card pTemplate="gridItem">
+    <div class="p-col-12 p-md-3">
+      <div class="card">
+        <img class="zoom card-image-big" (click)="addCard(card)" [src]="card.images.large" [alt]="card.name">
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <div class="footer">
+      <button *ngIf="hasPrevious()" pButton pRipple label="Previous" icon="fas fa-arrow-left" (click)="previousPage()"></button>
+      <label>{{getCount()}} of {{cards.totalCount}}</label>
+      <button *ngIf="hasNext()" pButton pRipple label="Next" icon="fas fa-arrow-right" (click)="nextPage()"></button>
+    </div>
+  </ng-template>
+</p-dataView>
+
+<p-dialog [(visible)]="displayDialog" [style]="{width: '60%'}" header="Card Details" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="p-field">
+      <label for="name">Name</label>
+      <input type="text" pInputText id="name" [(ngModel)]="selectedCard.cardCSV.cardName" [disabled]="true"/>
+    </div>
+    <div class="p-field">
+      <label for="number">Number</label>
+      <input type="text" pInputText id="number" [(ngModel)]="selectedCard.cardCSV.cardNumber" [disabled]="true"/>
+    </div>
+    <div class="p-field">
+      <label for="edition">Edition</label>
+      <input type="text" pInputText id="edition" [(ngModel)]="selectedCard.cardCSV.edition.name" [disabled]="true"/>
+    </div>
+    <div class="p-field">
+      <label for="rarity">Rarity</label>
+      <input type="text" pInputText id="rarity" [(ngModel)]="selectedCard.cardCSV.rarity" [disabled]="true"/>
+    </div>
+    <div class="p-formgrid p-grid">
+      <div class="p-field p-col">
+        <label for="quantity">Quantity</label>
+        <p-inputNumber id="quantity" [(ngModel)]="selectedCard.cardCSV.quantity"></p-inputNumber>
+      </div>
+      <div class="p-field p-col">
+        <label for="quality">Quality</label>
+        <p-dropdown inputId="quality" [autoDisplayFirst]="false" [options]="qualities" [(ngModel)]="selectedCard.cardCSV.quality"></p-dropdown>
+      </div>
+      <div class="p-field p-col">
+        <label for="language">Language</label>
+        <p-dropdown inputId="language" [autoDisplayFirst]="false" [options]="languages" [(ngModel)]="selectedCard.cardCSV.language"></p-dropdown>
+      </div>
+      <div class="p-field p-col">
+        <label for="extras">Extras</label>
+        <p-multiSelect inputId="extras" [options]="extras" [(ngModel)]="selectedCard.cardCSV.extras" defaultLabel="Select Extras" display="chip"></p-multiSelect>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveCard()"></button>
+  </ng-template>
+</p-dialog>
