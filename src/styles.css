@@ -127,6 +127,11 @@ body {
   color: #086e54;
 }
 
+.card-badge.status-rareshinygx {
+  background: #c4955a;
+  color: #6e5508;
+}
+
 .card-badge {
   border-radius: 2px;
   padding: .25em .5rem;

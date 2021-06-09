@@ -45,6 +45,11 @@ export class AppComponent {
         routerLink: ['/public/decks']
       },
       {
+        label: 'Wishlist',
+        icon: 'far fa-star',
+        routerLink: ['/public/wishlist']
+      },
+      {
         label: 'Login',
         icon: 'fas fa-user-circle',
         command: (event: Event) => {
@@ -109,6 +114,11 @@ export class AppComponent {
         label: 'Decks',
         icon: 'fas fa-journal-whills',
         routerLink: ['/public/decks']
+      },
+      {
+        label: 'Wishlist',
+        icon: 'far fa-star',
+        routerLink: ['/public/wishlist']
       },
       {
         label: 'Logout',

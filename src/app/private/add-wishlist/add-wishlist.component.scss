@@ -1,0 +1,132 @@
+.content {
+  margin: 1%;
+}
+
+.card {
+  display: flex;
+  justify-content: space-around;
+}
+
+.zoom {
+  transition: transform .2s; /* Animation */
+}
+
+.card-image-big {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.zoom:hover {
+  transform: scale(1.2);
+}
+
+:host ::ng-deep {
+
+  .card-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .card-description {
+    margin: 0 0 1rem 0;
+    min-height: 5%;
+  }
+
+  .card-category-icon {
+    vertical-align: middle;
+    padding-right: .5rem;
+  }
+
+  .card-category {
+    font-weight: 600;
+    vertical-align: middle;
+  }
+
+  .card-grid-item {
+    margin: .5em;
+    border: 1px solid #dee2e6;
+
+    .card-grid-item-top,
+    .card-grid-item-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    img {
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      margin: 2rem 0;
+    }
+
+    .card-grid-item-content {
+      text-align: center;
+    }
+
+    .card-price {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+  }
+}
+
+.card {
+  padding: 2rem;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  margin-bottom: 2rem;
+}
+
+@media screen and (max-width: 576px) {
+  :host ::ng-deep .card-list-item .card-grid-item {
+    flex-direction: column;
+    align-items: center;
+
+    img {
+      margin: 2rem 0;
+    }
+
+    .card-list-detail {
+      text-align: center;
+    }
+
+    .card-price {
+      align-self: center;
+    }
+
+    .card-list-action {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-list-action {
+      margin-top: 2rem;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .princ-img-card {
+      height: 300px;
+    }
+  }
+}
+
+.card-image-big {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.badges {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+}

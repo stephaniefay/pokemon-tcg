@@ -53,6 +53,8 @@ import {PickListModule} from "primeng/picklist";
 import { InfoDeckDialogComponent } from './public/info-deck-dialog/info-deck-dialog.component';
 import {ChipModule} from "primeng/chip";
 import { AddCardComponent } from './private/add-card/add-card.component';
+import { WishlistComponent } from './public/wishlist/wishlist.component';
+import { AddWishlistComponent } from './private/add-wishlist/add-wishlist.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +79,8 @@ import { AddCardComponent } from './private/add-card/add-card.component';
     CardManagementComponent,
     InfoDeckDialogComponent,
     AddCardComponent,
+    WishlistComponent,
+    AddWishlistComponent,
   ],
   imports: [
     BrowserModule,

@@ -47,6 +47,9 @@ export const Collections = {
 
   // Diamond & Pearl Collection
   DP_PROMOS: {value: "dpp", label: "Diamond & Pearl Promos"},
+  DP_LUCARIO: {value: "dpl", label: "Trainer Kit: Lucario"},
+  DP_MANAPHY: {value: "dpl", label: "Trainer Kit: Manaphy"},
+  DP_TRAINER: {value: "dpl", label: "Trainer Kit"},
   DIAMOND_PEARL: {value: "dp1", label: "Diamond & Pearl"},
   MYSTERIOUS_TREASURES: {value: "dp2", label: "Mysterious Treasures"},
   SECRET_WONDERS: {value: "dp3", label: "Secret Wonders"},

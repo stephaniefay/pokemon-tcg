@@ -14,6 +14,7 @@ import {DecksComponent} from "../public/decks/decks.component";
 import {ImportSomeComponent} from "../private/import-some/import-some.component";
 import {FetchSomeApiComponent} from "../private/fetch-some-api/fetch-some-api.component";
 import {CardManagementComponent} from "../private/card-management/card-management.component";
+import {WishlistComponent} from "../public/wishlist/wishlist.component";
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/']);
 
@@ -40,6 +41,10 @@ const routes: Routes = [
       {
         path: 'decks',
         component: DecksComponent
+      },
+      {
+        path: 'wishlist',
+        component: WishlistComponent
       }
     ]
   },

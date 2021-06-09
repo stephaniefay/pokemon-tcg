@@ -1,0 +1,52 @@
+<div class="card">
+  <p-table #dt [value]="cards" [rows]="10" [paginator]="true" [globalFilterFields]="['cardApi.name','cardApi.set.name','cardApi.number']"
+           [rowHover]="true" dataKey="key"
+           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true" (onPage)="gotoTop()">
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        <button pButton pRipple *ngIf="auth.user | async as user;" label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+        <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+                </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Number</th>
+        <th>Name</th>
+        <th></th>
+        <th>Collection</th>
+        <th>Rarity</th>
+        <th>Price (Market)</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-card>
+      <tr>
+        <td>{{card.cardApi.number}}</td>
+        <td>{{card.cardApi.name}}</td>
+        <td><img [src]="card.cardApi.images.small" [alt]="card.cardApi.name" awesomeTooltip="" image="{{card.cardApi.images.large}}" width="100" class="p-shadow-4" /></td>
+        <td>
+          <div class="table-ligapokemon">
+            <img [alt]="card.cardApi.set.name" src="assets/icons/{{getIcon(card.cardApi.set.id)}}" height="16" style="vertical-align: middle" />
+            <div class="item-ligapokemon">{{card.cardApi.set.name}}</div>
+          </div>
+        </td>
+        <td><span [class]="'card-badge status-' + getBadge(card.cardApi.rarity)">{{card.cardApi.rarity}}</span></td>
+        <td>{{getPrice(card) | currency: 'USD'}}</td>
+        <td>
+          <button pButton pRipple *ngIf="auth.user | async as user;" icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteCard(card)"></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        In total there are {{cards ? cards.length : 0 }} cards.
+      </div>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
