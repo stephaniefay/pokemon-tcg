@@ -91,6 +91,7 @@ export class InfoDialogComponent implements OnInit {
   }
 
   getBadge (rarity:string) {
+    if (rarity == null) rarity = 'Common';
     rarity = rarity.replace(/ /g, '').replace(/\./g, '').toLocaleLowerCase();
     return rarity;
   }

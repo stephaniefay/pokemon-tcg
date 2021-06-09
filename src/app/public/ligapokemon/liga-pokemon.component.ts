@@ -76,7 +76,7 @@ export class LigaPokemonComponent implements OnInit {
   }
 
   getRarity (initial: string) {
-    if (initial.trim() == '') return '';
+    if (initial == null || initial.trim() == '') return '';
     switch (initial) {
       case 'C':
         return 'Common';

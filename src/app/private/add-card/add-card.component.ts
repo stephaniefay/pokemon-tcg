@@ -83,7 +83,11 @@ export class AddCardComponent implements OnInit {
   }
 
   getRarity (rarity: string) {
-    if (rarity == null || rarity.trim() == '') return '';
+    if (rarity == null) {
+      this.selectedCard.rarity = 'Common';
+      rarity = 'Common';
+    }
+    if (rarity.trim() == '') return '';
     switch (rarity) {
       case 'Common':
         return 'C';
