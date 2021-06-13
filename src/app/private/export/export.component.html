@@ -1,1 +1,7 @@
-<p>export works!</p>
+<div class="ui-fluid">
+  <div class="p-formgrid p-grid">
+    <div class="p-field p-col" *ngFor="let key of buttons">
+      <button pButton pRipple type="button" [label]="getLabel(key)" class="p-button-outlined p-button-secondary" style="width:250px" (click)="export(key)"></button>
+    </div>
+  </div>
+</div>

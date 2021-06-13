@@ -1,0 +1,13 @@
+<div class="ui-fluid">
+  <div *ngFor="let category of categories">
+      <h3>{{category.label}}</h3>
+    <div class="line">
+      <div *ngFor="let collection of getArrayOfCollections(category); let i = index">
+        <a [href]="collection.url" *ngIf="!isLinkDisabled(category, i)"><button pButton pRipple type="button" [label]="getLabel(collection)"
+                class="p-button-outlined p-button-secondary" style="width:250px"></button></a>
+        <button pButton pRipple type="button" [label]="getLabel(collection)" class="p-button-outlined p-button-secondary" style="width:250px"
+                *ngIf="isLinkDisabled(category, i)" [disabled]="isLinkDisabled(category, i)"></button>
+      </div>
+    </div>
+  </div>
+</div>

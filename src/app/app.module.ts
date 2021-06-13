@@ -55,6 +55,7 @@ import {ChipModule} from "primeng/chip";
 import { AddCardComponent } from './private/add-card/add-card.component';
 import { WishlistComponent } from './public/wishlist/wishlist.component';
 import { AddWishlistComponent } from './private/add-wishlist/add-wishlist.component';
+import { IndexesComponent } from './public/indexes/indexes.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { AddWishlistComponent } from './private/add-wishlist/add-wishlist.compon
     AddCardComponent,
     WishlistComponent,
     AddWishlistComponent,
+    IndexesComponent,
   ],
   imports: [
     BrowserModule,

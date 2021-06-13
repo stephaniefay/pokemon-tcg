@@ -132,6 +132,11 @@ body {
   color: #6e5508;
 }
 
+.card-badge.status-rareprime {
+  background: #5a81c4;
+  color: #08516e;
+}
+
 .card-badge {
   border-radius: 2px;
   padding: .25em .5rem;

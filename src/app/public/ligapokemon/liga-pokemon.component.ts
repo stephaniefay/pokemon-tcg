@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {LigaPokemonService} from "../../services/liga-pokemon.service";
 import {CSVCard} from "../../models/CSVCard";
 import {CollectionsFunctions} from "../../models/collections";
+import {IndexesComponent} from "../indexes/indexes.component";
+import {DialogService} from "primeng/dynamicdialog";
 
 @Component({
   selector: 'app-ligapokemon',
@@ -11,7 +13,8 @@ import {CollectionsFunctions} from "../../models/collections";
 
 export class LigaPokemonComponent implements OnInit {
 
-  constructor(private service: LigaPokemonService) { }
+  constructor(private service: LigaPokemonService,
+              public dialogService: DialogService) { }
 
   columns: any[];
   cards: any[] = [];
@@ -133,5 +136,14 @@ export class LigaPokemonComponent implements OnInit {
       return 'base1.png'
     }
     return code + '.png';
+  }
+
+  openDialog() {
+    this.dialogService.open(IndexesComponent, {
+      header: 'Links to Liga Pokemon',
+      width: '70%',
+      autoZIndex: false,
+      style: {"z-index": 3}
+    });
   }
 }
