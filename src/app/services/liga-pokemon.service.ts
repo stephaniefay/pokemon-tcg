@@ -11,7 +11,7 @@ export class LigaPokemonService {
   constructor(private db: AngularFireDatabase) { }
 
   insert(csvRecord: CSVCard) {
-    this.db.list('LigaPokemon').push(csvRecord);
+    return this.db.list('LigaPokemon').push(csvRecord);
   }
 
   update(csvRecord: CSVCard, key: string) {
@@ -44,6 +44,19 @@ export class LigaPokemonService {
 
   getByTime (time: number) {
     return this.db.list('LigaPokemon', ref => ref.orderByChild('dateImport').startAt(time))
+      .snapshotChanges()
+      .pipe(
+        map(changes => {
+          return changes.map(c => ({
+            key: c.payload.key,
+            cardCSV: <CSVCard> c.payload.val()
+          }));
+        })
+      );
+  }
+
+  getByCard (cardName: string) {
+    return this.db.list('LigaPokemon', ref => ref.orderByChild('cardName').equalTo(cardName))
       .snapshotChanges()
       .pipe(
         map(changes => {

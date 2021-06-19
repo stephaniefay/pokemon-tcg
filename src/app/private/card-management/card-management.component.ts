@@ -66,8 +66,27 @@ export class CardManagementComponent implements OnInit {
     this.submitted = true;
     if (this.card.cardApi.cardCSV.quantity > 0) {
       this.card.cardApi.cardCSV.dateImport = new Date().getTime();
-      this.apiCardService.update(this.card.cardApi, this.card.key)
-      this.ligaCardService.update(this.card.cardApi.cardCSV, this.card.cardApi.cardCSV.key);
+      if (this.card.cardApi.cardCSV.key) {
+        this.ligaCardService.update(this.card.cardApi.cardCSV, this.card.cardApi.cardCSV.key);
+        this.apiCardService.update(this.card.cardApi, this.card.key)
+      } else {
+        const observer = this.ligaCardService.getByCard(this.card.cardApi.cardCSV.cardName).subscribe(result => {
+          const temp = result.filter(val =>
+            ((val.cardCSV.extras && this.card.cardApi.cardCSV.extras) ? val.cardCSV.extras.sort().join(' ') == this.card.cardApi.cardCSV.extras.sort().join(' ') : (val.cardCSV.extras == this.card.cardApi.cardCSV.extras)) &&
+            val.cardCSV.language == this.card.cardApi.cardCSV.language &&
+            val.cardCSV.quality == this.card.cardApi.cardCSV.quality &&
+            val.cardCSV.cardName == this.card.cardApi.cardCSV.cardName &&
+            val.cardCSV.cardNumber == this.card.cardApi.cardCSV.cardNumber &&
+            val.cardCSV.edition.name == this.card.cardApi.cardCSV.edition.name
+          );
+
+          const pop = temp.pop();
+          this.card.cardApi.cardCSV.key = pop.key;
+          observer.unsubscribe();
+          this.ligaCardService.update(this.card.cardApi.cardCSV, this.card.cardApi.cardCSV.key);
+          this.apiCardService.update(this.card.cardApi, this.card.key)
+        });
+      }
     } else {
       this.deleteCard(this.card)
     }

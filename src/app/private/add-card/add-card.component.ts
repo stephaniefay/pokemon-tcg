@@ -129,8 +129,9 @@ export class AddCardComponent implements OnInit {
 
   saveCard() {
     this.selectedCard.cardCSV.dateImport = new Date().getTime();
+    const key = this.ligaCardService.insert(this.selectedCard.cardCSV).key;
+    this.selectedCard.cardCSV.key = key;
     this.apiCardService.insert(this.selectedCard);
-    this.ligaCardService.insert(this.selectedCard.cardCSV);
     this.displayDialog = false;
   }
 

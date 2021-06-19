@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {CardAPIDB} from "../../models/interfaces/cardApiDB";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {AddCardComponent} from "../../private/add-card/add-card.component";
 import {DialogService} from "primeng/dynamicdialog";
 import {WishlistService} from "../../services/wishlist.service";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {AddWishlistComponent} from "../../private/add-wishlist/add-wishlist.component";
-import {CollectionsFunctions} from "../../models/collections";
 
 @Component({
   selector: 'app-wishlist',

@@ -138,8 +138,8 @@ export const Collections = {
   DETECTIVE_PIKACHU: {value: "det1", label: "Detective Pikachu", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86310"},
   UNBROKEN_BONDS: {value: "sm10", label: "Unbroken Bonds", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86311"},
   UNIFIED_MINDS: {value: "sm11", label: "Unified Minds", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86312"},
-  HIDDEN_FATES: {value: "sma", label: "Hidden Fates", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86313"},
-  HIDDEN_FATES_SHINY: {value: "sm115", label: "Hidden Fates (Shiny)", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86313"},
+  HIDDEN_FATES: {value: "sm115", label: "Hidden Fates", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86313"},
+  HIDDEN_FATES_SHINY: {value: "sma", label: "Hidden Fates (Shiny)", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86313"},
   COSMIC_ECLIPSE: {value: "sm12", label: "Cosmic Eclipse", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86319"},
 
   // Sword & Shield Collection
@@ -151,7 +151,8 @@ export const Collections = {
   VIVID_VOLTAGE: {value: "swsh4", label: "Vivid Voltage", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86325"},
   SHINING_FATES: {value: "swsh45", label: "Shining Fates", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86326"},
   SHINING_FATES_SHINY: {value: "swsh45sv", label: "Shining Fates (Shiny)", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86327"},
-  BATTLE_STYLES: {value: "swsh5", label: "Battle Styles", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86328"}
+  BATTLE_STYLES: {value: "swsh5", label: "Battle Styles", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86328"},
+  CHILLING_REIGN: {value: "swsh6", label: "Chilling Reign", url: ""}
 
 } as const;
 
