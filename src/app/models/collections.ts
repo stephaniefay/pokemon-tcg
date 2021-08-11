@@ -140,7 +140,7 @@ export const Collections = {
   UNIFIED_MINDS: {value: "sm11", label: "Unified Minds", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86312"},
   HIDDEN_FATES: {value: "sm115", label: "Hidden Fates", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86313"},
   HIDDEN_FATES_SHINY: {value: "sma", label: "Hidden Fates (Shiny)", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86313"},
-  COSMIC_ECLIPSE: {value: "sm12", label: "Cosmic Eclipse", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86319"},
+  COSMIC_ECLIPSE: {value: "sm12", label: "Co0p-smic Eclipse", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86319"},
 
   // Sword & Shield Collection
   SWSH_PROMOS: {value: "swshp", label: "Sword & Shield Promos", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86320"},

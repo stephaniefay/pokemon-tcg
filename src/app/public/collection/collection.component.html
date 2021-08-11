@@ -1,5 +1,5 @@
 <div class="card">
-  <p-dataView #dv [value]="cards" [paginator]="true" [rows]="9" filterBy="cardApi.name"
+  <p-dataView #dv [value]="cards" [paginator]="true" [rows]="cardByPage" filterBy="cardApi.name"
               [sortField]="sortField" [sortOrder]="sortOrder" layout="grid" [loading]="loading" (onPage)="gotoTop()">
     <ng-template pTemplate="header">
       <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
@@ -8,23 +8,10 @@
           <i class="pi pi-search"></i>
           <input type="search" pInputText placeholder="Search by Name" (input)="dv.filter($event.target.value)">
         </span>
-        <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
-      </div>
-    </ng-template>
-    <ng-template let-card pTemplate="listItem">
-      <div class="p-col-12">
-        <div class="card-list-item">
-          <div class="card-list-detail">
-            <div class="card-name">{{card.cardApi.name}}</div>
-            <div class="card-description">{{card.cardApi.flavorText}}</div>
-            <img class="card-category-icon" [src]="'assets/icons/'+ card.cardApi.set.id + '.png'" [alt]="card.cardApi.set.name" height="20"/>
-            <span class="card-category">{{card.cardApi.set.name}}</span>
-          </div>
-          <div class="card-list-action">
-            <span class="card-price">${{getDescriptor(card.cardApi)}}</span>
-            <span [class]="'card-badge status-' + getBadge(card.cardApi.rarity)">{{card.cardApi.rarity}}</span>
-          </div>
-        </div>
+        <span class="slider">
+          Cards by page: {{cardByPage}}
+          <p-slider [(ngModel)]="cardByPage" [step]="3" [min]="9" [max]="201"></p-slider>
+        </span>
       </div>
     </ng-template>
     <ng-template let-card pTemplate="gridItem">
@@ -34,6 +21,7 @@
             <div>
               <img class="card-category-icon" [src]="'assets/icons/'+ card.cardApi.set.id + '.png'" [alt]="card.cardApi.set.name" height="20"/>
               <span class="card-category">{{card.cardApi.set.name}}</span>
+              <img class="card-category-flag" [src]="'assets/icons/flags/' + card.cardApi.cardCSV.language + '.png'" [alt]="card.cardApi.cardCSV.language" height="20" />
             </div>
             <div class="badges">
             <span *ngIf="getExtra(card.cardApi) != null" [class]="'card-badge ' + getExtraClass(card.cardApi)">{{getExtra(card.cardApi)}}</span>

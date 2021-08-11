@@ -1,14 +1,14 @@
 <ng-template #logIn>
   <p-menubar [model]="items">
     <ng-template pTemplate="start">
-      <img src="" height="40" class="p-mr-2">
+      <img src="assets/logo.png" height="40" class="p-mr-2">
     </ng-template>
   </p-menubar>
 </ng-template>
 
 <p-menubar *ngIf="auth.user | async as user; else logIn" [model]="itemsLogged">
   <ng-template pTemplate="start">
-    <img src="" height="40" class="p-mr-2">
+    <img src="assets/logo.png" height="40" class="p-mr-2">
   </ng-template>
 </p-menubar>
 

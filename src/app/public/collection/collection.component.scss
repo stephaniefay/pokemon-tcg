@@ -4,6 +4,13 @@
     font-weight: normal;
   }
 
+  .slider {
+    width: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
   .card-name {
     font-size: 1.5rem;
     font-weight: 700;
@@ -18,6 +25,12 @@
     vertical-align: middle;
     padding-right: .5rem;
   }
+
+  .card-category-flag {
+    vertical-align: middle;
+    padding-left: .5rem;
+  }
+
 
   .card-category {
     font-weight: 600;

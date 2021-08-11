@@ -18,6 +18,7 @@ export class CollectionComponent implements OnInit {
 
   cards: CardAPIFirebase[];
   sortOptions: SelectItem[];
+  cardByPage: number;
   sortOrder: number;
   sortField: string;
   loading = true;
@@ -30,18 +31,22 @@ export class CollectionComponent implements OnInit {
       this.cards = [];
       data.forEach( item => {
         this.initializePrice(item.cardApi);
+        this.getDexNum(item.cardApi);
         this.cards.push({key: item.key, cardApi: item.cardApi});
       });
       this.loading = false;
     });
 
     this.sortOptions = [
-      {label: 'Price High to Low', value: '!cardApi.priceTotal'},
-      {label: 'Price Low to High', value: 'cardApi.priceTotal'},
+      {label: 'Dex Number', value: 'cardApi.dexNum'},
       {label: 'Acquisition Date (Desc)', value: '!cardApi.cardCSV.dateImport'},
       {label: 'Acquisition Date (Asc)', value: 'cardApi.cardCSV.dateImport'},
-      {label: 'Alphabetically', value: 'cardApi.name'}
+      {label: 'Alphabetically', value: 'cardApi.name'},
+      {label: 'Price High to Low', value: '!cardApi.priceTotal'},
+      {label: 'Price Low to High', value: 'cardApi.priceTotal'}
     ];
+
+    this.cardByPage = 9;
   }
 
   onSortChange(event) {
@@ -193,6 +198,13 @@ export class CollectionComponent implements OnInit {
     }
 
     return null;
+  }
+
+  getDexNum (card: CardAPI) {
+    if (card.nationalPokedexNumbers == null || card.nationalPokedexNumbers.length == 0)
+      card.dexNum = 999;
+    else
+      card.dexNum = card.nationalPokedexNumbers[0];
   }
 
   gotoTop() {

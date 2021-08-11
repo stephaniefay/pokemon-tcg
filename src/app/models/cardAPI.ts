@@ -85,4 +85,5 @@ export class CardAPI {
   tcgplayer: TcgPlayer;
   cardCSV: CSVCard;
   priceTotal: number;
+  dexNum: number;
 }
