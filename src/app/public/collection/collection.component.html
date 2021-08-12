@@ -1,12 +1,12 @@
 <div class="card">
-  <p-dataView #dv [value]="cards" [paginator]="true" [rows]="cardByPage" filterBy="cardApi.name"
+  <p-dataView #dv [value]="cards" [paginator]="true" [rows]="cardByPage" filterBy="cardApi.name,cardApi.set.name,cardApi.types"
               [sortField]="sortField" [sortOrder]="sortOrder" layout="grid" [loading]="loading" (onPage)="gotoTop()">
     <ng-template pTemplate="header">
       <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
         <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort" (onChange)="onSortChange($event)" styleClass="p-mb-2 p-mb-md-0"></p-dropdown>
         <span class="p-input-icon-left p-mb-2 p-mb-md-0">
           <i class="pi pi-search"></i>
-          <input type="search" pInputText placeholder="Search by Name" (input)="dv.filter($event.target.value)">
+          <input type="search" pInputText placeholder="Search by Name, Collection or Type" (input)="dv.filter($event.target.value)">
         </span>
         <span class="slider">
           Cards by page: {{cardByPage}}
