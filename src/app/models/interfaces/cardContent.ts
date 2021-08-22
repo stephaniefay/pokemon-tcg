@@ -8,4 +8,8 @@ export interface CardContent {
   price?: string;
   image?: string;
   quantity?: string;
+  isFoil?: boolean;
+  isReverse?: boolean;
+  language?: string;
+  quality?: string;
 }

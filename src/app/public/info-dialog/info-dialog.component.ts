@@ -18,7 +18,8 @@ export class InfoDialogComponent implements OnInit {
     {label: 'Type', field: 'type'},
     {label: 'Rarity', field: 'rarity'},
     {label: 'Price (Un)', field: 'price'},
-    {label: 'Quantity', field: 'quantity'}
+    {label: 'Quantity', field: 'quantity'},
+    {label: 'Quality', field: 'quality'}
   ];
 
   content: CardContent[];
@@ -46,7 +47,10 @@ export class InfoDialogComponent implements OnInit {
       content.quantity = card.cardCSV.quantity.toString();
       content.price = this.getPrice(card);
       content.image = card.images.large;
-
+      content.isFoil = (card.cardCSV.extras != null && card.cardCSV.extras.includes("Foil"));
+      content.isReverse = (card.cardCSV.extras != null && card.cardCSV.extras.includes("Reverse Foil"));
+      content.language = card.cardCSV.language;
+      content.quality = card.cardCSV.quality;
       this.content.push(content);
     });
     this.content.sort((a,b) => a.name.localeCompare(b.name));
@@ -94,5 +98,22 @@ export class InfoDialogComponent implements OnInit {
     if (rarity == null) rarity = 'Common';
     rarity = rarity.replace(/ /g, '').replace(/\./g, '').toLocaleLowerCase();
     return rarity;
+  }
+
+  getQuality (quality: string) {
+    switch (quality) {
+      case 'M':
+        return 'Mint';
+      case 'NM':
+        return 'Near Mint';
+      case 'SP':
+        return 'Slightly Played';
+      case 'MP':
+        return 'Moderately Played';
+      case 'HP':
+        return 'Heavily Played';
+      case 'D':
+        return 'Damaged';
+    }
   }
 }

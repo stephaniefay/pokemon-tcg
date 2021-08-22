@@ -8,6 +8,7 @@
         <th>{{columns[3].label}}</th>
         <th>{{columns[4].label}}</th>
         <th>{{columns[5].label}}</th>
+        <th>{{columns[6].label}}</th>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
       <tr>
@@ -16,7 +17,10 @@
         </td>
         <td>
           <span class="p-column-title">{{columns[0].label}}</span>
+          <div class="nameCollection">
           {{rowData['number']}}
+            <img class="card-category-icon" [src]="'assets/icons/flags/' + rowData['language'] + '.png'" [alt]="rowData['language']" height="20" />
+          </div>
         </td>
         <td>
           <span class="p-column-title">{{columns[1].label}}</span>
@@ -40,6 +44,14 @@
         <td>
           <span class="p-column-title">{{columns[5].label}}</span>
           {{rowData['quantity']}}
+        </td>
+        <td>
+          <span class="p-column-title">{{columns[6].label}}</span>
+          <div class="nameCollection">
+            {{getQuality(rowData['quality'])}}
+            <img *ngIf="rowData['isFoil']" class="card-category-icon" [src]="'assets/icons/sparkles.png'" [pTooltip]="'Foil'" [alt]="'Foil'" height="20"/>
+            <img *ngIf="rowData['isReverse']" class="card-category-icon" [src]="'assets/icons/reverse_sparkles.png'" [pTooltip]="'Reverse Foil'" [alt]="'Reverse Foil'" height="20"/>
+          </div>
         </td>
       </tr>
     </ng-template>
