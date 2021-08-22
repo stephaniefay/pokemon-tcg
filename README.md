@@ -1,6 +1,6 @@
 # Pokemon TCG
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.8. I will probably use the [Pokemon TCG API](https://dev.pokemontcg.io/) to fetch the information needed. Also, I will be using [Firebase](https://firebase.google.com/) as a database, and its storage as a recipient for the CSV files.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.8. I'm, right now, using the [Pokemon TCG API](https://dev.pokemontcg.io/) to fetch the information needed (Although I'm actually not using their repository to keep my models). Also, I will be using [Firebase](https://firebase.google.com/) as a database, and its storage as a recipient for the CSV files.
 
 The live version of this project can be accessed right [here](https://tcg-pkmn.web.app/public/collection). It is still a WIP.
 
@@ -23,7 +23,7 @@ All images used in this project either came from the Pokemon TCG API or were fou
 
 ## Setting up CORS
 
-Firebase, as in Google, have a very strict CORS policy. To set up the firebase storage to allow downloads from any paths, so I could manipulate the files internally and export the CSVs to upload in LigaPokemon, I had to enable the get for all paths. Although you could, if you wanted, enable for only certain paths as well. The step-by-step can be found in:
+Firebase, as in Google, have a very strict CORS policy. To set up the firebase storage to allow downloads from any paths, allowing me to manipulate the files internally and export the CSVs to upload in LigaPokemon, I had to enable the `get` for all paths. Although you could, if you wanted, enable for only certain paths as well. The step-by-step can be found in:
 [Firebase Storage Docs](https://firebase.google.com/docs/storage/web/download-files) and [GSuit Installation](https://cloud.google.com/storage/docs/gsutil_install).
 
 The necessary `cors.json` is already in the repository.
