@@ -1,7 +1,7 @@
-<p-table #dt2 [value]="cards" dataKey="id" [rows]="10" [totalRecords]="quantity" [showCurrentPageReport]="true"
+<p-table #dt2 [value]="cards" dataKey="key" [rows]="10" [totalRecords]="quantity" [showCurrentPageReport]="true"
          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
          [rowsPerPageOptions]="[10,20,50,100]" [loading]="loading" styleClass="p-datatable-responsive-type" [paginator]="true"
-         [globalFilterFields]="['cardName','edition.name']" xmlns="http://www.w3.org/1999/html">
+         [globalFilterFields]="['cardName','edition.name']" xmlns="http://www.w3.org/1999/html" editMode="row">
   <ng-template pTemplate="caption">
     <div class="p-d-flex">
 			<span class="p-input-icon-left p-ml-auto">
@@ -94,24 +94,46 @@
           Date added <p-columnFilter type="date" field="dateImport" display="menu"></p-columnFilter>
         </div>
       </th>
+      <th style="width:8rem" *ngIf="auth.user | async as user;"></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-card>
-    <tr>
+  <ng-template pTemplate="body" let-card let-editing="editing" let-ri="rowIndex">
+    <tr [pEditableRow]="card">
       <td>
-        <span class="p-column-title">Card #</span>
-        {{card.cardNumber}}
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input pInputText type="text" [(ngModel)]="card.cardNumber">
+          </ng-template>
+          <ng-template pTemplate="output">
+            <span class="p-column-title">Card #</span>
+            {{card.cardNumber}}
+          </ng-template>
+        </p-cellEditor>
       </td>
       <td>
-        <span class="p-column-title">Card Name</span>
-        {{card.cardName}}
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input pInputText type="text" [(ngModel)]="card.cardName">
+          </ng-template>
+          <ng-template pTemplate="output">
+            <span class="p-column-title">Card Name</span>
+            {{card.cardName}}
+          </ng-template>
+        </p-cellEditor>
       </td>
       <td>
-        <span class="p-column-title">Collection</span>
-        <div class="table-ligapokemon">
-          <img [alt]="card.edition.name" src="assets/icons/{{getIcon(card.edition.image)}}" height="16" style="vertical-align: middle" />
-          <div class="item-ligapokemon">{{card.edition.name}}</div>
-        </div>
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input pInputText type="text" [(ngModel)]="card.edition.name">
+          </ng-template>
+          <ng-template pTemplate="output">
+            <span class="p-column-title">Collection</span>
+            <div class="table-ligapokemon">
+              <img [alt]="card.edition.name" src="assets/icons/{{getIcon(card.edition.image)}}" height="16" style="vertical-align: middle" />
+              <div class="item-ligapokemon">{{card.edition.name}}</div>
+            </div>
+          </ng-template>
+        </p-cellEditor>
       </td>
       <td>
         <span class="p-column-title">Quality</span>
@@ -122,20 +144,39 @@
         {{card.quantity}}
       </td>
       <td>
-        <span class="p-column-title">Language</span>
-        {{card.language}}
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input pInputText type="text" [(ngModel)]="card.language">
+          </ng-template>
+          <ng-template pTemplate="output">
+            <span class="p-column-title">Language</span>
+            {{card.language}}
+          </ng-template>
+        </p-cellEditor>
       </td>
       <td>
         <span class="p-column-title">Rarity</span>
         {{card.rarity}}
       </td>
       <td>
-        <span class="p-column-title">Extras</span>
-        {{card.extras}}
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input pInputText type="text" [(ngModel)]="card.extras">
+          </ng-template>
+          <ng-template pTemplate="output">
+            <span class="p-column-title">Extras</span>
+            {{card.extras}}
+          </ng-template>
+        </p-cellEditor>
       </td>
       <td>
         <span class="p-column-title">Date added</span>
         {{card.dateImport | date}}
+      </td>
+      <td style="text-align:center" *ngIf="auth.user | async as user;">
+        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(card)" class="p-button-rounded p-button-text"></button>
+        <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(card)" class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+        <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(card, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
       </td>
     </tr>
   </ng-template>

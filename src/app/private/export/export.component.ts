@@ -16,6 +16,7 @@ export class ExportComponent implements OnInit {
               private http: HttpClient) { }
 
   buttons: any = [];
+  headers: any;
 
   ngOnInit(): void {
     const collectionsFunctions = new CollectionsFunctions();
@@ -40,19 +41,34 @@ export class ExportComponent implements OnInit {
     const data = object.split(/\r\n|\n/);
     const headersRow = this.service.getHeaderArray(data);
 
-    const result = this.service.updateCSV(data, headersRow.length);
+    const result = this.service.updateCSV(data, headersRow.length, key.toLowerCase() == 'all_collection');
 
     if (result.length < 1) {
       return;
     }
 
+    this.headers = Object.keys(result[0]);
+
+    if (result.length > 1000) {
+      let index = 1;
+
+      while (result.length > 0) {
+        this.buildFile(result.splice(0, (999 > result.length) ? result.length : 999), key + ' - ' + index);
+        index++;
+      }
+    } else {
+      this.buildFile(result.splice(1, result.length), key);
+    }
+  }
+
+  buildFile (arr: any[], key: string) {
     const separator = ',';
-    const keys = Object.keys(result[0]);
+
     const csvData =
-      keys.join(separator) +
+      this.headers.join(separator) +
       '\n' +
-      result.map(row => {
-        return keys.map(k => {
+      arr.map(row => {
+        return this.headers.map(k => {
           let cell = row[k] === null || row[k] === undefined ? '' : row[k];
           cell = cell instanceof Date
             ? cell.toLocaleString()

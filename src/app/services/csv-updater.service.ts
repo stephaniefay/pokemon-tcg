@@ -28,7 +28,7 @@ export class CsvUpdaterService {
 
 
 
-  updateCSV(csvRecordsArray: any, headerLength: any) {
+  updateCSV(csvRecordsArray: any, headerLength: any, isAll) {
     this.exportArray = [];
     let re = /"/gi;
 
@@ -38,12 +38,12 @@ export class CsvUpdaterService {
         const cardName = currentRecord[4].trim().replace(re, '');
         const cardNumber = currentRecord[11].trim().replace(re, '');
         const collection = currentRecord[1].trim().replace("&rsquo;", "'").replace(re, '');
-        const filtered = this.CSVList.filter(val =>
-          val.cardCSV.cardName.replace("Poké", "Poke") == cardName &&
-          val.cardCSV.cardNumber == cardNumber &&
-          val.cardCSV.edition.name == collection
+        let filtered = this.CSVList.filter(val =>
+          val.cardCSV.cardName.replace("Poké", "Poke").replace(/[^a-zA-Z0-9]/g, '') == cardName.replace(/[^a-zA-Z0-9]/g, '') &&
+          (val.cardCSV.cardNumber.startsWith('0') ? Number(val.cardCSV.cardNumber == cardNumber).toString() : val.cardCSV.cardNumber == cardNumber) &&
+          (val.cardCSV.edition.name.split('—').length > 1 ?  val.cardCSV.edition.name.split('—')[1] == collection : val.cardCSV.edition.name == collection)
         );
-
+        
         filtered.forEach(card => {
           currentRecord[5] = '"' + card.cardCSV.quantity + '"';
           currentRecord[6] = '"' + card.cardCSV.quality + '"';
@@ -58,8 +58,18 @@ export class CsvUpdaterService {
             currentRecord[10] = '"' + card.cardCSV.extras.join(', ') + '"';
           }
           this.exportArray.push(this.buildObject(currentRecord));
+
+          const index = this.CSVList.indexOf(card, 0);
+          if (index > -1) {
+            this.CSVList.splice(index, 1);
+          }
         });
       }
+    }
+
+    if(isAll) {
+      console.log('Original List: ' + this.CSVList.length + ', ExportArraySize: ' + this.exportArray.length);
+      if (this.CSVList.length > 0) console.log(this.CSVList);
     }
 
     return this.exportArray;

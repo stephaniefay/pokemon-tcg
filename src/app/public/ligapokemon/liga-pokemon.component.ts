@@ -4,6 +4,8 @@ import {CSVCard} from "../../models/CSVCard";
 import {CollectionsFunctions} from "../../models/collections";
 import {IndexesComponent} from "../indexes/indexes.component";
 import {DialogService} from "primeng/dynamicdialog";
+import {AngularFireAuth} from "@angular/fire/auth";
+import {CardCSVDB} from "../../private/import-some/import-some.component";
 
 @Component({
   selector: 'app-ligapokemon',
@@ -14,7 +16,8 @@ import {DialogService} from "primeng/dynamicdialog";
 export class LigaPokemonComponent implements OnInit {
 
   constructor(private service: LigaPokemonService,
-              public dialogService: DialogService) { }
+              public dialogService: DialogService,
+              public auth: AngularFireAuth,) { }
 
   columns: any[];
   cards: any[] = [];
@@ -22,35 +25,13 @@ export class LigaPokemonComponent implements OnInit {
   loading: boolean = true;
   qualityArray: any[];
   rarityArray: any[];
+  originalCards: CardCSVDB[];
 
   ngOnInit(): void {
     this.service.getAll().subscribe(ligaPokemon => {
+      this.originalCards = ligaPokemon;
       ligaPokemon.forEach (entry => {
-        const cardCSV = <CSVCard>entry.cardCSV;
-
-        let extrasString: string = '';
-
-        if (cardCSV.extras != null) {
-          cardCSV.extras.forEach(value => {
-            extrasString += value + ', ';
-          });
-
-          extrasString = extrasString.slice(0, -2);
-        }
-
-        this.cards.push(
-          {
-            'cardNumber': cardCSV.cardNumber,
-            'cardName': cardCSV.cardName,
-            'edition': cardCSV.edition,
-            'quality': this.getQuality(cardCSV.quality),
-            'quantity': cardCSV.quantity,
-            'language': cardCSV.language,
-            'rarity': this.getRarity(cardCSV.rarity),
-            'extras': extrasString,
-            'dateImport': new Date(cardCSV.dateImport)
-          }
-        )
+        this.cards.push(this.buildObjectCard(entry));
       });
       this.quantity = ligaPokemon.length;
       this.loading = false;
@@ -145,5 +126,57 @@ export class LigaPokemonComponent implements OnInit {
       autoZIndex: false,
       style: {"z-index": 3}
     });
+  }
+
+  onRowEditInit(card: CSVCard) {
+    console.log(card.key);
+  }
+
+  onRowEditSave(editedCard) {
+    const filter = this.originalCards.filter(val =>
+      val.key == editedCard.key
+    );
+
+    const card = filter.pop();
+
+    card.cardCSV.cardNumber = editedCard.cardNumber;
+    card.cardCSV.cardName = editedCard.cardName;
+    card.cardCSV.edition.name = editedCard.edition.name;
+    card.cardCSV.language = editedCard.language;
+    card.cardCSV.extras = editedCard.extras.split(', ');
+
+    this.service.update(card.cardCSV, card.key);
+  }
+
+  onRowEditCancel(card: CSVCard, index: number) {
+   const filter = this.originalCards.filter(val =>
+    val.key == card.key
+   );
+   this.cards.splice(index, 1, this.buildObjectCard(filter.pop()))
+  }
+
+  buildObjectCard (card: CardCSVDB) {
+    let extrasString: string = '';
+
+    if (card.cardCSV.extras != null) {
+      card.cardCSV.extras.forEach(value => {
+        extrasString += value + ', ';
+      });
+
+      extrasString = extrasString.slice(0, -2);
+    }
+
+    return {
+      'cardNumber': card.cardCSV.cardNumber,
+      'cardName': card.cardCSV.cardName,
+      'edition': card.cardCSV.edition,
+      'quality': this.getQuality(card.cardCSV.quality),
+      'quantity': card.cardCSV.quantity,
+      'language': card.cardCSV.language,
+      'rarity': this.getRarity(card.cardCSV.rarity),
+      'extras': extrasString,
+      'dateImport': new Date(card.cardCSV.dateImport),
+      'key': card.key
+    };
   }
 }
