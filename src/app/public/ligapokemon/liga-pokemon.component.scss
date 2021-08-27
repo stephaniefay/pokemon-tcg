@@ -6,6 +6,10 @@
   padding-left: 4%;
 }
 
+.p-inputtext {
+  width: 100%;
+}
+
 :host ::ng-deep {
   .p-datatable-responsive-type .p-datatable-tbody > tr > td .p-column-title {
     display: none;
