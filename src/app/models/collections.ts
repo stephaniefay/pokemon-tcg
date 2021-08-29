@@ -152,7 +152,8 @@ export const Collections = {
   SHINING_FATES: {value: "swsh45", label: "Shining Fates", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86326"},
   SHINING_FATES_SHINY: {value: "swsh45sv", label: "Shining Fates (Shiny)", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86327"},
   BATTLE_STYLES: {value: "swsh5", label: "Battle Styles", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86328"},
-  CHILLING_REIGN: {value: "swsh6", label: "Chilling Reign", url: ""}
+  CHILLING_REIGN: {value: "swsh6", label: "Chilling Reign", url: ""},
+  EVOLVING_SKIES: {value: "swsh7", label: "Evolving Skies", url: ""}
 
 } as const;
 
