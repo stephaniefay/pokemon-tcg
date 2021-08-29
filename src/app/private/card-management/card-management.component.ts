@@ -5,6 +5,7 @@ import {LigaPokemonService} from "../../services/liga-pokemon.service";
 import {CardAPIDB} from "../../models/interfaces/cardApiDB";
 import {AddCardComponent} from "../add-card/add-card.component";
 import {DialogService} from "primeng/dynamicdialog";
+import {HttpServiceService} from "../../services/http-service.service";
 
 @Component({
   selector: 'app-card-management',
@@ -23,6 +24,7 @@ export class CardManagementComponent implements OnInit {
 
   constructor(private apiCardService: ApiCardService,
               private ligaCardService: LigaPokemonService,
+              private requestService: HttpServiceService,
               private confirmationService: ConfirmationService,
               private messageService: MessageService,
               public dialogService: DialogService) { }
@@ -137,6 +139,36 @@ export class CardManagementComponent implements OnInit {
       width: '90%',
       autoZIndex: false,
       style: {"z-index": 3}
+    });
+  }
+
+  updatePrices() {
+    const cloneCards = [];
+    cloneCards.push(this.cards);
+
+    cloneCards[0].forEach(async card => {
+      try {
+        const request = await this.requestService.getCard(card.cardApi.id).toPromise();
+        card.cardApi.tcgplayer = request.data.tcgplayer;
+
+        this.apiCardService.update(card, card.key);
+      } catch (e) {
+        this.messageService.add({
+          key: 'tc',
+          severity: 'error',
+          summary: 'Error fetching new price',
+          detail: card.cardApi.name + ' wasnt updated. ',
+          life: 3000
+        });
+      }
+    }).then(end => {
+      this.messageService.add({
+        key: 'tc',
+        severity: 'success',
+        summary: 'Cards Updated',
+        detail: '',
+        life: 3000
+      });
     });
   }
 

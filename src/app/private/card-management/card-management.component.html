@@ -1,3 +1,5 @@
+<p-toast position="top-center" key="tc"></p-toast>
+
 <div class="card">
   <p-table #dt [value]="cards" [rows]="10" [paginator]="true" [globalFilterFields]="['cardApi.name','cardApi.set.name','cardApi.number']"
            [rowHover]="true" dataKey="key"
@@ -5,6 +7,8 @@
     <ng-template pTemplate="caption">
       <div class="p-d-flex p-ai-center p-jc-between">
         <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+        <button pButton pRipple label="Update Prices" icon="pi pi-dollar" class="p-button-secondary p-mr-2" (click)="updatePrices()"></button>
+
         <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
