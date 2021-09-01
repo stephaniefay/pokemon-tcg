@@ -144,7 +144,7 @@ export class OverallStatusComponent implements OnInit {
     let low: number;
     let market: number;
     let flag = false;
-    if (card.tcgplayer == null) {
+    if (card.tcgplayer == null || card.tcgplayer.prices == null) {
       high = 0;
       medium = 0;
       low = 0;

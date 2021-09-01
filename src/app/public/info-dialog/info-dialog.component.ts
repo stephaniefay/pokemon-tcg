@@ -59,7 +59,7 @@ export class InfoDialogComponent implements OnInit {
 
   getPrice (card: CardAPI) {
     let flag = false;
-    if (card.tcgplayer == null) {
+    if (card.tcgplayer == null || card.tcgplayer.prices == null) {
       return '0.00';
     } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Edition One")) {
       if (card.cardCSV.extras.includes("Foil")) {

@@ -142,33 +142,32 @@ export class CardManagementComponent implements OnInit {
     });
   }
 
-  updatePrices() {
-    const cloneCards = [];
-    cloneCards.push(this.cards);
+  async updatePrices() {
+    const cloneCards: CardAPIDB[] = this.cards;
 
-    cloneCards[0].forEach(async card => {
+    while (cloneCards.length > 0) {
+      const index = cloneCards.length - 1;
+      const request = await this.requestService.getCard(cloneCards[index].cardApi.id).toPromise();
+
       try {
-        const request = await this.requestService.getCard(card.cardApi.id).toPromise();
-        card.cardApi.tcgplayer = request.data.tcgplayer;
-
-        this.apiCardService.update(card, card.key);
+        cloneCards[index].cardApi.tcgplayer = request.data.tcgplayer;
+        this.apiCardService.update(cloneCards[index].cardApi, cloneCards[index].key);
       } catch (e) {
-        this.messageService.add({
-          key: 'tc',
-          severity: 'error',
-          summary: 'Error fetching new price',
-          detail: card.cardApi.name + ' wasnt updated. ',
-          life: 3000
-        });
+        const cardCSV = cloneCards[index].cardApi.cardCSV;
+        cloneCards[index].cardApi = request.data;
+        cloneCards[index].cardApi.cardCSV = cardCSV;
+        this.apiCardService.update(cloneCards[index].cardApi, cloneCards[index].key);
       }
-    }).then(end => {
-      this.messageService.add({
-        key: 'tc',
-        severity: 'success',
-        summary: 'Cards Updated',
-        detail: '',
-        life: 3000
-      });
+      const cardAPIDB = cloneCards.pop();
+      console.log('updated: ' + cardAPIDB.key);
+    }
+
+    this.messageService.add({
+      key: 'tc',
+      severity: 'success',
+      summary: 'Cards Updated',
+      detail: '',
+      life: 3000
     });
   }
 
