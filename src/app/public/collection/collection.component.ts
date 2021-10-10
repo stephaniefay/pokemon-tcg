@@ -106,6 +106,8 @@ export class CollectionComponent implements OnInit {
       flag = true;
     }
 
+    if (isNaN(value)) value = 0;
+
     if (flag) {
       for (let pricesKey in card.tcgplayer.prices) {
         value = Number(card.tcgplayer.prices[pricesKey].market);

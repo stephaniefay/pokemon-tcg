@@ -120,7 +120,15 @@ export class OverallStatusComponent implements OnInit {
         }
       });
     } else {
-      console.log(card.name + ': no subtype');
+      const noTypeArray: CardAPI[] = this.trainerMap.get('No Type');
+      if (noTypeArray) {
+        noTypeArray.push(card);
+        this.trainerMap.set('No Type', noTypeArray);
+      } else {
+        const newNoTypeArray = [];
+        newNoTypeArray.push(card);
+        this.trainerMap.set('No Type', newNoTypeArray);
+      }
     }
   }
 
@@ -203,6 +211,13 @@ export class OverallStatusComponent implements OnInit {
         break;
       }
     }
+
+    if (isNaN(market)) market = 0;
+    if (isNaN(high)) high = 0;
+    if (isNaN(medium)) medium = 0;
+    if (isNaN(low)) low = 0;
+
+    if (isNaN(market) && isNaN(high) && isNaN(medium) && isNaN(low)) this.noPrice.push(card);
 
     high = high * card.cardCSV.quantity;
     medium = medium * card.cardCSV.quantity;
