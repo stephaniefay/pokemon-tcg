@@ -57,6 +57,8 @@ import { WishlistComponent } from './public/wishlist/wishlist.component';
 import { AddWishlistComponent } from './private/add-wishlist/add-wishlist.component';
 import { IndexesComponent } from './public/indexes/indexes.component';
 import {SliderModule} from "primeng/slider";
+import { VerifyCollectionComponent } from './public/verify-collection/verify-collection.component';
+import {DividerModule} from "primeng/divider";
 
 @NgModule({
   declarations: [
@@ -84,6 +86,7 @@ import {SliderModule} from "primeng/slider";
     WishlistComponent,
     AddWishlistComponent,
     IndexesComponent,
+    VerifyCollectionComponent,
   ],
     imports: [
         BrowserModule,
@@ -120,6 +123,7 @@ import {SliderModule} from "primeng/slider";
         ChipModule,
         PickListModule,
         SliderModule,
+        DividerModule,
     ],
   providers: [],
   entryComponents: [

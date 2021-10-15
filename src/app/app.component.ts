@@ -27,7 +27,18 @@ export class AppComponent {
       {
         label: 'Collection',
         icon: 'fas fa-dragon',
-        routerLink: ['/public/collection']
+        items: [
+          {
+            label: 'All cards in Collection',
+            icon: 'fas fa-bahai',
+            routerLink: ['/public/collection']
+          },
+          {
+            label: 'Cards by Type',
+            icon: 'fas fa-bahai',
+            routerLink: ['/public/collectionByPokemon']
+          }
+        ]
       },
       {
         label: 'LigaPokemon datatable',
@@ -46,7 +57,7 @@ export class AppComponent {
       },
       {
         label: 'Wishlist',
-        icon: 'far fa-star',
+        icon: 'far fa-heart',
         routerLink: ['/public/wishlist']
       },
       {
@@ -98,7 +109,18 @@ export class AppComponent {
       {
         label: 'Collection',
         icon: 'fas fa-dragon',
-        routerLink: ['/public/collection']
+        items: [
+          {
+            label: 'All cards in Collection',
+            icon: 'fas fa-bahai',
+            routerLink: ['/public/collection']
+          },
+          {
+            label: 'Cards by Type',
+            icon: 'fas fa-bahai',
+            routerLink: ['/public/collectionByPokemon']
+          }
+        ]
       },
       {
         label: 'LigaPokemon datatable',
@@ -117,7 +139,7 @@ export class AppComponent {
       },
       {
         label: 'Wishlist',
-        icon: 'far fa-star',
+        icon: 'far fa-heart',
         routerLink: ['/public/wishlist']
       },
       {

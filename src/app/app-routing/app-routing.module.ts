@@ -15,6 +15,7 @@ import {ImportSomeComponent} from "../private/import-some/import-some.component"
 import {FetchSomeApiComponent} from "../private/fetch-some-api/fetch-some-api.component";
 import {CardManagementComponent} from "../private/card-management/card-management.component";
 import {WishlistComponent} from "../public/wishlist/wishlist.component";
+import {VerifyCollectionComponent} from "../public/verify-collection/verify-collection.component";
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/']);
 
@@ -29,6 +30,10 @@ const routes: Routes = [
       {
         path: 'collection',
         component: CollectionComponent
+      },
+      {
+        path: 'collectionByPokemon',
+        component: VerifyCollectionComponent
       },
       {
         path: 'ligapokemon',

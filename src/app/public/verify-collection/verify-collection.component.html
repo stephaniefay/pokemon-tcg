@@ -1,0 +1,40 @@
+<div class="content">
+  <div class="p-fluid p-grid">
+    <div class="p-grid header">
+      <div class="p-col-12 p-md-6 p-lg-5">
+        <div class="p-fluid">
+          <div class="p-field">
+             <span class="p-float-label">
+                <input type="text" id="cardname" pInputText [(ngModel)]="searchAttr">
+                <label for="cardname">Card Name</label>
+             </span>
+          </div>
+        </div>
+      </div>
+      <div class="p-col-2">
+        <p-divider layout="vertical">
+          <b>☆</b>
+        </p-divider>
+      </div>
+      <div class="p-col-12 p-md-6 p-lg-5">
+        <span class="info-message">
+          To begin search for a Pokémon or a card name! Owned cards will be colorful :)
+        </span>
+      </div>
+    </div>
+
+    <button pButton pRipple label="Search" icon="fas fa-search" class="p-button-success p-mr-2" (click)="search()"></button>
+  </div>
+</div>
+
+<p-dataView [loading]="loading" *ngIf="searchResult" [value]="searchResult" [paginator]="false" [rows]="searchResult.length" layout="grid"
+            [totalRecords]="searchResult.length">
+  <ng-template let-card pTemplate="gridItem">
+    <div class="p-col-12 p-md-3">
+      <div class="card">
+        <img *ngIf="card.owned" class="zoom card-image-big" [src]="card.card.images.large" [alt]="card.card.name">
+        <img *ngIf="!card.owned" class="zoom img-notOwned card-image-big" [src]="card.card.images.large" [alt]="card.card.name">
+      </div>
+    </div>
+  </ng-template>
+</p-dataView>
