@@ -4,6 +4,7 @@
 
 .header {
   align-items: center;
+  width: 100%;
 }
 
 .p-grid {
@@ -94,7 +95,7 @@
   margin-bottom: 2rem;
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 40rem) {
   :host ::ng-deep .card-list-item .card-grid-item {
     flex-direction: column;
     align-items: center;

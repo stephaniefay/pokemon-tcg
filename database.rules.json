@@ -3,7 +3,7 @@
     ".read": true,
     ".write": "auth != null",
     "API": {
-      ".indexOn": "cardCSV/key"
+      ".indexOn": ["cardCSV/key", "id"]
     },
     "LigaPokemon": {
       ".indexOn": "dateImport"

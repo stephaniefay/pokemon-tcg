@@ -44,7 +44,7 @@ export class ApiCardService {
 
   searchByChild (child: string, value: string) {
     return this.db.list('API', ref => ref.orderByChild(child).equalTo(value))
-      .snapshotChanges(['child_added'])
+      .snapshotChanges()
       .pipe(
         map( changes => {
           return changes.map((c => ({

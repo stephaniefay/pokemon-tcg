@@ -9,6 +9,13 @@
                 <label for="cardname">Card Name</label>
              </span>
           </div>
+          <div class="p-field">
+             <span class="p-float-label">
+               <p-dropdown inputId="collectionName" [pTooltip]="'If you feel adventurous you can also search for a whole collection, but be aware that it may take a long time to load.'"
+                           [autoDisplayFirst]="false" [options]="collections" [(ngModel)]="searchCollection" [filter]="true" filterBy="label" optionLabel="label"></p-dropdown>
+                <label for="collectionName">Collection</label>
+             </span>
+          </div>
         </div>
       </div>
       <div class="p-col-2">
