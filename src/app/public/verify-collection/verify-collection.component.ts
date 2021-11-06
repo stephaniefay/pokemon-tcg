@@ -45,6 +45,8 @@ export class VerifyCollectionComponent implements OnInit {
 
     if (this.searchCollection != null && this.searchCollection['code'] != null)
       query = 'set.id:' + this.searchCollection['code'];
+    else if (this.searchAttr.includes(' '))
+      query = 'name:"' + this.searchAttr + '"';
     else
       query = 'name:' + this.searchAttr;
 
