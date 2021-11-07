@@ -32,10 +32,10 @@
             <img class="card-image-big" [src]="card.cardApi.images.large" [alt]="card.cardApi.name"/>
             <div class="card-name" pTooltip="{{card.cardApi.flavorText}}" tooltipEvent="hover" tooltipPosition="bottom">{{card.cardApi.name}}</div>
           </div>
-          <div class="card-grid-item-bottom">
+<!--          <div class="card-grid-item-bottom">
             <span class="card-price">{{getPrice(card.cardApi) | currency: 'USD'}}</span>
             <span class="card-descriptor">{{getDescriptor(card.cardApi)}}</span>
-          </div>
+          </div>-->
         </div>
       </div>
     </ng-template>
