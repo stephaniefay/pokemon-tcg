@@ -3,12 +3,20 @@
     <ng-template pTemplate="start">
       <img src="assets/logo.png" height="40" class="p-mr-2" [routerLink]="'/public/collection'">
     </ng-template>
+    <ng-template pTemplate="end">
+      <label [style]="{fontSize: '2rem', cursor: 'pointer'}" class="p-mr-2 fa-brands fa-github" (click)="githubClick()"></label>
+      <label [style]="{fontSize: '2rem', cursor: 'pointer'}" class="p-mr-2 fa-brands fa-twitter" (click)="twitterClick()"></label>
+    </ng-template>
   </p-menubar>
 </ng-template>
 
 <p-menubar *ngIf="auth.user | async as user; else logIn" [model]="itemsLogged">
   <ng-template pTemplate="start">
     <img src="assets/logo.png" height="40" class="p-mr-2" [routerLink]="'/public/collection'">
+  </ng-template>
+  <ng-template pTemplate="end">
+    <label [style]="{fontSize: '2rem', cursor: 'pointer'}" class="p-mr-2 fa-brands fa-github" (click)="githubClick()"></label>
+    <label [style]="{fontSize: '2rem', cursor: 'pointer'}" class="p-mr-2 fa-brands fa-twitter" (click)="twitterClick()"></label>
   </ng-template>
 </p-menubar>
 

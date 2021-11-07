@@ -161,6 +161,14 @@ export class AppComponent {
     });
   }
 
+  githubClick() {
+    window.open('https://github.com/stephaniefay/pokemon-tcg', '_blank').focus();
+  }
+
+  twitterClick() {
+    window.open('https://twitter.com/Teffyhart', '_blank').focus();
+  }
+
   async isUserLoggedIn() {
     this.auth.authState.subscribe(value => {
       return value != null;
