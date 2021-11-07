@@ -99,7 +99,7 @@ export class AddCardComponent implements OnInit {
         return 'RH';
       case 'Rare Holo EX':
         return 'RE';
-      case 'Rare Holo Lv.X':
+      case 'Rare Holo LV.X':
         return 'RL';
       case 'Rare Ultra':
         return 'RU';
@@ -107,9 +107,9 @@ export class AddCardComponent implements OnInit {
         return 'RP';
       case 'Rare ACE':
         return 'RA';
-      case 'Legend':
+      case 'LEGEND':
         return 'L';
-      case 'Secret Rare / Promo':
+      case 'Promo':
         return 'S';
       case 'Amazing Rare':
         return 'AR';

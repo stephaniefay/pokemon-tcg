@@ -19,8 +19,9 @@ export class CardManagementComponent implements OnInit {
   cards: CardAPIDB[];
   cardDialog: boolean;
   card: CardAPIDB;
+  extras: any;
+  subtypes: any;
   submitted: boolean;
-  showAddButton: boolean = true;
 
   constructor(private apiCardService: ApiCardService,
               private ligaCardService: LigaPokemonService,
@@ -30,6 +31,11 @@ export class CardManagementComponent implements OnInit {
               public dialogService: DialogService) { }
 
   ngOnInit(): void {
+    this.extras = ['Foil', 'Reverse Foil', 'Promo', 'Altered', 'Edition One', 'Pre Release', 'Oversize'];
+    this.subtypes = ["BREAK", "Baby", "Basic", "EX", "GX", "Goldenrod Game Corner", "Item", "LEGEND", "Level-Up", "MEGA", "Pokémon Tool", "Pokémon Tool F",
+      "Rapid Strike", "Restored", "Rocket's Secret Machine", "Single Strike", "Special", "Stadium", "Stage 1", "Stage 2", "Supporter", "TAG TEAM",
+      "Technical Machine", "V", "VMAX"]
+
 
     this.apiCardService.getAll().subscribe(result => {
       this.cards = result;
@@ -38,6 +44,7 @@ export class CardManagementComponent implements OnInit {
 
   editCard(card: CardAPIDB) {
     this.card = {...card};
+    console.log(this.card.key);
     this.cardDialog = true;
   }
 
@@ -104,25 +111,6 @@ export class CardManagementComponent implements OnInit {
       extrasString = extrasString.slice(0, -2);
     }
     return extrasString;
-  }
-
-  onClickAddButton() {
-    this.showAddButton = false;
-  }
-
-  addExtra(extra: string) {
-    this.card.cardApi.cardCSV.extras.push(extra);
-    this.showAddButton = true;
-  }
-
-  cancelAddExtra () {
-    this.showAddButton = true;
-  }
-
-  removeExtra(extra: string) {
-    this.card.cardApi.cardCSV.extras = this.card.cardApi.cardCSV.extras.filter(val =>
-      val == extra
-    );
   }
 
   gotoTop() {

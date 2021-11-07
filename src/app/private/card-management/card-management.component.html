@@ -48,22 +48,64 @@
   </p-table>
 </div>
 
-<p-dialog [(visible)]="cardDialog" [style]="{width: '450px'}" header="Card Details" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="cardDialog" [style]="{width: '80%'}" header="Card Details" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
-    <img [src]="card.cardApi.images.large" [alt]="card.cardApi.name" class="card-image" *ngIf="card.cardApi.images.small">
-    <div class="p-field">
-      <label for="name">Name</label>
-      <input type="text" pInputText id="name" [(ngModel)]="card.cardApi.name" [disabled]="true"/>
-    </div>
-    <div class="p-formgrid p-grid">
-      <div class="p-field p-col">
-        <label for="quantity">Quantity</label>
-        <p-inputNumber id="quantity" [(ngModel)]="card.cardApi.cardCSV.quantity"></p-inputNumber>
+    <div class="card-content">
+      <div [style]="{width: '60%'}">
+        <img [src]="card.cardApi.images.large" [alt]="card.cardApi.name" class="card-image" *ngIf="card.cardApi.images.large">
       </div>
-      <div class="p-field p-col" *ngIf="card.cardApi.cardCSV.extras">
-        <div class="extrasLine"><label for="extras">Extras: </label> <button *ngIf="showAddButton" pButton pRipple type="button" icon="pi pi-bookmark" class="p-button-rounded p-button-secondary p-button-outlined"></button> </div>
-        <div id="extras">
-          <p-chip *ngFor="let extra of card.cardApi.cardCSV.extras" [label]="extra" [removable]="true" (onRemove)="removeExtra(extra)"></p-chip>
+      <div [style]="{marginLeft: '1%', width: '100%'}">
+        <div class="p-formgrid p-grid">
+          <div class="p-field p-col">
+              <label for="name">Name</label>
+              <input type="text" pInputText id="name" [(ngModel)]="card.cardApi.name"/>
+          </div>
+          <div class="p-field p-col">
+            <label for="number">Card Number</label>
+            <input type="text" pInputText id="number" [(ngModel)]="card.cardApi.number"/>
+          </div>
+          <div class="p-field p-col">
+            <label for="rarity">Rarity</label>
+            <input type="text" pInputText id="rarity" [(ngModel)]="card.cardApi.rarity"/>
+          </div>
+        </div>
+        <div class="p-formgrid p-grid">
+          <div class="p-field p-col">
+            <label for="setId">Set ID</label>
+            <input type="text" pInputText id="setId" [(ngModel)]="card.cardApi.set.id"/>
+          </div>
+          <div class="p-field p-col">
+            <label for="setName">Set Name</label>
+            <input type="text" pInputText id="setName" [(ngModel)]="card.cardApi.set.name"/>
+          </div>
+        </div>
+        <div class="p-formgrid p-grid">
+          <div class="p-field p-col">
+            <label for="supertype">Supertype</label>
+            <input type="text" pInputText id="supertype" [(ngModel)]="card.cardApi.supertype"/>
+          </div>
+          <div class="p-field p-col">
+            <label for="subTypes">Subtypes</label>
+            <p-multiSelect inputId="subTypes" [options]="subtypes" [(ngModel)]="card.cardApi.subtypes" defaultLabel="Select Subtypes" display="chip"></p-multiSelect>
+          </div>
+        </div>
+        <div class="p-formgrid p-grid">
+          <div class="p-field p-col">
+            <label for="quantity">Quantity</label>
+            <p-inputNumber id="quantity" [(ngModel)]="card.cardApi.cardCSV.quantity"></p-inputNumber>
+          </div>
+          <div class="p-field p-col" *ngIf="card.cardApi.cardCSV.extras">
+            <label for="extras">Extras: </label>
+            <p-multiSelect inputId="extras" [options]="extras" [(ngModel)]="card.cardApi.cardCSV.extras" defaultLabel="Select Extras" display="chip"></p-multiSelect>
+          </div>
+        </div>
+        <div class="p-field p-col" *ngIf="card.cardApi.artist">
+          <label for="artist">Artist</label>
+          <input type="text" pInputText id="artist" [(ngModel)]="card.cardApi.artist"/>
+        </div>
+        <div class="p-field p-col" *ngIf="card.cardApi.flavorText">
+          <label for="flavorText">Flavor Text</label>
+          <textarea id="flavorText" rows="1" pInputTextarea autoResize="autoResize" [(ngModel)]="card.cardApi.flavorText"></textarea>
         </div>
       </div>
     </div>
