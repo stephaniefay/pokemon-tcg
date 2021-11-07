@@ -25,7 +25,7 @@
         <td>{{deck.deck.name}}</td>
         <td class="typesTD">
           <div *ngFor="let tp of deck.deck.type" [class]="'icon ' + tp.toLowerCase()">
-            <img [src]="'assets/types/' + tp.toLowerCase() + '.svg'" [alt]="tp" width="30" class="p-shadow-4" />
+            <img [src]="'assets/types/' + tp.toLowerCase() + '.svg'" [alt]="tp" width="30" />
           </div>
         </td>
         <td>{{deck.deck.type}}</td>

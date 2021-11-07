@@ -10,7 +10,7 @@ import {InfoDeckDialogComponent} from "../info-deck-dialog/info-deck-dialog.comp
 @Component({
   selector: 'app-decks',
   templateUrl: './decks.component.html',
-  styleUrls: ['./decks.component.css'],
+  styleUrls: ['./decks.component.scss'],
   providers: [MessageService, ConfirmationService]
 })
 export class DecksComponent implements OnInit {
