@@ -1,6 +1,8 @@
 {
   "projects": {
-    "default": "tcg-pkmn"
+    "teffy": "tcg-pkmn",
+    "any": "anybnight-pkmn",
+    "default": "anybnight-pkmn"
   },
   "targets": {
     "tcg-pkmn": {

@@ -2,37 +2,12 @@
   "database": {
     "rules": "database.rules.json"
   },
-  "hosting": [
-    {
-      "target": "pokemon-tcg",
-      "public": "dist/pokemon-tcg",
-      "ignore": [
-        "**/.*"
-      ],
-      "headers": [
-        {
-          "source": "**/*.@(jpg|jpeg|gif|png|csv)",
-          "headers": [{
-            "key" : "Access-Control-Allow-Origin",
-            "value" : "*"
-          }]
-        },
-        {
-          "source": "*.[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f].+(css|js)",
-          "headers": [
-            {
-              "key": "Cache-Control",
-              "value": "public,max-age=31536000,immutable"
-            }
-          ]
-        }
-      ],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
-    }
-  ]
+  "hosting": {
+    "public": "dist/pokemon-tcg",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
 }

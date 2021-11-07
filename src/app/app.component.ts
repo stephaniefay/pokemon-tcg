@@ -166,7 +166,7 @@ export class AppComponent {
   }
 
   twitterClick() {
-    window.open('https://twitter.com/Teffyhart', '_blank').focus();
+    window.open('https://twitter.com/AnyBnight', '_blank').focus();
   }
 
   async isUserLoggedIn() {
