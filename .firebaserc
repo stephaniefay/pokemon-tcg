@@ -11,6 +11,13 @@
           "tcg-pkmn"
         ]
       }
+    },
+    "anybnight-pkmn": {
+      "hosting": {
+        "any": [
+          "anybnight-pkmn"
+        ]
+      }
     }
   }
 }

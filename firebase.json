@@ -4,10 +4,12 @@
   },
   "hosting": [
     {
-      "target": "pokemon-tcg",
+      "target": "any",
       "public": "dist/pokemon-tcg",
       "ignore": [
-        "**/.*"
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
       ],
       "headers": [
         {
