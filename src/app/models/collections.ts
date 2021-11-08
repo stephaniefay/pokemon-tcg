@@ -121,6 +121,7 @@ export const Collections = {
   MCD_2012: {value: "mcd12", label: "McDonald's Collection 2012", url: ""},
   MCD_2016: {value: "mcd16", label: "McDonald's Collection 2016", url: ""},
   MCD_2019: {value: "mcd19", label: "McDonald's Collection 2019", url: ""},
+  MCD_2021: {value: "mcd21", label: "McDonald's Collection 2021", url: ""},
 
   // Sun & Moon Collection
   SM_PROMOS: {value: "smp", label: "Sun & Moon Promos", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86299"},
