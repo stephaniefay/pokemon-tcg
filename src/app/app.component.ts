@@ -100,7 +100,7 @@ export class AppComponent {
             routerLink: ['/private/export']
           },
           {
-            label: 'Edit Cards',
+            label: 'Add & Edit Cards',
             icon: 'fas fa-table',
             routerLink: ['/private/cardmanagement']
           }

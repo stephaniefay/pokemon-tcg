@@ -165,3 +165,10 @@
   justify-content: space-between;
   align-items: stretch;
 }
+
+.truncate {
+  width:55%;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow: ellipsis;
+}
