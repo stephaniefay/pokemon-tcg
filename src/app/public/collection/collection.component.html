@@ -18,11 +18,9 @@
       <div class="p-col-12 p-md-4">
         <div class="card-grid-item card">
           <div class="card-grid-item-top">
-            <div>
               <img class="card-category-icon" [src]="'assets/icons/'+ card.cardApi.set.id + '.png'" [alt]="card.cardApi.set.name" height="20"/>
-              <span class="card-category">{{card.cardApi.set.name}}</span>
+                <span class="card-category truncate">{{card.cardApi.set.name}}</span>
               <img class="card-category-flag" [src]="'assets/icons/flags/' + card.cardApi.cardCSV.language + '.png'" [alt]="card.cardApi.cardCSV.language" height="20" />
-            </div>
             <div class="badges">
             <span *ngIf="getExtra(card.cardApi) != null" [class]="'card-badge ' + getExtraClass(card.cardApi)">{{getExtra(card.cardApi)}}</span>
             <span [class]="'card-badge status-' + getBadge(card.cardApi.rarity)">{{card.cardApi.rarity}}</span>
