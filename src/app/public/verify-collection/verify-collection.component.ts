@@ -103,18 +103,21 @@ export class VerifyCollectionComponent implements OnInit {
   }
 
   addToWishlist(card: VerifyCollectionInterface) {
-    if (!card.wish) {
-      this.confirmationService.confirm({
-        message: 'Are you sure you want to put ' + card.card.name + ' on your wishlist?',
-        header: 'Confirm',
-        icon: 'pi pi-exclamation-circle',
-        accept: () => {
-          card.wish = true;
-          this.wishlist.insert(card.card)
-          this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Card Inserted', life: 3000});
-        }
-      });
-    }
+    this.auth.user.subscribe(user => {
+      if (!card.wish && !card.owned && user) {
+        this.confirmationService.confirm({
+          message: 'Are you sure you want to put ' + card.card.name + ' on your wishlist?',
+          header: 'Confirm',
+          icon: 'pi pi-exclamation-circle',
+          accept: () => {
+            card.wish = true;
+            this.wishlist.insert(card.card)
+            this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Card Inserted', life: 3000});
+          }
+        });
+      }
+
+    });
   }
 
 }
