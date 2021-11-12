@@ -7,6 +7,9 @@
     },
     "LigaPokemon": {
       ".indexOn": "dateImport"
+    },
+    "Wishlist": {
+      ".indexOn": "id"
     }
   }
 }
