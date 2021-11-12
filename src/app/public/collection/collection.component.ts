@@ -34,6 +34,7 @@ export class CollectionComponent implements OnInit {
         this.getDexNum(item.cardApi);
         this.cards.push({key: item.key, cardApi: item.cardApi});
       });
+      this.onSortChange({originalEvent: null, value: '!cardApi.cardCSV.dateImport'});
       this.loading = false;
     });
 
