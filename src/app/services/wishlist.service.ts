@@ -44,7 +44,7 @@ export class WishlistService {
 
   searchByChild (child: string, value: string) {
     return this.db.list('Wishlist', ref => ref.orderByChild(child).equalTo(value))
-      .snapshotChanges(['child_added'])
+      .snapshotChanges(['child_removed'])
       .pipe(
         map( changes => {
           return changes.map((c => ({

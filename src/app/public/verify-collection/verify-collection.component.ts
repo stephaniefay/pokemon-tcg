@@ -72,17 +72,17 @@ export class VerifyCollectionComponent implements OnInit {
           if (result == null || result.length == 0) {
             this.wishlist.searchByChild('id', card.id).subscribe(wishlist => {
               if (wishlist == null || wishlist.length == 0) {
-                this.searchResult.push({card: card, owned: false, wish: false})
+                this.searchResult.push({card: card, id: card.id, owned: false, wish: false})
               } else {
-                this.searchResult.push({card: card, owned: false, wish: true})
+                this.searchResult.push({card: card, id: card.id, owned: false, wish: true})
               }
             });
           } else {
             this.wishlist.searchByChild('id', card.id).subscribe(wishlist => {
               if (wishlist == null || wishlist.length == 0) {
-                this.searchResult.push({card: card, owned: true, wish: false})
+                this.searchResult.push({card: card, id: card.id, owned: true, wish: false})
               } else {
-                this.searchResult.push({card: card, owned: true, wish: true})
+                this.searchResult.push({card: card, id: card.id, owned: true, wish: true})
               }
             });
           }
@@ -115,7 +115,7 @@ export class VerifyCollectionComponent implements OnInit {
         accept: () => {
           card.wish = true;
           this.wishlist.insert(card.card)
-          this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Card Inserted', life: 3000});
+          this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Card Inserted', life: 100});
         }
       });
     }
