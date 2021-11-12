@@ -6,7 +6,6 @@ import {Collections, CollectionsFunctions} from "../../models/collections";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {WishlistService} from "../../services/wishlist.service";
 import {AngularFireAuth} from "@angular/fire/auth";
-import {CardAPIDB} from "../../models/interfaces/cardApiDB";
 
 @Component({
   selector: 'app-verify-collection',
@@ -29,6 +28,7 @@ export class VerifyCollectionComponent implements OnInit {
   searchResult: VerifyCollectionInterface[];
   collections: any;
   loading = true;
+  user: any;
 
   ngOnInit(): void {
     const collectionsFunctions = new CollectionsFunctions();
@@ -39,6 +39,10 @@ export class VerifyCollectionComponent implements OnInit {
 
     allKeys.forEach(key => {
       this.collections.push({label: Collections[key].label, code: Collections[key].value});
+    });
+
+    this.auth.user.subscribe(user => {
+      this.user = user;
     });
   }
 
@@ -103,7 +107,7 @@ export class VerifyCollectionComponent implements OnInit {
   }
 
   addToWishlist(card: VerifyCollectionInterface) {
-    if (!card.wish) {
+    if (!card.wish && !card.owned && this.user) {
       this.confirmationService.confirm({
         message: 'Are you sure you want to put ' + card.card.name + ' on your wishlist?',
         header: 'Confirm',
@@ -116,5 +120,4 @@ export class VerifyCollectionComponent implements OnInit {
       });
     }
   }
-
 }
