@@ -28,7 +28,7 @@
         <span class="info-message">
           Begin searching for a Pokémon or a card name! Owned cards will be colorful :)
         </span>
-        <div class="info-message" *ngIf="auth.user | async as user;">
+        <div class="info-message" *ngIf="user">
           You can also click on the cards that you wish to add to your wishilist. Cards already added will have a heart next to it.
         </div>
       </div>
