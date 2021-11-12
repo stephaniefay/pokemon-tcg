@@ -3,16 +3,26 @@ import {ApiCardService} from "../../services/api-card.service";
 import {HttpServiceService} from "../../services/http-service.service";
 import {VerifyCollectionInterface} from "../../models/interfaces/verifyCollectionInterface";
 import {Collections, CollectionsFunctions} from "../../models/collections";
+import {ConfirmationService, MessageService} from "primeng/api";
+import {WishlistService} from "../../services/wishlist.service";
+import {AngularFireAuth} from "@angular/fire/auth";
+import {CardAPIDB} from "../../models/interfaces/cardApiDB";
 
 @Component({
   selector: 'app-verify-collection',
   templateUrl: './verify-collection.component.html',
-  styleUrls: ['./verify-collection.component.scss']
+  styleUrls: ['./verify-collection.component.scss'],
+  providers: [ConfirmationService, MessageService]
 })
 export class VerifyCollectionComponent implements OnInit {
 
   constructor(private apiService: ApiCardService,
-              private searchService: HttpServiceService) { }
+              public auth: AngularFireAuth,
+              private confirmationService: ConfirmationService,
+              private searchService: HttpServiceService,
+              private messageService: MessageService,
+              public wishlist: WishlistService) {
+  }
 
   searchAttr: string;
   searchCollection: string;
@@ -28,7 +38,7 @@ export class VerifyCollectionComponent implements OnInit {
     this.collections.push({label: '', code: null});
 
     allKeys.forEach(key => {
-      this.collections.push({ label: Collections[key].label, code: Collections[key].value});
+      this.collections.push({label: Collections[key].label, code: Collections[key].value});
     });
   }
 
@@ -54,16 +64,57 @@ export class VerifyCollectionComponent implements OnInit {
     apiSearchPromise = await this.searchService.searchForCard(query + "&page=" + page).toPromise();
     while (count < apiSearchPromise.totalCount) {
       for (const card of apiSearchPromise.data) {
-        this.apiService.searchByChild('id', card.id).subscribe( result => {
-          if (result == null || result.length == 0) this.searchResult.push({card: card, owned: false})
-          else this.searchResult.push({card: card, owned: true});
+        this.apiService.searchByChild('id', card.id).subscribe(result => {
+          if (result == null || result.length == 0) {
+            this.wishlist.searchByChild('id', card.id).subscribe(wishlist => {
+              if (wishlist == null || wishlist.length == 0) {
+                this.searchResult.push({card: card, owned: false, wish: false})
+              } else {
+                this.searchResult.push({card: card, owned: false, wish: true})
+              }
+            });
+          } else {
+            this.wishlist.searchByChild('id', card.id).subscribe(wishlist => {
+              if (wishlist == null || wishlist.length == 0) {
+                this.searchResult.push({card: card, owned: true, wish: false})
+              } else {
+                this.searchResult.push({card: card, owned: true, wish: true})
+              }
+            });
+          }
         });
       }
       count += apiSearchPromise.count;
       page += 1;
       apiSearchPromise = await this.searchService.searchForCard(query + "&page=" + page).toPromise();
     }
+
+    const tempArray = [];
+    this.searchResult.forEach(card => {
+      this.wishlist.searchByChild('id', card.card.id).subscribe(result => {
+        if (result == null || result.length == 0) tempArray.push(card);
+        else tempArray.push({card: card.card, owned: card.owned, wish: true});
+
+        this.searchResult = tempArray;
+      });
+    });
+
     this.loading = false;
+  }
+
+  addToWishlist(card: VerifyCollectionInterface) {
+    if (!card.wish) {
+      this.confirmationService.confirm({
+        message: 'Are you sure you want to put ' + card.card.name + ' on your wishlist?',
+        header: 'Confirm',
+        icon: 'pi pi-exclamation-circle',
+        accept: () => {
+          card.wish = true;
+          this.wishlist.insert(card.card)
+          this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Card Inserted', life: 3000});
+        }
+      });
+    }
   }
 
 }

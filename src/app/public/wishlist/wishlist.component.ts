@@ -16,7 +16,8 @@ export class WishlistComponent implements OnInit {
 
   cards: CardAPIDB[];
   card: CardAPIDB;
-
+  pageSize: number = 10;
+  pageSizeArray: any;
 
   constructor(private confirmationService: ConfirmationService,
               public auth: AngularFireAuth,
@@ -28,6 +29,11 @@ export class WishlistComponent implements OnInit {
     this.service.getAll().subscribe(result => {
       this.cards = result;
       this.cards.sort((a, b) => a.cardApi.name.localeCompare(b.cardApi.name));
+      this.pageSizeArray = [
+        {name: '10 rows', value: 10},
+        {name: '50 rows', value: 50},
+        {name: 'Show all', value: this.cards.length}
+      ];
     });
   }
 

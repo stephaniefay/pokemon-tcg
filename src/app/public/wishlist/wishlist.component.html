@@ -1,10 +1,11 @@
 <div class="card">
-  <p-table #dt [value]="cards" [rows]="10" [paginator]="true" [globalFilterFields]="['cardApi.name','cardApi.set.name','cardApi.number']"
+  <p-table #dt [value]="cards" [rows]="pageSize" [paginator]="true" [globalFilterFields]="['cardApi.name','cardApi.set.name','cardApi.number']"
            [rowHover]="true" dataKey="key" styleClass="p-datatable-responsive-type"
            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true" (onPage)="gotoTop()">
     <ng-template pTemplate="caption">
       <div class="p-d-flex p-ai-center p-jc-between">
         <button pButton pRipple *ngIf="auth.user | async as user;" label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+        <p-dropdown [options]="pageSizeArray" [(ngModel)]="pageSize" placeholder="Rows per page" optionLabel="name" optionValue="value" [showClear]="false"></p-dropdown>
         <span class="p-input-icon-left">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />

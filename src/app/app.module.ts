@@ -59,6 +59,7 @@ import { IndexesComponent } from './public/indexes/indexes.component';
 import {SliderModule} from "primeng/slider";
 import { VerifyCollectionComponent } from './public/verify-collection/verify-collection.component';
 import {DividerModule} from "primeng/divider";
+import {BadgeModule} from "primeng/badge";
 
 @NgModule({
   declarations: [
@@ -124,6 +125,7 @@ import {DividerModule} from "primeng/divider";
         PickListModule,
         SliderModule,
         DividerModule,
+        BadgeModule,
     ],
   providers: [],
   entryComponents: [
