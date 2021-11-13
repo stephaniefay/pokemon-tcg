@@ -119,7 +119,11 @@ export const Collections = {
   POKEMON_RUMBLE: {value: "ru1", label: "Pokémon Rumble", url: ""},
   MCD_2011: {value: "mcd11", label: "McDonald's Collection 2011", url: ""},
   MCD_2012: {value: "mcd12", label: "McDonald's Collection 2012", url: ""},
+  MCD_2014: {value: "mcd14", label: "McDonald's Collection 2014", url: ""},
+  MCD_2015: {value: "mcd15", label: "McDonald's Collection 2015", url: ""},
   MCD_2016: {value: "mcd16", label: "McDonald's Collection 2016", url: ""},
+  MCD_2017: {value: "mcd17", label: "McDonald's Collection 2017", url: ""},
+  MCD_2018: {value: "mcd18", label: "McDonald's Collection 2018", url: ""},
   MCD_2019: {value: "mcd19", label: "McDonald's Collection 2019", url: ""},
   MCD_2021: {value: "mcd21", label: "McDonald's Collection 2021", url: ""},
 
@@ -155,6 +159,7 @@ export const Collections = {
   BATTLE_STYLES: {value: "swsh5", label: "Battle Styles", url: "https://www.ligapokemon.com.br/?view=colecao/colecao&id=86328"},
   CHILLING_REIGN: {value: "swsh6", label: "Chilling Reign", url: ""},
   EVOLVING_SKIES: {value: "swsh7", label: "Evolving Skies", url: ""},
+  FUSION_STRIKE: {value: "swsh8", label: "Fusion Strike", url: ""},
 
   // Celebrations
   CELEBRATIONS: {value: "cel25", label: "Celebrations", url: ""},
