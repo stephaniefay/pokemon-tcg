@@ -71,7 +71,8 @@ export class FetchSomeApiComponent implements OnInit {
     this.totalCards = this.cardsCSV.length;
     this.cardsCSV.forEach(card => {
       card.cardCSV.key = card.key;
-      this.apiCardService.searchByChild('cardCSV/key', card.key).subscribe(result => {
+      const service = this.apiCardService.searchByChild('cardCSV/key', card.key).subscribe(result => {
+        service.unsubscribe();
         if (result.length == 1) {
           let api = result.pop();
           api.cardApi.cardCSV = card.cardCSV;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ApiCardService} from "../../services/api-card.service";
-import {ConfirmationService, MessageService} from "primeng/api";
+import {ConfirmationService, MessageService, SortEvent} from "primeng/api";
 import {LigaPokemonService} from "../../services/liga-pokemon.service";
 import {CardAPIDB} from "../../models/interfaces/cardApiDB";
 import {AddCardComponent} from "../add-card/add-card.component";
@@ -22,6 +22,8 @@ export class CardManagementComponent implements OnInit {
   extras: any;
   subtypes: any;
   submitted: boolean;
+  pageSize: number = 10;
+  pageSizeArray: any;
 
   constructor(private apiCardService: ApiCardService,
               private ligaCardService: LigaPokemonService,
@@ -40,6 +42,13 @@ export class CardManagementComponent implements OnInit {
     this.apiCardService.getAll().subscribe(result => {
       this.cards = result;
     });
+
+    this.pageSizeArray = [
+      {name: '10 rows', value: 10},
+      {name: '20 rows', value: 20},
+      {name: '50 rows', value: 50},
+      {name: '100 rows', value: 100}
+    ];
   }
 
   editCard(card: CardAPIDB) {
@@ -158,5 +167,4 @@ export class CardManagementComponent implements OnInit {
       life: 3000
     });
   }
-
 }
