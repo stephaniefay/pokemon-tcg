@@ -79,7 +79,8 @@ export class FetchApiComponent implements OnInit {
           summary: 'Fetching...',
           detail: 'fetching cards imported in LigaPokemon'
         });
-        this.ligaPokemonService.getAll().subscribe(async ligaPokemon => {
+        const service = this.ligaPokemonService.getAll().subscribe(async ligaPokemon => {
+          service.unsubscribe();
           this.cardsCSV = ligaPokemon;
           this.cardsCSV.forEach(card => {
             this.totalMultipleCards += card.cardCSV.quantity;
