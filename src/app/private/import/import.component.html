@@ -1,12 +1,21 @@
 
 <p-messages></p-messages>
 
+<div *ngIf="!finishedImport">
+  <p>Use a file .CSV from LigaPokemon to import your collection to this site. Once you have finished the import, go to <a [routerLink]="'/private/api'">Fetch all</a> to fetch the information needed from the API and populate the site. Only then it will show up in the dashboard.</p>
+  <p>To begin the conversion click on "Convert" after you choose a proper file, remember: <strong>it WILL clean all the database from LigaPokemon, so if you want to keep some records please use the <a [routerLink]="'/private/add-import'">import some</a> component.</strong></p>
+</div>
+
+<div *ngIf="finishedImport">
+  <p>Now, <a [routerLink]="'/private/api'">import your collection from the API</a> so everything looks perfect!</p>
+</div>
+
 <span *ngIf="csvReader.totalLines">{{csvReader.linesRead}} of {{csvReader.totalLines}} inserted</span>
 
 <div class="p-grid p-mt-2">
   <div class="p-col">
     <div class="box">
-      <p-fileUpload #uploader accept=".csv" customUpload="true" (uploadHandler)="uploadFile($event)"
+      <p-fileUpload #uploader accept=".csv" customUpload="true" [uploadLabel]="'Convert'" (uploadHandler)="uploadFile($event)"
               multiple="multiple" maxFileSize="1000000">
         <ng-template pTemplate="content">
           <ul *ngIf="uploadedFiles.length">

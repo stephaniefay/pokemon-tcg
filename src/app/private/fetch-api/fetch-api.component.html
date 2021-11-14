@@ -1,10 +1,14 @@
 <p-toast position="top-center" key="tc"></p-toast>
-
+<div>
+  <p>To begin the conversion, so the cards imported via LigaPokemon can show up in the dashboard, click on the "Start converting" button.</p>
+  <p>At the end of the process there will still be actions to be taken; cards that could not be found by Collection & Name will show up in the "duplicates" category. Just click on the card name and choose, using the information displayed on the screen, the one that fits your card the best.</p>
+  <p>If, for some reason, the card imported still could not be found in the API, try to add it later, via Add & Edit menu. Sometimes the API can be outdated, but since it's a free solution I ask you to be patient, eventually it will be updated.</p>
+</div>
 <div class="p-grid p-mt-2">
   <div class="p-col">
     <div class="top-div">
         <span>Fetching {{cardsProcessed}} of {{totalCards}} unique cards;</span>
-        <button pButton pRipple type="button" label="Start converting" class="p-button-outlined" (click)="convert()" [disabled]="disabled"></button>
+        <button pButton pRipple type="button" label="Start converting" class="p-button-outlined" (click)="verifyConvert()" [disabled]="disabled"></button>
         <span>Fetching {{cardsMultipleProcessed}} of {{totalMultipleCards}} total (multiple) cards;</span>
   </div>
 </div>
@@ -159,3 +163,5 @@
   </tr>
 </ng-template>
 </p-table>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

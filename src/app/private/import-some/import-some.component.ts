@@ -23,7 +23,7 @@ export class ImportSomeComponent implements OnInit {
 
   uploadedFiles: any[] = [];
   cards: CardCSVDB[];
-
+  finishedImport = false;
 
   @ViewChild('uploader') uploader: any;
 
@@ -76,6 +76,7 @@ export class ImportSomeComponent implements OnInit {
           summary: 'CSV imported!',
           detail: 'the file was successfully imported to the database!'
         });
+        this.finishedImport = true;
         this.fileReset();
       };
 
