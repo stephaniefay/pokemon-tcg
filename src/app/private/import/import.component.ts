@@ -16,6 +16,7 @@ export class ImportComponent implements OnInit {
               private messageService: MessageService,
               public csvReader: CsvReaderService) { }
   uploadedFiles: any[] = [];
+  finishedImport = false;
 
   @ViewChild('uploader') uploader: any;
 
@@ -48,6 +49,7 @@ export class ImportComponent implements OnInit {
             detail: 'the file was successfully imported to the database!'
           });
           this.fileReset();
+          this.finishedImport = true;
         });
       };
 

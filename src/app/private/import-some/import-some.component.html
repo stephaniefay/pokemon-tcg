@@ -1,5 +1,12 @@
-
 <p-messages></p-messages>
+
+<div *ngIf="!finishedImport">
+  <p>This component will <strong>add</strong> to your LigaPokemon collection, if you wish to clean the database and reimport, use the <a [routerLink]="'/private/import'">Import all</a> component.</p>
+</div>
+
+<div *ngIf="finishedImport">
+  <p>Now, <a [routerLink]="'/private/add-api'">import your collection from the API</a>, using today's date (so you will only update your current repository), and make everything looks awesome!</p>
+</div>
 
 <span *ngIf="csvReader.totalLines">{{csvReader.linesRead}} of {{csvReader.totalLines}} inserted</span>
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {LigaPokemonService} from "../../services/liga-pokemon.service";
 import {HttpServiceService} from "../../services/http-service.service";
 import {ApiCardService} from "../../services/api-card.service";
-import {MessageService} from "primeng/api";
+import {ConfirmationService, MessageService} from "primeng/api";
 import {CSVCard} from "../../models/CSVCard";
 import {CardAPI} from "../../models/cardAPI";
 import {cardCSVDB} from "../../models/interfaces/ligaPokemonDB";
@@ -21,7 +21,7 @@ export class MultipleCards {
   selector: 'app-fetch-api',
   templateUrl: './fetch-api.component.html',
   styleUrls: ['./fetch-api.component.scss'],
-  providers: [MessageService]
+  providers: [ConfirmationService, MessageService]
 })
 
 export class FetchApiComponent implements OnInit {
@@ -41,52 +41,83 @@ export class FetchApiComponent implements OnInit {
   loadingCSV = true;
   loadingErrors = true;
 
+  blocked = false;
+
   constructor(private ligaPokemonService: LigaPokemonService,
               private httpService: HttpServiceService,
               private apiCardService: ApiCardService,
+              private confirmationService: ConfirmationService,
               private messageService: MessageService) { }
 
   ngOnInit(): void {}
 
-  convert() {
-    this.disabled = true;
-    this.messageService.add({
-      key: 'tc',
-      severity: 'info',
-      summary: 'Fetching...',
-      detail: 'fetching cards in the api (from LigaPokemon)'
+  verifyConvert() {
+    this.confirmationService.confirm({
+      message: 'If you want to continue, you will delete all cards fetched from API (but keep the ones imported via LigaPokemon) and reimport them. It will take a long time, please do not close the window or change tabs, because it could cause some strange behaviour.',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-circle',
+      accept: () => {
+        this.convert();
+      }
     });
-    this.apiCardService.deleteAll().then(() => {
-      this.ligaPokemonService.getAll().subscribe(async ligaPokemon => {
-        this.cardsCSV = ligaPokemon;
-        this.cardsCSV.forEach(card => {
-          this.totalMultipleCards += card.cardCSV.quantity;
-        });
-        this.loadingCSV = false;
-        this.totalCards = this.cardsCSV.length;
+  }
 
-        while (this.cardsCSV.length > 0) {
-          const index = this.cardsCSV.length - 1;
-          this.cardsCSV[index].cardCSV.key = this.cardsCSV[index].key;
-          const fetchFromAPI = await this.fetchFromAPI(this.cardsCSV[index].cardCSV);
-          this.cardsProcessed += 1;
-          const cardCSV = this.cardsCSV.pop().cardCSV;
-          this.cardsMultipleProcessed += cardCSV.quantity;
-        }
+  convert() {
+    if (!this.blocked) {
+      this.disabled = true;
+      this.blocked = true;
+      this.messageService.add({
+        key: 'tc',
+        severity: 'info',
+        summary: 'Cleaning database...',
+        detail: 'cleaning API database'
+      });
+      this.apiCardService.deleteAll().then(() => {
         this.messageService.add({
           key: 'tc',
-          severity: 'success',
-          summary: 'Fetch successful',
-          detail: 'all items from LigaPokemon were successfully fetched in the api.'
+          severity: 'info',
+          summary: 'Fetching...',
+          detail: 'fetching cards imported in LigaPokemon'
         });
-        this.loadingCSV = false;
-        if (this.errorCards.length > 0) {
-          const processErrors = await this.processErrors();
-        } else {
-          this.loading = false;
-        }
+        this.ligaPokemonService.getAll().subscribe(async ligaPokemon => {
+          this.cardsCSV = ligaPokemon;
+          this.cardsCSV.forEach(card => {
+            this.totalMultipleCards += card.cardCSV.quantity;
+          });
+          this.loadingCSV = false;
+          this.totalCards = this.cardsCSV.length;
+
+          this.messageService.add({
+            key: 'tc',
+            severity: 'info',
+            summary: 'Searching...',
+            detail: 'fetching cards in the API'
+          });
+
+          while (this.cardsCSV.length > 0) {
+            const index = this.cardsCSV.length - 1;
+            this.cardsCSV[index].cardCSV.key = this.cardsCSV[index].key;
+            const fetchFromAPI = await this.fetchFromAPI(this.cardsCSV[index].cardCSV);
+            this.cardsProcessed += 1;
+            const cardCSV = this.cardsCSV.pop().cardCSV;
+            this.cardsMultipleProcessed += cardCSV.quantity;
+          }
+          this.messageService.add({
+            key: 'tc',
+            severity: 'success',
+            summary: 'Fetch successful',
+            detail: 'all items from LigaPokemon were successfully fetched in the api.'
+          });
+          this.loadingCSV = false;
+          if (this.errorCards.length > 0) {
+            const processErrors = await this.processErrors();
+          } else {
+            this.loading = false;
+            this.blocked = false;
+          }
+        });
       });
-    });
+    }
   }
 
   async processErrors() {
@@ -124,6 +155,7 @@ export class FetchApiComponent implements OnInit {
 
     this.loadingErrors = false;
     this.loading = false;
+    this.blocked = false;
   }
 
   addToMultiple (response: ApiSearch, card: CSVCard) {
