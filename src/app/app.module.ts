@@ -63,9 +63,11 @@ import {BadgeModule} from "primeng/badge";
 import { AboutComponent } from './public/about/about.component';
 import { ConfigurationsComponent } from './private/configurations/configurations.component';
 import {AutoCompleteModule} from "primeng/autocomplete";
+import {Nosanitizerpipe} from "./services/nosanitizerpipe";
 
 @NgModule({
   declarations: [
+    Nosanitizerpipe,
     AppComponent,
     LoginComponent,
     ImportComponent,
