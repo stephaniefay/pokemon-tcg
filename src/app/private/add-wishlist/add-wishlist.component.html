@@ -3,14 +3,14 @@
   <div class="p-fluid p-grid">
     <div class="p-field p-col-12 p-md-4">
         <span class="p-float-label">
-            <input type="text" id="cardname" pInputText [(ngModel)]="cardName">
+          <p-autoComplete id="cardname" [(ngModel)]="cardName" [suggestions]="filteredNames" (completeMethod)="filterName($event)" [minLength]="1"></p-autoComplete>
             <label for="cardname">Card Name</label>
         </span>
     </div>
     <div class="p-field p-col-12 p-md-4">
         <span class="p-float-label">
-            <p-dropdown inputId="typedropdown" [autoDisplayFirst]="false" [options]="types" [(ngModel)]="typeChosen" optionLabel="label"></p-dropdown>
             <label for="typedropdown">Type</label>
+            <p-dropdown inputId="typedropdown" [autoDisplayFirst]="false" [options]="types" [(ngModel)]="typeChosen" optionLabel="label"></p-dropdown>
         </span>
     </div>
     <div class="p-field p-col-12 p-md-4">

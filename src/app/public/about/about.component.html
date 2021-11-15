@@ -1,0 +1,16 @@
+<div class="card">
+
+  <div class="line-flex">
+    <h1>{{name}}</h1>
+    <label *ngIf="twitter" [style]="{fontSize: '2rem', cursor: 'pointer'}" class="p-mr-2 fa-brands fa-twitter" (click)="linkClick(twitter)"></label>
+    <label *ngIf="instagram" [style]="{fontSize: '2rem', cursor: 'pointer'}" class="p-mr-2 fa-brands fa-instagram" (click)="linkClick(instagram)"></label>
+    <label *ngIf="ligaPokemon" [style]="{cursor: 'pointer'}" class="p-mr-2" (click)="linkClick(ligaPokemon)"><img src="assets/pokeball.png"></label>
+  </div>
+
+  <div [innerHTML]="description"></div>
+
+</div>
+
+<div style="text-align: center;">
+  <p>This site was created by Stephanie Fay. You can open issues, verify the status and last releases or fork it on <a href="https://github.com/stephaniefay/pokemon-tcg">github</a>. Still a WIP.</p>
+</div>

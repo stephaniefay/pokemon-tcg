@@ -1,0 +1,49 @@
+.card {
+  background-color: var(--surface-card);
+  padding: 1.5rem;
+  -webkit-box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+  border-radius: 4px;
+  margin: 2rem;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.line-flex {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.line-flex-heart {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    height: 3em;
+  }
+}
+
+.uploader-flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.click-pointer {
+  cursor: pointer;
+}
+
+.form-flex {
+  display: flex;
+  flex-direction: column;
+}

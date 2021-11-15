@@ -3,7 +3,7 @@
               [sortField]="sortField" [sortOrder]="sortOrder" layout="grid" [loading]="loading" (onPage)="gotoTop()">
     <ng-template pTemplate="header">
       <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
-        <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort" (onChange)="onSortChange($event)" styleClass="p-mb-2 p-mb-md-0"></p-dropdown>
+        <p-dropdown [options]="sortOptions" placeholder="Sort" (onChange)="onSortChange($event)" styleClass="p-mb-2 p-mb-md-0"></p-dropdown>
         <span class="p-input-icon-left p-mb-2 p-mb-md-0">
           <i class="pi pi-search"></i>
           <input type="search" pInputText placeholder="Search by Name, Collection or Type" (input)="dv.filter($event.target.value)">
@@ -30,9 +30,22 @@
             <img class="card-image-big" [src]="card.cardApi.images.large" [alt]="card.cardApi.name"/>
             <div class="card-name" pTooltip="{{card.cardApi.flavorText}}" tooltipEvent="hover" tooltipPosition="bottom">{{card.cardApi.name}}</div>
           </div>
-          <div class="card-grid-item-bottom">
-            <span class="card-price">{{getPrice(card.cardApi) | currency: 'USD'}}</span>
-            <span class="card-descriptor">{{getDescriptor(card.cardApi)}}</span>
+          <div class="card-grid-item-bottom" *ngIf="behaviour == 'totalPriceAndQuantity'">
+            <span class="card-price">{{getPriceTotal(card.cardApi) | currency: 'USD'}}</span>
+            <span class="card-descriptor">{{getDescriptorTotal(card.cardApi)}}</span>
+          </div>
+          <div class="card-grid-item-bottom" *ngIf="behaviour == 'itemPriceAndQuantity'">
+            <span class="card-price">{{getPriceItem(card.cardApi) | currency: 'USD'}}</span>
+            <span class="card-descriptor">Quantity: {{card.cardApi.cardCSV.quantity}}</span>
+          </div>
+          <div class="card-grid-item-bottom" *ngIf="behaviour == 'totalPrice'">
+            <span class="card-only">{{getPriceTotal(card.cardApi) | currency: 'USD'}}</span>
+          </div>
+          <div class="card-grid-item-bottom" *ngIf="behaviour == 'itemPrice'">
+            <span class="card-only">{{getPriceItem(card.cardApi) | currency: 'USD'}}</span>
+          </div>
+          <div class="card-grid-item-bottom" *ngIf="behaviour == 'quantity'">
+            <span class="card-only">Quantity: {{card.cardApi.cardCSV.quantity}}</span>
           </div>
         </div>
       </div>

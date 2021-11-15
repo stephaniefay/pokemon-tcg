@@ -5,6 +5,8 @@ import {DialogService} from "primeng/dynamicdialog";
 import {WishlistService} from "../../services/wishlist.service";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {AddWishlistComponent} from "../../private/add-wishlist/add-wishlist.component";
+import {CSVCard} from "../../models/CSVCard";
+import {CardCSVDB} from "../../private/import-some/import-some.component";
 
 @Component({
   selector: 'app-wishlist',
@@ -27,7 +29,12 @@ export class WishlistComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.getAll().subscribe(result => {
-      this.cards = result;
+      this.cards = [];
+      result.forEach(card => {
+        if (card.cardApi.extras == null) card.cardApi.extras = 'any';
+        if (card.cardApi.language == null) card.cardApi.language = 'any';
+        this.cards.push(card);
+      });
       this.cards.sort((a, b) => a.cardApi.name.localeCompare(b.cardApi.name));
       this.pageSizeArray = [
         {name: '10 rows', value: 10},
@@ -91,4 +98,29 @@ export class WishlistComponent implements OnInit {
     return rarity;
   }
 
+  onRowEditInit(card: CardAPIDB) {
+    console.log(card.key);
+  }
+
+  onRowEditSave(editedCard: CardAPIDB) {
+    const filter = this.cards.filter(val =>
+      val.key == editedCard.key
+    );
+
+    const card = filter.pop();
+
+    card.cardApi.number = editedCard.cardApi.number;
+    card.cardApi.name = editedCard.cardApi.name;
+    card.cardApi.language = editedCard.cardApi.language;
+    card.cardApi.extras = editedCard.cardApi.extras;
+
+    this.service.update(card.cardApi, card.key);
+  }
+
+  onRowEditCancel(card: CSVCard, index: number) {
+    const filter = this.cards.filter(val =>
+      val.key == card.key
+    );
+    this.cards.splice(index, 1, filter.pop())
+  }
 }

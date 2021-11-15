@@ -6,7 +6,7 @@
         <div class="p-fluid">
           <div class="p-field">
              <span class="p-float-label">
-                <input type="text" id="cardname" pInputText [(ngModel)]="searchAttr">
+               <p-autoComplete id="cardname" [(ngModel)]="searchAttr" [suggestions]="filteredNames" (completeMethod)="filterName($event)" [minLength]="1"></p-autoComplete>
                 <label for="cardname">Card Name</label>
              </span>
           </div>
@@ -43,7 +43,7 @@
   <ng-template let-card pTemplate="gridItem">
     <div class="p-col-12 p-md-3">
       <div class="card" (click)="addToWishlist(card)">
-        <img *ngIf="card.wish" class="fa-solid fa-circle-heart in-wishlist" src="assets/heart_wish.png">
+        <img *ngIf="card.wish" class="fa-solid fa-circle-heart in-wishlist" [src]="wishHeart">
         <img *ngIf="card.owned" class="zoom card-image-big" [src]="card.card.images.large" [alt]="card.card.name">
         <img *ngIf="!card.owned" class="zoom img-notOwned card-image-big" pBadge [src]="card.card.images.large" [alt]="card.card.name">
       </div>

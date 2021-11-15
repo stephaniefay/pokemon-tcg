@@ -7,6 +7,7 @@ import {CardAPI} from "../../models/cardAPI";
 import {CSVCard} from "../../models/CSVCard";
 import {ApiCardService} from "../../services/api-card.service";
 import {LigaPokemonService} from "../../services/liga-pokemon.service";
+import {NamesFunctions} from "../../models/names";
 
 @Component({
   selector: 'app-add-card',
@@ -36,6 +37,7 @@ export class AddCardComponent implements OnInit {
   selectedCard: CardAPI;
   cards: ApiSearch;
   displayDialog: boolean = false;
+  filteredNames: any[];
 
   ngOnInit(): void {
     this.supertypes = [
@@ -153,7 +155,7 @@ export class AddCardComponent implements OnInit {
       if (this.cardName.includes(" ")) {
         query += '"' + this.cardName + '"';
       } else {
-        query += this.cardName;
+        query += this.cardName + "*";
       }
     }
 
@@ -194,6 +196,13 @@ export class AddCardComponent implements OnInit {
   previousPage() {
     this.page--;
     this.search();
+  }
+
+  filterName(event) {
+    let query = event.query;
+
+    const namesFunctions = new NamesFunctions();
+    this.filteredNames = namesFunctions.searchByName(query)
   }
 
 }

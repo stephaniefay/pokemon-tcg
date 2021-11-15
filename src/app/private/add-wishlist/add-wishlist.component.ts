@@ -5,6 +5,7 @@ import {WishlistService} from "../../services/wishlist.service";
 import {CardAPI} from "../../models/cardAPI";
 import {ApiSearch} from "../../models/interfaces/apiSearch";
 import {Collections, CollectionsFunctions} from "../../models/collections";
+import {NamesFunctions} from "../../models/names";
 
 @Component({
   selector: 'app-add-wishlist',
@@ -31,6 +32,7 @@ export class AddWishlistComponent implements OnInit {
   page: number = 1;
   selectedCard: CardAPI;
   cards: ApiSearch;
+  filteredNames: any[];
 
   ngOnInit(): void {
     this.supertypes = [
@@ -87,7 +89,7 @@ export class AddWishlistComponent implements OnInit {
       if (this.cardName.includes(" ")) {
         query += '"' + this.cardName + '"';
       } else {
-        query += this.cardName;
+        query += this.cardName + "*";
       }
     }
 
@@ -130,4 +132,10 @@ export class AddWishlistComponent implements OnInit {
     this.search();
   }
 
+  filterName(event) {
+    let query = event.query;
+
+    const namesFunctions = new NamesFunctions();
+    this.filteredNames = namesFunctions.searchByName(query)
+  }
 }

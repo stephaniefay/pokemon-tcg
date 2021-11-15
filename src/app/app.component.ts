@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {MenuItem, PrimeNGConfig} from "primeng/api";
 import {AngularFireAuth} from "@angular/fire/auth";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {LoginComponent} from "./login/login.component";
+import {ConfigurationService} from "./services/configuration.service";
+import {DOCUMENT} from "@angular/common";
+import {AngularFireStorage} from "@angular/fire/storage";
 
 @Component({
   selector: 'app-root',
@@ -15,13 +18,21 @@ export class AppComponent {
   itemsLogged: MenuItem[];
   items: MenuItem[];
   ref: DynamicDialogRef;
+  theme: any;
+  logo: any;
 
   constructor(private primengConfig: PrimeNGConfig,
               public auth: AngularFireAuth,
-              public dialogService: DialogService) {}
+              public config: ConfigurationService,
+              public dialogService: DialogService,
+              private storage: AngularFireStorage,
+              @Inject(DOCUMENT) private document: Document) {}
 
   ngOnInit() {
     this.primengConfig.ripple = true;
+
+    this.loadTheme();
+    this.loadLogo()
 
     this.items = [
       {
@@ -59,6 +70,11 @@ export class AppComponent {
         label: 'Wishlist',
         icon: 'far fa-heart',
         routerLink: ['/public/wishlist']
+      },
+      {
+        label: 'About',
+        icon: 'fa-solid fa-circle-info',
+        routerLink: ['/public/about']
       },
       {
         label: 'Login',
@@ -143,6 +159,22 @@ export class AppComponent {
         routerLink: ['/public/wishlist']
       },
       {
+        label: 'Profile',
+        icon: 'fa-solid fa-circle-info',
+        items: [
+          {
+            label: 'About',
+            icon: 'fa-solid fa-circle-info',
+            routerLink: ['/public/about'],
+          },
+          {
+            label: 'Configurations',
+            icon: 'fa-solid fa-gear',
+            routerLink: ['/private/config']
+          }
+        ]
+      },
+      {
         label: 'Logout',
         icon: 'fas fa-sign-out-alt',
         command: (event: Event) => {
@@ -161,17 +193,16 @@ export class AppComponent {
     });
   }
 
-  githubClick() {
-    window.open('https://github.com/stephaniefay/pokemon-tcg', '_blank').focus();
-  }
-
-  twitterClick() {
-    window.open('https://twitter.com/Teffyhart', '_blank').focus();
-  }
-
-  async isUserLoggedIn() {
-    this.auth.authState.subscribe(value => {
-      return value != null;
+  loadTheme () {
+    this.config.loadTheme().subscribe(result => {
+      let themeLink = this.document.getElementById('app-theme') as HTMLLinkElement;
+      themeLink.href = result + '.css';
     });
+  }
+
+  async loadLogo() {
+    this.config.loadLogo().subscribe(async path => {
+      this.logo = await this.storage.ref(<string>path).getDownloadURL().toPromise();
+    })
   }
 }

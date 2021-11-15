@@ -1,0 +1,197 @@
+<p-messages></p-messages>
+<div class="card">
+  <div class="card-content">
+    <div [style]="{width: '40%'}">
+      <div class="form-flex">
+        Choose a Theme:
+        <div class="line-flex">
+          <a (click)="changeTheme('arya-blue')" class="click-pointer">
+            <img src="assets/themes/images/arya-blue.png" width="50">
+          </a>
+          <a (click)="changeTheme('arya-green')" class="click-pointer">
+            <img src="assets/themes/images/arya-green.png" width="50">
+          </a>
+          <a (click)="changeTheme('arya-orange')" class="click-pointer">
+            <img src="assets/themes/images/arya-orange.png" width="50">
+          </a>
+          <a (click)="changeTheme('arya-purple')" class="click-pointer">
+            <img src="assets/themes/images/arya-purple.png" width="50">
+          </a>
+        </div>
+        <div class="line-flex">
+          <a (click)="changeTheme('bootstrap4-dark-blue')" class="click-pointer">
+            <img src="assets/themes/images/bootstrap4-dark-blue.svg" width="50">
+          </a>
+          <a (click)="changeTheme('bootstrap4-dark-purple')" class="click-pointer">
+            <img src="assets/themes/images/bootstrap4-dark-purple.svg" width="50">
+          </a>
+          <a (click)="changeTheme('bootstrap4-light-blue')" class="click-pointer">
+            <img src="assets/themes/images/bootstrap4-light-blue.svg" width="50">
+          </a>
+          <a (click)="changeTheme('bootstrap4-light-purple')" class="click-pointer">
+            <img src="assets/themes/images/bootstrap4-light-purple.svg" width="50">
+          </a>
+        </div>
+        <div class="line-flex">
+          <a (click)="changeTheme('luna-amber')" class="click-pointer">
+            <img src="assets/themes/images/luna-amber.png" width="50">
+          </a>
+          <a (click)="changeTheme('luna-blue')" class="click-pointer">
+            <img src="assets/themes/images/luna-blue.png" width="50">
+          </a>
+          <a (click)="changeTheme('luna-green')" class="click-pointer">
+            <img src="assets/themes/images/luna-green.png" width="50">
+          </a>
+          <a (click)="changeTheme('luna-pink')" class="click-pointer">
+            <img src="assets/themes/images/luna-pink.png" width="50">
+          </a>
+        </div>
+        <div class="line-flex">
+          <a (click)="changeTheme('md-dark-deeppurple')" class="click-pointer">
+            <img src="assets/themes/images/md-dark-deeppurple.svg" width="50">
+          </a>
+          <a (click)="changeTheme('md-dark-indigo')" class="click-pointer">
+            <img src="assets/themes/images/md-dark-indigo.svg" width="50">
+          </a>
+          <a (click)="changeTheme('md-light-deeppurple')" class="click-pointer">
+            <img src="assets/themes/images/md-light-deeppurple.svg" width="50">
+          </a>
+          <a (click)="changeTheme('md-light-indigo')" class="click-pointer">
+            <img src="assets/themes/images/md-light-indigo.svg" width="50">
+          </a>
+        </div>
+        <div class="line-flex">
+          <a (click)="changeTheme('saga-blue')" class="click-pointer">
+            <img src="assets/themes/images/saga-blue.png" width="50">
+          </a>
+          <a (click)="changeTheme('saga-green')" class="click-pointer">
+            <img src="assets/themes/images/saga-green.png" width="50">
+          </a>
+          <a (click)="changeTheme('saga-orange')" class="click-pointer">
+            <img src="assets/themes/images/saga-orange.png" width="50">
+          </a>
+          <a (click)="changeTheme('saga-purple')" class="click-pointer">
+            <img src="assets/themes/images/saga-purple.png" width="50">
+          </a>
+        </div>
+        <div class="line-flex">
+          <a (click)="changeTheme('vela-blue')" class="click-pointer">
+            <img src="assets/themes/images/vela-blue.png" width="50">
+          </a>
+          <a (click)="changeTheme('vela-green')" class="click-pointer">
+            <img src="assets/themes/images/vela-green.png" width="50">
+          </a>
+          <a (click)="changeTheme('vela-orange')" class="click-pointer">
+            <img src="assets/themes/images/vela-orange.png" width="50">
+          </a>
+          <a (click)="changeTheme('vela-purple')" class="click-pointer">
+            <img src="assets/themes/images/vela-purple.png" width="50">
+          </a>
+        </div>
+      </div>
+      <div class="form-flex">
+        Choose a heart for the wishlist:
+        <div class="line-flex-heart">
+          <img src="assets/wish_hearts/filled/red.svg" alt="red" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/filled/red.svg')">
+          <img src="assets/wish_hearts/filled/pink.svg" alt="pink" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/filled/pink.svg')">
+          <img src="assets/wish_hearts/filled/purple.svg" alt="purple" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/filled/purple.svg')">
+          <img src="assets/wish_hearts/filled/deep_purple.svg" alt="deep_purple" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/filled/deep_purple.svg')">
+          <img src="assets/wish_hearts/filled/indigo.svg" alt="indigo" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/filled/indigo.svg')">
+          <img src="assets/wish_hearts/filled/blue.svg" alt="blue" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/filled/blue.svg')">
+          <img src="assets/wish_hearts/filled/light_blue.svg" alt="light_blue" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/filled/light_blue.svg')">
+          <img src="assets/wish_hearts/filled/cyan.svg" alt="cyan" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/filled/cyan.svg')">
+          <img src="assets/wish_hearts/filled/teal.svg" alt="teal" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/filled/teal.svg')">
+          <img src="assets/wish_hearts/filled/green.svg" alt="green" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/filled/green.svg')">
+          <img src="assets/wish_hearts/filled/light_green.svg" alt="light_green" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/filled/light_green.svg')">
+          <img src="assets/wish_hearts/filled/lime.svg" alt="lime" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/filled/lime.svg')">
+          <img src="assets/wish_hearts/filled/yellow.svg" alt="yellow" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/filled/yellow.svg')">
+          <img src="assets/wish_hearts/filled/amber.svg" alt="amber" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/filled/amber.svg')">
+          <img src="assets/wish_hearts/filled/orange.svg" alt="orange" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/filled/orange.svg')">
+          <img src="assets/wish_hearts/filled/deep_orange.svg" alt="deep_orange" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/filled/deep_orange.svg')">
+          <img src="assets/wish_hearts/filled/brown.svg" alt="brown" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/filled/brown.svg')">
+          <img src="assets/wish_hearts/filled/grey.svg" alt="grey" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/filled/grey.svg')">
+          <img src="assets/wish_hearts/filled/blue_grey.svg" alt="blue_grey" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/filled/blue_grey.svg')">
+        </div>
+        <div class="line-flex-heart">
+          <img src="assets/wish_hearts/transparent/red.svg" alt="red" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/transparent/red.svg')">
+          <img src="assets/wish_hearts/transparent/pink.svg" alt="pink" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/transparent/pink.svg')">
+          <img src="assets/wish_hearts/transparent/purple.svg" alt="purple" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/transparent/purple.svg')">
+          <img src="assets/wish_hearts/transparent/deep_purple.svg" alt="deep_purple" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/transparent/deep_purple.svg')">
+          <img src="assets/wish_hearts/transparent/indigo.svg" alt="indigo" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/transparent/indigo.svg')">
+          <img src="assets/wish_hearts/transparent/blue.svg" alt="blue" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/transparent/blue.svg')">
+          <img src="assets/wish_hearts/transparent/light_blue.svg" alt="light_blue" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/transparent/light_blue.svg')">
+          <img src="assets/wish_hearts/transparent/cyan.svg" alt="cyan" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/transparent/cyan.svg')">
+          <img src="assets/wish_hearts/transparent/teal.svg" alt="teal" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/transparent/teal.svg')">
+          <img src="assets/wish_hearts/transparent/green.svg" alt="green" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/transparent/green.svg')">
+          <img src="assets/wish_hearts/transparent/light_green.svg" alt="light_green" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/transparent/light_green.svg')">
+          <img src="assets/wish_hearts/transparent/lime.svg" alt="lime" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/transparent/lime.svg')">
+          <img src="assets/wish_hearts/transparent/yellow.svg" alt="yellow" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/transparent/yellow.svg')">
+          <img src="assets/wish_hearts/transparent/amber.svg" alt="amber" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/transparent/amber.svg')">
+          <img src="assets/wish_hearts/transparent/orange.svg" alt="orange" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/transparent/orange.svg')">
+          <img src="assets/wish_hearts/transparent/deep_orange.svg" alt="deep_orange" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/transparent/deep_orange.svg')">
+          <img src="assets/wish_hearts/transparent/brown.svg" alt="brown" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/transparent/brown.svg')">
+          <img src="assets/wish_hearts/transparent/grey.svg" alt="grey" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/transparent/grey.svg')">
+          <img src="assets/wish_hearts/transparent/blue_grey.svg" alt="blue_grey" [style]="{cursor: 'pointer'}" (click)="changeWishHeart('assets/wish_hearts/transparent/blue_grey.svg')">
+        </div>
+      </div>
+    </div>
+    <div [style]="{width: '40%'}">
+      <div class="p-formgrid p-grid">
+        <div class="p-field p-col">
+          <label for="logo">Logo:</label>
+          <div class="uploader-flex">
+            <p-fileUpload #uploader id="logo" accept="image/*" customUpload="true" (onSelect)="showLogoFile($event)" (uploadHandler)="changeLogo($event)" mode="basic" maxFileSize="1000000">
+            </p-fileUpload>
+            <span *ngIf="fileName" [style]="{marginLeft: '5%'}">{{fileName}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="p-formgrid p-grid">
+        <div class="p-field p-col form-flex">
+          <label for="defaultFilter">Default filter in collection:</label>
+          <p-dropdown id="defaultFilter" [options]="filters" [(ngModel)]="filterSelected" (onChange)="changeFilter($event)" placeholder="Select a Filter" optionLabel="name" [showClear]="false"></p-dropdown>
+        </div>
+        <div class="p-field p-col form-flex">
+          <label for="defaultBehaviour">Default behaviour in collection:</label>
+          <p-dropdown id="defaultBehaviour" [options]="behaviours" [(ngModel)]="behaviourSelected" (onChange)="changeBehaviour($event)" placeholder="Select a Behaviour" optionLabel="name" [showClear]="false"></p-dropdown>
+        </div>
+      </div>
+      <div class="p-formgrid p-grid form-flex">
+        Personal Info showed in About Section:
+        <div [style]="{display: 'flex', marginTop: '1%'}">
+          <div class="p-field p-col">
+            <span class="p-float-label">
+              <input id="name" type="text" pInputText [(ngModel)]="name">
+              <label for="name">Name</label>
+            </span>
+          </div>
+          <div class="p-field p-col">
+            <span class="p-float-label">
+              <input id="twitter" type="text" pInputText [(ngModel)]="twitter">
+              <label for="twitter">Twitter</label>
+            </span>
+          </div>
+          <div class="p-field p-col">
+            <span class="p-float-label">
+              <input id="instagram" type="text" pInputText [(ngModel)]="instagram">
+              <label for="instagram">Instagram</label>
+            </span>
+          </div>
+          <div class="p-field p-col">
+            <span class="p-float-label">
+              <input id="ligaPokemon" type="text" pInputText [(ngModel)]="ligaPokemon">
+              <label for="ligaPokemon">Liga Pokemon</label>
+            </span>
+          </div>
+        </div>
+        <div class="p-field p-col">
+          <span class="p-float-label">
+            <textarea id="description" [pTooltip]="'You can use HTML in here to personalize it as you wish!'" autoResize="autoResize" [rows]="5" [cols]="80" pInputTextarea [(ngModel)]="description"></textarea>
+            <label for="description">Description</label>
+          </span>
+        </div>
+        <button pButton pRipple label="Save" icon="fas fa-ch" class="p-button-success p-mr-2" (click)="save()"></button>
+      </div>
+    </div>
+  </div>
+</div>

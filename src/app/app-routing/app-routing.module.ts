@@ -16,6 +16,8 @@ import {FetchSomeApiComponent} from "../private/fetch-some-api/fetch-some-api.co
 import {CardManagementComponent} from "../private/card-management/card-management.component";
 import {WishlistComponent} from "../public/wishlist/wishlist.component";
 import {VerifyCollectionComponent} from "../public/verify-collection/verify-collection.component";
+import {AboutComponent} from "../public/about/about.component";
+import {ConfigurationsComponent} from "../private/configurations/configurations.component";
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/']);
 
@@ -50,6 +52,10 @@ const routes: Routes = [
       {
         path: 'wishlist',
         component: WishlistComponent
+      },
+      {
+        path: 'about',
+        component: AboutComponent
       }
     ]
   },
@@ -90,6 +96,10 @@ const routes: Routes = [
       {
         path: 'cardmanagement',
         component: CardManagementComponent
+      },
+      {
+        path: 'config',
+        component: ConfigurationsComponent
       }
     ]
   },

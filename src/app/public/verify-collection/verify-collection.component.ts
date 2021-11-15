@@ -6,6 +6,8 @@ import {Collections, CollectionsFunctions} from "../../models/collections";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {WishlistService} from "../../services/wishlist.service";
 import {AngularFireAuth} from "@angular/fire/auth";
+import {ConfigurationService} from "../../services/configuration.service";
+import {NamesFunctions} from "../../models/names";
 
 @Component({
   selector: 'app-verify-collection',
@@ -20,6 +22,7 @@ export class VerifyCollectionComponent implements OnInit {
               private confirmationService: ConfirmationService,
               private searchService: HttpServiceService,
               private messageService: MessageService,
+              private configService: ConfigurationService,
               public wishlist: WishlistService) {
   }
 
@@ -29,6 +32,8 @@ export class VerifyCollectionComponent implements OnInit {
   collections: any;
   loading = true;
   user: any;
+  wishHeart: any;
+  filteredNames: any[];
 
   ngOnInit(): void {
     const collectionsFunctions = new CollectionsFunctions();
@@ -44,6 +49,11 @@ export class VerifyCollectionComponent implements OnInit {
     this.auth.user.subscribe(user => {
       this.user = user;
     });
+
+    this.configService.loadWishHeart().subscribe(result => {
+      this.wishHeart = result;
+    });
+
   }
 
   async search() {
@@ -62,7 +72,7 @@ export class VerifyCollectionComponent implements OnInit {
     else if (this.searchAttr.includes(' '))
       query = 'name:"' + this.searchAttr + '"';
     else
-      query = 'name:' + this.searchAttr;
+      query = 'name:' + this.searchAttr + '*';
 
     count = 0;
     apiSearchPromise = await this.searchService.searchForCard(query + "&page=" + page).toPromise();
@@ -119,5 +129,12 @@ export class VerifyCollectionComponent implements OnInit {
         }
       });
     }
+  }
+
+  filterName(event) {
+    let query = event.query;
+
+    const namesFunctions = new NamesFunctions();
+    this.filteredNames = namesFunctions.searchByName(query)
   }
 }

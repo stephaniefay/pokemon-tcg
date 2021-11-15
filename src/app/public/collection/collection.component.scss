@@ -63,6 +63,13 @@
       align-self: flex-end;
     }
 
+    .card-only {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: .5rem;
+      align-self: center;
+    }
+
     .card-list-action {
       display: flex;
       flex-direction: column;
@@ -95,6 +102,11 @@
     }
 
     .card-price {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .card-only {
       font-size: 1.5rem;
       font-weight: 600;
     }
@@ -131,6 +143,10 @@
     }
 
     .card-price {
+      align-self: center;
+    }
+
+    .card-only {
       align-self: center;
     }
 
