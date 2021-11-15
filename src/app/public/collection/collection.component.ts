@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {CardAPI} from "../../models/cardAPI";
 import {SelectItem} from "primeng/api";
 import {ApiCardService} from "../../services/api-card.service";
+import {ConfigurationService} from "../../services/configuration.service";
+import {configurations} from "../../models/interfaces/configurations";
 
 export interface CardAPIFirebase {
   key: string;
@@ -18,23 +20,34 @@ export class CollectionComponent implements OnInit {
 
   cards: CardAPIFirebase[];
   sortOptions: SelectItem[];
+  behaviour: string;
   cardByPage: number;
   sortOrder: number;
   sortField: string;
   loading = true;
 
-  constructor(private service: ApiCardService) {
+  constructor(private service: ApiCardService,
+              private configService: ConfigurationService) {
   }
 
   ngOnInit(): void {
     this.service.getAll().subscribe( data => {
       this.cards = [];
       data.forEach( item => {
-        this.initializePrice(item.cardApi);
+        item.cardApi.priceTotal = this.initializePrice(item.cardApi);
         this.getDexNum(item.cardApi);
         this.cards.push({key: item.key, cardApi: item.cardApi});
       });
-      this.onSortChange({originalEvent: null, value: '!cardApi.cardCSV.dateImport'});
+
+      this.configService.loadFilter().subscribe((filter:configurations) => {
+        if (filter != null)
+          this.onSortChange({originalEvent: null, value: filter.value});
+      });
+
+      this.configService.loadBehaviour().subscribe((behaviour:configurations) => {
+        this.behaviour = behaviour.value;
+      })
+
       this.loading = false;
     });
 
@@ -69,9 +82,16 @@ export class CollectionComponent implements OnInit {
     return rarity;
   }
 
-  getPrice (card: CardAPI) {
+  getPriceItem (card: CardAPI) {
     if (card.priceTotal == null) {
-      this.initializePrice(card);
+      this.initializePriceItem(card);
+    }
+    return card.priceTotal;
+  }
+
+  getPriceTotal (card: CardAPI) {
+    if (card.priceTotal == null) {
+      this.initializePriceTotal(card);
     }
     return card.priceTotal;
   }
@@ -116,13 +136,21 @@ export class CollectionComponent implements OnInit {
       }
     }
 
-    value = value * card.cardCSV.quantity;
+    return value;
+  }
+
+  initializePriceTotal (card: CardAPI) {
+    const value = this.initializePrice(card) * card.cardCSV.quantity;
     card.priceTotal = Number(value.toFixed(2));
   }
 
-  getDescriptor (card: CardAPI) {
+  initializePriceItem (card: CardAPI) {
+    card.priceTotal = Number(this.initializePrice(card).toFixed(2));
+  }
+
+  getDescriptorTotal (card: CardAPI) {
     let flag = false;
-    let descriptor: string = this.getPrice(card) + ' = (';
+    let descriptor: string = this.getPriceTotal(card) + ' = (';
     if (card.tcgplayer == null) {
       descriptor += '0 x ';
     } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Edition One")) {

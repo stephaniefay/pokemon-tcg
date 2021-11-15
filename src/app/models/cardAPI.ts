@@ -86,4 +86,6 @@ export class CardAPI {
   cardCSV: CSVCard;
   priceTotal: number;
   dexNum: number;
+  extras: string;
+  language: string;
 }

@@ -18,7 +18,8 @@ All images used in this project either came from the Pokemon TCG API or were fou
 [x](https://br.pinterest.com/pin/454793262346636811/), 
 [x](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.tumblr.com%2Ftagged%2Fsparkles%3Fsort%3Dtop&psig=AOvVaw39_GHxIAIMBRsknXhIv4tG&ust=1620356174101000&source=images&cd=vfe&ved=0CA0QjhxqFwoTCMCpgqOHtPACFQAAAAAdAAAAABAF), 
 [x](https://br.pinterest.com/pin/851180398302573457/),
-[x](https://github.com/duiker101/pokemon-type-svg-icons)
+[x](https://github.com/duiker101/pokemon-type-svg-icons),
+[x](https://commons.wikimedia.org/w/index.php?curid=89213285)
  ]
 
 ## Setting up CORS

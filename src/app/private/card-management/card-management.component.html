@@ -6,13 +6,15 @@
            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true" (onPage)="gotoTop()">
     <ng-template pTemplate="caption">
       <div class="p-d-flex p-ai-center p-jc-between">
-        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
         <button pButton pRipple label="Update Prices" icon="pi pi-dollar" class="p-button-secondary p-mr-2" (click)="updatePrices()"></button>
-        <p-dropdown [options]="pageSizeArray" [(ngModel)]="pageSize" placeholder="Rows per page" optionLabel="name" optionValue="value" [showClear]="false"></p-dropdown>
-        <span class="p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
-                </span>
+        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+        <div>
+          <span class="p-input-icon-left">
+                      <i class="pi pi-search"></i>
+                      <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+                  </span>
+          <p-dropdown [options]="pageSizeArray" [(ngModel)]="pageSize" placeholder="Rows per page" optionLabel="name" optionValue="value" [showClear]="false"></p-dropdown>
+        </div>
       </div>
     </ng-template>
     <ng-template pTemplate="header">

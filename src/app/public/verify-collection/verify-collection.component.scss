@@ -97,10 +97,11 @@
 
   img {
     display: block;
+    z-index: 1;
   }
 
   .in-wishlist {
-    z-index: 9999;
+    z-index: 2;
     height: 6vw;
     position: absolute;
     top: 0;

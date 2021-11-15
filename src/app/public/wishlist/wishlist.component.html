@@ -1,6 +1,6 @@
 <div class="card">
   <p-table #dt [value]="cards" [rows]="pageSize" [paginator]="true" [globalFilterFields]="['cardApi.name','cardApi.set.name','cardApi.number']"
-           [rowHover]="true" dataKey="key" styleClass="p-datatable-responsive-type"
+           [rowHover]="true" dataKey="key" styleClass="p-datatable-responsive-type" editMode="row"
            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true" (onPage)="gotoTop()">
     <ng-template pTemplate="caption">
       <div class="p-d-flex p-ai-center p-jc-between">
@@ -19,18 +19,22 @@
         <th></th>
         <th>Collection</th>
         <th>Rarity</th>
+        <th>Extras</th>
+        <th>Language</th>
         <th></th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-card>
-      <tr>
+    <ng-template pTemplate="body" let-card let-editing="editing" let-ri="rowIndex">
+      <tr [pEditableRow]="card">
         <td>
           <span class="p-column-title">Number</span>
           {{card.cardApi.number}}</td>
         <td>
           <span class="p-column-title">Name</span>
           {{card.cardApi.name}}</td>
-        <td><img [src]="card.cardApi.images.small" [alt]="card.cardApi.name" awesomeTooltip="" image="{{card.cardApi.images.large}}" width="100" class="p-shadow-4" /></td>
+        <td>
+          <img [src]="card.cardApi.images.small" [alt]="card.cardApi.name" awesomeTooltip="" image="{{card.cardApi.images.large}}" width="100" class="p-shadow-4" />
+        </td>
         <td>
           <span class="p-column-title">Collection</span>
           <div class="table-ligapokemon">
@@ -40,9 +44,35 @@
         </td>
         <td>
           <span class="p-column-title">Rarity</span>
-          <span [class]="'card-badge status-' + getBadge(card.cardApi.rarity)">{{card.cardApi.rarity}}</span></td>
+          <span [class]="'card-badge status-' + getBadge(card.cardApi.rarity)">{{card.cardApi.rarity}}</span>
+        </td>
         <td>
-          <button pButton pRipple *ngIf="auth.user | async as user;" icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteCard(card)"></button>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="text" [(ngModel)]="card.cardApi.extras">
+            </ng-template>
+            <ng-template pTemplate="output">
+              <span class="p-column-title">Extras</span>
+              {{card.cardApi.extras}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="text" [(ngModel)]="card.cardApi.language">
+            </ng-template>
+            <ng-template pTemplate="output">
+              <span class="p-column-title">Languages</span>
+              {{card.cardApi.language}}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td style="text-align:center" *ngIf="auth.user | async as user;">
+          <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(card)" class="p-button-rounded p-button-text"></button>
+          <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(card)" class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+          <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(card, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteCard(card)"></button>
         </td>
       </tr>
     </ng-template>
