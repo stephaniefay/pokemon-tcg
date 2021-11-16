@@ -20,10 +20,10 @@ export class AboutComponent implements OnInit {
   ngOnInit(): void {
     this.service.loadAllConfigurations().subscribe((result: ConfigInterface) => {
       this.name = result.name;
-      this.twitter = result.twitter;
-      this.instagram = result.instagram;
-      this.ligaPokemon = result.ligaPokemon;
-      this.description = result.description;
+      this.twitter = (result.twitter == '') ? null : result.twitter;
+      this.instagram = (result.instagram == '') ? null : result.instagram;
+      this.ligaPokemon = (result.ligaPokemon == '') ? null : result.ligaPokemon;
+      this.description = (result.description == '') ? ' ' : result.description;
     });
   }
 
