@@ -31,10 +31,13 @@ export class ConfigurationService {
   switchLogo(file: File) {
     const service = this.loadLogo().subscribe(oldPath => {
       service.unsubscribe();
-      this.storage.ref(<string>oldPath).delete();
-      this.storage.upload(file.name, file).then(result => {
-        var itemRef = this.db.object('Configuration/logoPath');
-        itemRef.set(file.name);
+      const fileService = this.storage.ref(<string>oldPath).getDownloadURL().subscribe(fileUrl => {
+        fileService.unsubscribe();
+        if (fileUrl != null) this.storage.ref(<string>oldPath).delete();
+        this.storage.upload(file.name, file).then(result => {
+          var itemRef = this.db.object('Configuration/logoPath');
+          itemRef.set(file.name);
+        });
       });
     });
   }
@@ -68,20 +71,21 @@ export class ConfigurationService {
 
   saveData (data: ConfigInterface) {
     let itemRef;
+
     itemRef = this.db.object('Configuration/name');
-    itemRef.set(data.name);
+    itemRef.set((data.name != null) ? data.name : '');
 
     itemRef = this.db.object('Configuration/twitter');
-    itemRef.set(data.twitter);
+    itemRef.set((data.twitter != null) ? data.twitter : '');
 
     itemRef = this.db.object('Configuration/instagram');
-    itemRef.set(data.instagram);
+    itemRef.set((data.instagram != null) ? data.instagram : '');
 
     itemRef = this.db.object('Configuration/ligaPokemon');
-    itemRef.set(data.ligaPokemon);
+    itemRef.set((data.ligaPokemon != null) ? data.ligaPokemon : '');
 
     itemRef = this.db.object('Configuration/description');
-    itemRef.set(data.description);
+    itemRef.set((data.description != null) ? data.description : '');
 
   }
 }
