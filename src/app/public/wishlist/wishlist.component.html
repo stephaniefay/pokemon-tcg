@@ -14,14 +14,14 @@
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
-        <th>Number</th>
-        <th>Name</th>
+        <th pSortableColumn="cardApi.number">Number <p-sortIcon field="cardApi.number"></p-sortIcon></th>
+        <th pSortableColumn="cardApi.name">Name <p-sortIcon field="cardApi.name"></p-sortIcon></th>
         <th></th>
-        <th>Collection</th>
-        <th>Rarity</th>
-        <th>Extras</th>
-        <th>Language</th>
-        <th></th>
+        <th pSortableColumn="cardApi.set.name">Collection <p-sortIcon field="cardApi.set.name"></p-sortIcon></th>
+        <th pSortableColumn="cardApi.rarity">Rarity <p-sortIcon field="cardApi.rarity"></p-sortIcon></th>
+        <th pSortableColumn="cardApi.extras">Extras <p-sortIcon field="cardApi.extras"></p-sortIcon></th>
+        <th pSortableColumn="cardApi.language">Language <p-sortIcon field="cardApi.language"></p-sortIcon></th>
+        <th *ngIf="auth.user | async as user;"></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-card let-editing="editing" let-ri="rowIndex">
