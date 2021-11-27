@@ -90,9 +90,7 @@ export class CollectionComponent implements OnInit {
   }
 
   getPriceTotal (card: CardAPI) {
-    if (card.priceTotal == null) {
-      this.initializePriceTotal(card);
-    }
+    this.initializePriceTotal(card);
     return card.priceTotal;
   }
 

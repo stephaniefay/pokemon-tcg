@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {LigaPokemonService} from "../../services/liga-pokemon.service";
 import {HttpServiceService} from "../../services/http-service.service";
 import {ApiCardService} from "../../services/api-card.service";
@@ -7,6 +7,7 @@ import {CSVCard} from "../../models/CSVCard";
 import {CardAPI} from "../../models/cardAPI";
 import {cardCSVDB} from "../../models/interfaces/ligaPokemonDB";
 import {ApiSearch} from "../../models/interfaces/apiSearch";
+import {CsvReaderService} from "../../services/csv-reader.service";
 
 export class MultipleCards {
   index: string;
@@ -40,6 +41,8 @@ export class FetchApiComponent implements OnInit {
   loading = true;
   loadingCSV = true;
   loadingErrors = true;
+  finishedImporting = false;
+  uploadedFiles: any[] = [];
 
   blocked = false;
 
@@ -47,19 +50,67 @@ export class FetchApiComponent implements OnInit {
               private httpService: HttpServiceService,
               private apiCardService: ApiCardService,
               private confirmationService: ConfirmationService,
-              private messageService: MessageService) { }
+              private messageService: MessageService,
+              public csvReader: CsvReaderService) { }
+
+  @ViewChild('uploader') uploader: any;
 
   ngOnInit(): void {}
 
-  verifyConvert() {
+  verifyConvert(event) {
     this.confirmationService.confirm({
-      message: 'If you want to continue, you will delete all cards fetched from API (but keep the ones imported via LigaPokemon) and reimport them. It will take a long time, please do not close the window or change tabs, because it could cause some strange behaviour.',
+      message: 'If you want to continue, you will delete all cards in your collection and import those in this file. It will take a long time, please do not close the window or change tabs, because it could cause some strange behaviour.',
       header: 'Confirm',
       icon: 'pi pi-exclamation-circle',
       accept: () => {
-        this.convert();
+        this.uploadFile(event);
       }
     });
+  }
+
+  uploadFile (event) {
+    let file = event.files[0];
+
+    if (this.csvReader.isValidCSVFile(file)) {
+      let reader = new FileReader();
+      reader.readAsText(file);
+
+      reader.onload = () => {
+        let csvData = reader.result;
+        let csvRecordsArray = (<string>csvData).split(/\r\n|\n/);
+
+        let headersRow = this.csvReader.getHeaderArray(csvRecordsArray);
+
+        this.csvReader.records = this.csvReader.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
+        this.csvReader.totalLines = this.csvReader.records.length;
+        this.ligaPokemonService.deleteAll().then(() => {
+          this.csvReader.records.forEach(record => {
+            this.csvReader.linesRead += 1;
+            this.ligaPokemonService.insert(record);
+          });
+          this.messageService.add({
+            severity: 'success',
+            summary: 'CSV imported!',
+            detail: 'the file was successfully imported to the database!'
+          });
+          this.fileReset();
+          this.finishedImporting = true;
+          this.convert();
+        });
+      };
+
+      reader.onerror = () => {
+        this.messageService.add({severity: 'danger', summary: 'Error', detail: 'error occurred while reading file'});
+      };
+
+    } else {
+      this.messageService.add({severity: 'warn', summary: 'File not supported', detail: 'Please import valid .csv file'});
+      this.fileReset();
+    }
+  }
+
+  fileReset() {
+    this.uploader.clear();
   }
 
   convert() {

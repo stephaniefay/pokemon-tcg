@@ -14,6 +14,10 @@ export class CsvReaderService {
 
   constructor() { }
 
+  getCurrentDate () {
+    return this.currentDate;
+  }
+
   getDataRecordsArrayFromCSVFile(csvRecordsArray: any, headerLength: any) {
     let csvArr = [];
     const service = new CollectionsFunctions();

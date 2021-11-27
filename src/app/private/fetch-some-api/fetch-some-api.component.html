@@ -1,19 +1,34 @@
 <p-toast position="top-center" key="tc"></p-toast>
 
 <div>
-  <p>In this section you will be able to fetch <strong>some</strong> cards from the API. Use the input underneath to select the date of the cards that you added via LigaPokemon.</p>
+  <p>This component will <strong>add</strong> to your LigaPokemon collection, then it will do it's magic and fetch all the info necessary from the API.</p>
   <p>You also should know that this component <strong>WILL NOT</strong> clean the base before fetching, it will only verify if the card was already added (and update it as necessary) and if not will fetch it from the API.</p>
-  <p>If you wish to clean the base for some reason, please use the <a [routerLink]="'/private/api'">Fetch all</a> option in the menu.</p>
+  <p>If you wish to clean the base for some reason, please use the <a [routerLink]="'/private/clean-import'">Clean & Import</a> option in the menu.</p>
 </div>
 
-<div class="p-grid p-mt-2">
+<div *ngIf="!finishedImporting">
+  <span *ngIf="csvReader.totalLines">{{csvReader.linesRead}} of {{csvReader.totalLines}} inserted</span>
+
+  <div class="p-grid p-mt-2">
+    <div class="p-col">
+      <div class="box">
+        <p-fileUpload #uploader accept=".csv" customUpload="true" [uploadLabel]="'Import'" (uploadHandler)="uploadFile($event)"
+                      multiple="multiple" maxFileSize="1000000">
+          <ng-template pTemplate="content">
+            <ul *ngIf="uploadedFiles.length">
+              <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+            </ul>
+          </ng-template>
+        </p-fileUpload>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="p-grid p-mt-2" *ngIf="finishedImporting">
   <div class="p-col">
     <div class="top-div">
       <span>Fetching {{cardsProcessed}} of {{totalCards}} ({{multipleCardsProcessed}}) cards;</span>
-        <div class="p-inputgroup">
-          <p-calendar [(ngModel)]="date" [touchUI]="true" [readonlyInput]="true" inputId="touchui"></p-calendar>
-          <button pButton pRipple type="button" label="Start converting" class="p-button-outlined" (click)="convert()" [disabled]="disabled"></button>
-        </div>
     </div>
   </div>
 

@@ -8,7 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "setFirebase": "firebase use default",
+    "deploy": "firebase deploy"
   },
   "private": true,
   "dependencies": {

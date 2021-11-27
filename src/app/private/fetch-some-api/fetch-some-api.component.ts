@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {CSVCard} from "../../models/CSVCard";
 import {CardAPI} from "../../models/cardAPI";
 import {MessageService} from "primeng/api";
@@ -7,6 +7,7 @@ import {HttpServiceService} from "../../services/http-service.service";
 import {ApiCardService} from "../../services/api-card.service";
 import {cardCSVDB} from "../../models/interfaces/ligaPokemonDB";
 import {ApiSearch} from "../../models/interfaces/apiSearch";
+import {CsvReaderService} from "../../services/csv-reader.service";
 
 export class MultipleCards {
   index: string;
@@ -15,6 +16,11 @@ export class MultipleCards {
   edition: string;
   extras: string;
   multiples: CardAPI[];
+}
+
+export interface CardCSVDB {
+  key: string;
+  cardCSV: CSVCard;
 }
 
 @Component({
@@ -38,13 +44,85 @@ export class FetchSomeApiComponent implements OnInit {
   loadingErrors = true;
   date: Date;
 
+  uploadedFiles: any[] = [];
+  cards: CardCSVDB[];
+  finishedImporting = false;
+
+  @ViewChild('uploader') uploader: any;
+
   constructor(private ligaPokemonService: LigaPokemonService,
               private httpService: HttpServiceService,
               private apiCardService: ApiCardService,
-              private messageService: MessageService) { }
+              private messageService: MessageService,
+              public csvReader: CsvReaderService) { }
 
   ngOnInit(): void {
+    const service = this.ligaPokemonService.getAll().subscribe(result => {
+      this.cards = result;
+      service.unsubscribe();
+    });
+  }
 
+  uploadFile (event) {
+    var tempDate = new Date();
+    let file = event.files[0];
+
+    if (this.csvReader.isValidCSVFile(file)) {
+      let reader = new FileReader();
+      reader.readAsText(file);
+
+      reader.onload = () => {
+        let csvData = reader.result;
+        let csvRecordsArray = (<string>csvData).split(/\r\n|\n/);
+
+        let headersRow = this.csvReader.getHeaderArray(csvRecordsArray);
+
+        this.csvReader.records = this.csvReader.getDataRecordsArrayFromCSVFile(csvRecordsArray, headersRow.length);
+        this.csvReader.totalLines = this.csvReader.records.length;
+        this.csvReader.records.forEach(record => {
+          this.csvReader.linesRead += 1;
+          if (record.extras.length == 0) record.extras = null;
+          const temp = this.cards.filter(val =>
+            val.cardCSV.id == record.id &&
+            ((val.cardCSV.extras && record.extras) ? val.cardCSV.extras.sort().join(' ') == record.extras.sort().join(' ') : (val.cardCSV.extras == record.extras)) &&
+            val.cardCSV.language == record.language &&
+            val.cardCSV.quality == record.quality
+          );
+
+          if (temp.length == 0) {
+            this.ligaPokemonService.insert(record);
+          } else if (temp.length == 1) {
+            let card = temp.pop();
+            card.cardCSV.quantity += record.quantity;
+            card.cardCSV.dateImport = record.dateImport;
+            this.ligaPokemonService.update(card.cardCSV, card.key);
+          } else if (temp.length > 1) {
+            console.log('Multiple')
+          }
+        });
+        this.messageService.add({
+          severity: 'success',
+          summary: 'CSV imported!',
+          detail: 'the file was successfully imported to the database!'
+        });
+        this.finishedImporting = true;
+        this.fileReset();
+        this.date = this.csvReader.getCurrentDate();
+        this.convert();
+      };
+
+      reader.onerror = () => {
+        this.messageService.add({severity: 'danger', summary: 'Error', detail: 'error occurred while reading file'});
+      };
+
+    } else {
+      this.messageService.add({severity: 'warn', summary: 'File not supported', detail: 'Please import valid .csv file'});
+      this.fileReset();
+    }
+  }
+
+  fileReset() {
+    this.uploader.clear();
   }
 
   async convert() {
@@ -60,14 +138,15 @@ export class FetchSomeApiComponent implements OnInit {
       const timestamp = this.date.getTime();
 
       const service = this.ligaPokemonService.getByTime(timestamp).subscribe(result => {
-        this.cardsCSV = result;
         service.unsubscribe();
+        this.cardsCSV = result;
         this.startImporting();
       });
     }
   }
 
   async startImporting() {
+    console.log(this.cardsCSV);
     this.totalCards = this.cardsCSV.length;
     this.cardsCSV.forEach(card => {
       card.cardCSV.key = card.key;
@@ -99,7 +178,6 @@ export class FetchSomeApiComponent implements OnInit {
       this.loading = false;
     }
   }
-
 
   async processErrors() {
     this.messageService.add({
