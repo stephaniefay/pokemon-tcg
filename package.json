@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "setFirebase": "firebase use default",
+    "setFirebase": "firebase use any",
     "deploy": "firebase deploy"
   },
   "private": true,
