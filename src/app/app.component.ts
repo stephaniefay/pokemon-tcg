@@ -91,24 +91,14 @@ export class AppComponent {
         icon: 'fas fa-terminal',
         items: [
           {
-            label: 'Import All',
+            label: 'Clean & Import',
             icon: 'fas fa-file-import',
-            routerLink: ['/private/import']
+            routerLink: ['/private/clean-import']
           },
           {
-            label: 'Import Some',
+            label: 'Import & Add',
             icon: 'fas fa-file-medical',
-            routerLink: ['/private/add-import']
-          },
-          {
-            label: 'Fetch all from API',
-            icon: 'fas fa-link',
-            routerLink: ['/private/api']
-          },
-          {
-            label: 'Fetch some from API',
-            icon: 'fas fa-plus-circle',
-            routerLink: ['/private/add-api']
+            routerLink: ['/private/import']
           },
           {
             icon: 'fas fa-file-export',

@@ -50,6 +50,7 @@ export class ImportComponent implements OnInit {
           });
           this.fileReset();
           this.finishedImport = true;
+
         });
       };
 
