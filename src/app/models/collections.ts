@@ -160,6 +160,8 @@ export const Collections = {
   CHILLING_REIGN: {value: "swsh6", label: "Chilling Reign", url: ""},
   EVOLVING_SKIES: {value: "swsh7", label: "Evolving Skies", url: ""},
   FUSION_STRIKE: {value: "swsh8", label: "Fusion Strike", url: ""},
+  BRILLIANT_STARS: {value: "swsh9", label: "Brilliant Stars", url: ""},
+  TRAINER_GALLERY: {value: "swsh9tg", label: "Trainer Gallery", url: ""},
 
   // Celebrations
   CELEBRATIONS: {value: "cel25", label: "Celebrations", url: ""},
