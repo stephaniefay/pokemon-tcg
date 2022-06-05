@@ -161,7 +161,9 @@ export const Collections = {
   EVOLVING_SKIES: {value: "swsh7", label: "Evolving Skies", url: ""},
   FUSION_STRIKE: {value: "swsh8", label: "Fusion Strike", url: ""},
   BRILLIANT_STARS: {value: "swsh9", label: "Brilliant Stars", url: ""},
-  TRAINER_GALLERY: {value: "swsh9tg", label: "Trainer Gallery", url: ""},
+  TRAINER_GALLERY_BS: {value: "swsh9tg", label: "Trainer Gallery (BS)", url: ""},
+  RADIANT_STARS: {value: "swsh10", label: "Radiant Stars", url: ""},
+  TRAINER_GALLERY_RS: {value: "swsh10tg", label: "Trainer Gallery (RS)", url: ""},
 
   // Celebrations
   CELEBRATIONS: {value: "cel25", label: "Celebrations", url: ""},
