@@ -93,17 +93,19 @@ export class OverallStatusComponent implements OnInit {
   }
 
   setTypeEnergy (card: CardAPI) {
-    card.subtypes.forEach(type => {
-      const energyTypeArray: CardAPI[] = this.energyMap.get(type);
-      if (energyTypeArray) {
-        energyTypeArray.push(card);
-        this.energyMap.set(type, energyTypeArray);
-      } else {
-        const newEnergyTypeArray = [];
-        newEnergyTypeArray.push(card);
-        this.energyMap.set(type, newEnergyTypeArray);
-      }
-    });
+    if (card.subtypes != null) {
+      card.subtypes.forEach(type => {
+        const energyTypeArray: CardAPI[] = this.energyMap.get(type);
+        if (energyTypeArray) {
+          energyTypeArray.push(card);
+          this.energyMap.set(type, energyTypeArray);
+        } else {
+          const newEnergyTypeArray = [];
+          newEnergyTypeArray.push(card);
+          this.energyMap.set(type, newEnergyTypeArray);
+        }
+      });
+    }
   }
 
   setTypeTrainer (card: CardAPI) {

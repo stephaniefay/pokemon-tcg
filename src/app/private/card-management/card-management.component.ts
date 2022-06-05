@@ -148,10 +148,12 @@ export class CardManagementComponent implements OnInit {
 
       try {
         cloneCards[index].cardApi.tcgplayer = request.data.tcgplayer;
+        cloneCards[index].cardApi.images = request.data.images;
         this.apiCardService.update(cloneCards[index].cardApi, cloneCards[index].key);
       } catch (e) {
         const cardCSV = cloneCards[index].cardApi.cardCSV;
         cloneCards[index].cardApi = request.data;
+        cloneCards[index].cardApi.images = request.data.images;
         cloneCards[index].cardApi.cardCSV = cardCSV;
         this.apiCardService.update(cloneCards[index].cardApi, cloneCards[index].key);
       }
