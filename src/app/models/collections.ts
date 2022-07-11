@@ -162,12 +162,15 @@ export const Collections = {
   FUSION_STRIKE: {value: "swsh8", label: "Fusion Strike", url: ""},
   BRILLIANT_STARS: {value: "swsh9", label: "Brilliant Stars", url: ""},
   TRAINER_GALLERY_BS: {value: "swsh9tg", label: "Trainer Gallery (BS)", url: ""},
-  RADIANT_STARS: {value: "swsh10", label: "Radiant Stars", url: ""},
-  TRAINER_GALLERY_RS: {value: "swsh10tg", label: "Trainer Gallery (RS)", url: ""},
+  RADIANT_STARS: {value: "swsh10", label: "Astral Radiance", url: ""},
+  TRAINER_GALLERY_RS: {value: "swsh10tg", label: "Trainer Gallery (AR)", url: ""},
 
   // Celebrations
   CELEBRATIONS: {value: "cel25", label: "Celebrations", url: ""},
-  CELEBRATIONS_CLASSIC: {value: "cel25c", label: "Celebrations: Classic", url: ""}
+  CELEBRATIONS_CLASSIC: {value: "cel25c", label: "Celebrations: Classic", url: ""},
+
+  //Pokemon Go
+  POKEMON_GO: {value: "pgo", label: "Pokemon Go", url: ""}
 
 } as const;
 
