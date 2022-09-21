@@ -149,7 +149,7 @@ export class CollectionComponent implements OnInit {
   getDescriptorTotal (card: CardAPI) {
     let flag = false;
     let descriptor: string = this.getPriceTotal(card) + ' = (';
-    if (card.tcgplayer == null) {
+    if (card.tcgplayer == null || card.tcgplayer.prices == null) {
       descriptor += '0 x ';
     } else if (card.cardCSV.extras && card.cardCSV.extras.length > 0 && card.cardCSV.extras.includes("Edition One")) {
       if (card.cardCSV.extras.includes("Foil")) {
