@@ -164,6 +164,8 @@ export const Collections = {
   TRAINER_GALLERY_BS: {value: "swsh9tg", label: "Trainer Gallery (BS)", url: ""},
   RADIANT_STARS: {value: "swsh10", label: "Astral Radiance", url: ""},
   TRAINER_GALLERY_RS: {value: "swsh10tg", label: "Trainer Gallery (AR)", url: ""},
+  LOST_ORIGIN: {value: "swsh11", label: "Lost Origin", url: ""},
+  TRAINER_GALLERY_LO: {value: "swsh11tg", label: "Trainer Gallery (LO)", url: ""},
 
   // Celebrations
   CELEBRATIONS: {value: "cel25", label: "Celebrations", url: ""},
